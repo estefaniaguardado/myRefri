@@ -9,8 +9,11 @@ html
                 td No.   
                 td Article
         table
-            for item in listOfItems
+            each item in listOfItems
                 tr
                     td #{item.index}   
                     td #{item.name}
+                    td 
+                        button(type='submit' onclick='edit("#{item.index}")') Delete
+        
 
