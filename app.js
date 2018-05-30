@@ -1,9 +1,12 @@
 const express = require('express');
-var app = express();
+const app = express();
 
 app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
+    const listOfItems = require('./listOfItems');
+    const listItems = new listOfItems([]);
+    var list = listItems.create();
     res.render('index', { message: 'Hello World!' });
 })
 
