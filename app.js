@@ -7,7 +7,8 @@ app.get('/', function(req, res) {
     const listOfItems = require('./listOfItems');
     const listItems = new listOfItems([]);
     var list = listItems.create();
-    res.render('index', { message: 'Hello World!' });
+    res.render('index', { message: 'Hello World!', 
+                          listOfItems: list });
 })
 
 app.listen(3000, function() {

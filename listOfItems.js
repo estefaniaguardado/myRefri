@@ -1,4 +1,4 @@
-var randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+var randomString = Math.random().toString(36).substring(2, 7) + Math.random().toString(36).substring(2, 15);
 
 class listOfItems {
     create() {
