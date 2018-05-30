@@ -1,0 +1,19 @@
+doctype
+html
+    head
+        title List Items
+    body
+        h1 #{message}
+        table
+            tr 
+                td No.   
+                td Article
+        table
+            each item in listOfItems
+                tr
+                    td #{item.index}   
+                    td #{item.name}
+                    td 
+                        button(type='submit' onclick='edit("#{item.index}")') Delete
+        
+
