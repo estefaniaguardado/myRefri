@@ -1,1 +1,9 @@
-module.exports = { extends: 'airbnb-base' };
+module.exports = {
+    "extends": "airbnb-base",
+    "rules": {
+        "linebreak-style": [
+          "error",
+          "windows"
+        ]
+      }
+};
