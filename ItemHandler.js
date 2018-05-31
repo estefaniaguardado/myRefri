@@ -1,27 +1,27 @@
 
 // TODO: The list must be persisted in a DB, no in memory
-const memoryList = [];
 
 class ItemHandler {
-    constructor() {
-        // TODO: Remove once the list is in the DB
-        if (memoryList.length) return;
+  constructor() {
+    // TODO: Remove once the list is in the DB
+    const memoryList = [];
 
-        for (let index = 0; index < 20; index++) {
-            const name = Math.random().toString(36).substring(2, 7) + Math.random().toString(36).substring(2, 15);
-            memoryList.push({ index, name });
-        }
+    for (let index = 0; index < 20; index += 1) {
+      const name = Math.random().toString(36).substring(2, 7);
+      memoryList.push({ index, name });
     }
+    this.list = memoryList;
+  }
+  getList() {
+    return [...this.list];
+  }
+  removeItemOfList(index) {
+    const memoryList = this.list;
 
-    getList() {
-        return [...memoryList];
-    }
-
-    removeItemOfList(index) {
-        if (typeof index !== 'number' || index < 0 || index >= memoryList.length ) return;
-
-        memoryList.splice(index, 1);
-    }
+    if (typeof index !== 'number' || index < 0 || index >= memoryList.length ) return;
+    memoryList.splice(index, 1);
+    this.list = memoryList;
+  }
 }
 
 module.exports = ItemHandler;
