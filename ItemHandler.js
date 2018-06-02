@@ -12,13 +12,20 @@ class ItemHandler {
     }
     this.list = memoryList;
   }
+
   getList() {
     return [...this.list];
   }
+
+  /**
+   * Removes from the items based on the id
+   * @param {number} index Identifier of the item to remove
+   * @todo Remove based on the id (index) not based on the position
+   */
   removeItemOfList(index) {
     const memoryList = this.list;
 
-    if (typeof index !== 'number' || index < 0 || index >= memoryList.length ) return;
+    if (typeof index !== 'number' || index < 0 || index >= memoryList.length) return;
     memoryList.splice(index, 1);
     this.list = memoryList;
   }

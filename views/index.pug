@@ -2,6 +2,7 @@ doctype
 html
     head
         title List Items
+        script(src='http://code.jquery.com/jquery-1.11.0.min.js')
     body
         h1 #{message}
         table
@@ -14,6 +15,18 @@ html
                     td #{item.index}   
                     td #{item.name}
                     td 
-                        button(type='submit' onclick='edit("#{item.index}")') Delete
+                        button(type='submit' id='button' value=item.index) Delete
+        script(type='text/javascript').
+            $('button').click(function () {
+                $.ajax({
+                    url: "http://localhost:3000/item/" + this.value,
+                    type: "DELETE",
+                    success: function(data){
+                        alert("hola");
+                        // TODO: Remove row from the table with JQuery OR reload page
+                    }
+                });
+            });
+                        
         
 
