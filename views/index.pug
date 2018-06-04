@@ -18,12 +18,12 @@ html
                         button(type='submit' id='button' value=item.index) Delete
         script(type='text/javascript').
             $('button').click(function () {
+                const $tr = $(this).closest('tr');
                 $.ajax({
                     url: "http://localhost:3000/item/" + this.value,
                     type: "DELETE",
                     success: function(data){
-                        alert("hola");
-                        // TODO: Remove row from the table with JQuery OR reload page
+                        $tr.remove();                    
                     }
                 });
             });
