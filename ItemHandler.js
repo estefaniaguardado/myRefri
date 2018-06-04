@@ -18,11 +18,6 @@ class ItemHandler {
     return [...this.list];
   }
 
-  /**
-   * Removes from the items based on the id
-   * @param {number} index Identifier of the item to remove
-   * @todo Remove based on the id (index) not based on the position
-   */
   removeItemOfList(id) {
     const memoryList = this.list;
     const filterList = memoryList.filter(item => item.id !== id);
