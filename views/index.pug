@@ -2,18 +2,29 @@ doctype
 html
     head
         title List Items
+        script(src='http://code.jquery.com/jquery-1.11.0.min.js')
     body
         h1 #{message}
         table
             tr 
-                td No.   
-                td Article
+                th Article
         table
             each item in listOfItems
-                tr
-                    td #{item.index}   
+                tr   
                     td #{item.name}
                     td 
-                        button(type='submit' onclick='edit("#{item.index}")') Delete
+                        button(type='submit' id='button' value=item.id) Delete
+        script(type='text/javascript').
+            $('button').click(function () {
+                const $tr = $(this).closest('tr');
+                $.ajax({
+                    url: "http://localhost:3000/item/" + this.value,
+                    type: "DELETE",
+                    success: function(data){
+                        $tr.remove();                    
+                    }
+                });
+            });
+                        
         
 

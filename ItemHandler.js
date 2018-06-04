@@ -7,20 +7,21 @@ class ItemHandler {
     const memoryList = [];
 
     for (let index = 0; index < 20; index += 1) {
+      const id = Math.random().toString(36).substring(2, 5);
       const name = Math.random().toString(36).substring(2, 7);
-      memoryList.push({ index, name });
+      memoryList.push({ id, name });
     }
     this.list = memoryList;
   }
+
   getList() {
     return [...this.list];
   }
-  removeItemOfList(index) {
-    const memoryList = this.list;
 
-    if (typeof index !== 'number' || index < 0 || index >= memoryList.length ) return;
-    memoryList.splice(index, 1);
-    this.list = memoryList;
+  removeItemOfList(id) {
+    const memoryList = this.list;
+    const filterList = memoryList.filter(item => item.id !== id);
+    this.list = filterList;
   }
 }
 

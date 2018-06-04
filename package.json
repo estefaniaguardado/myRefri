@@ -18,6 +18,7 @@
   "homepage": "https://github.com/EstefaniaGuardado/myAppJs#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "pug": "^2.0.3"
   },
   "devDependencies": {
