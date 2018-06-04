@@ -7,7 +7,12 @@ const itemHandler = new ItemHandler();
 const app = express();
 app.set('view engine', 'pug');
 
-app.get('/', (req, res) => {
+app.get('/item', (req, res) => {
+  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+});
+
+app.post('/item', (req, res) => {
+  itemHandler.createNewItem('hola');
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
