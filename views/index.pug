@@ -5,17 +5,20 @@ html
         script(src='http://code.jquery.com/jquery-1.11.0.min.js')
     body
         h1 #{message}
+        form(action="/item" method="post" id="itemForm")
+            input(type="text" placeholder="Add new Item" name="itemName" id="newItemInput")
+            input(type="submit" value="Add new Item" id="addItemButton")
         table
             tr 
                 th Article
-        table
+        table(id= 'listItems')
             each item in listOfItems
                 tr   
                     td #{item.name}
                     td 
-                        button(type='submit' id='button' value=item.id) Delete
+                        button(type='submit' id='deleteItemButton' value=item.id) Delete
         script(type='text/javascript').
-            $('button').click(function () {
+            $('button#deleteItemButton').click(function () {
                 const $tr = $(this).closest('tr');
                 $.ajax({
                     url: "http://localhost:3000/item/" + this.value,
@@ -25,6 +28,3 @@ html
                     }
                 });
             });
-                        
-        
-
