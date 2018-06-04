@@ -7,8 +7,9 @@ class ItemHandler {
     const memoryList = [];
 
     for (let index = 0; index < 20; index += 1) {
+      const id = Math.random().toString(36).substring(2, 5);
       const name = Math.random().toString(36).substring(2, 7);
-      memoryList.push({ index, name });
+      memoryList.push({ id, name });
     }
     this.list = memoryList;
   }
@@ -22,12 +23,10 @@ class ItemHandler {
    * @param {number} index Identifier of the item to remove
    * @todo Remove based on the id (index) not based on the position
    */
-  removeItemOfList(index) {
+  removeItemOfList(id) {
     const memoryList = this.list;
-
-    if (typeof index !== 'number' || index < 0 || index >= memoryList.length) return;
-    memoryList.splice(index, 1);
-    this.list = memoryList;
+    const filterList = memoryList.filter(item => item.id !== id);
+    this.list = filterList;
   }
 }
 
