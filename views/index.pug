@@ -7,15 +7,13 @@ html
         h1 #{message}
         table
             tr 
-                td No.   
-                td Article
+                th Article
         table
             each item in listOfItems
-                tr
-                    td #{item.index}   
+                tr   
                     td #{item.name}
                     td 
-                        button(type='submit' id='button' value=item.index) Delete
+                        button(type='submit' id='button' value=item.id) Delete
         script(type='text/javascript').
             $('button').click(function () {
                 const $tr = $(this).closest('tr');

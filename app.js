@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.delete('/item/:id', (req, res) => {
-  itemHandler.removeItemOfList(parseInt(req.params.id, 10));
+  itemHandler.removeItemOfList(req.params.id);
   res.json({ ok: true });
 });
 
