@@ -20,9 +20,8 @@ class ItemHandler {
 
   createNewItem(itemName) {
     const itemId = Math.random().toString(36).substring(2, 5);
-    const item = { itemId, itemName };
     const memoryList = this.list;
-    memoryList.push(item);
+    memoryList.push({ id: itemId, name: itemName });
     this.list = memoryList;
   }
 
