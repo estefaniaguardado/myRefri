@@ -3,6 +3,9 @@ html
     head
         title List Items
         script(src='http://code.jquery.com/jquery-1.11.0.min.js')
+        script(src="https://code.jquery.com/jquery-1.12.4.js")
+        script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+        link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     body
         h1 #{message}
         form(action="/item" method="post" id="itemForm")
@@ -16,6 +19,9 @@ html
                 tr 
                     td
                         button(id='modifyItemButton' value=item.id) Edit
+                        div(id="dialog-confirm" title="Empty the recycle bin?" hidden)
+                            p Modify Item
+                            input(type="text" id="modifiedNameItem")
                     td #{item.name}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
@@ -34,13 +40,29 @@ html
 
             $('button#modifyItemButton').click(function() {
                 const idItemSelected = $(this).attr("value");
-                $.ajax({
-                    url: "http://localhost:3000/item/edit/" + idItemSelected,
-                    type: "PUT",
-                    //TODO: Add form to input the new name of item and get value
-                    data: { name: "newName" },
-                    success: function(data){
-                        alert("listo");
+                $( "#dialog-confirm" ).dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        "Save Changes": function() {
+                            const input = $(this).find("input#modifiedNameItem").val();
+                            $( this ).dialog( "close" );
+                        },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
                         }
+                    }
                 });
+
+                /*$.ajax({
+                            type: "PUT",
+                            url: "http://localhost:3000/item/edit/" + idItemSelected,
+                            //TODO: Add form to input the new name of item and get value
+                            data: { name: "newName" },
+                            success: function(data){
+                                alert("listo");
+                            }
+                        }); */
             });
