@@ -9,14 +9,17 @@ html
             input(type="text" placeholder="Add new Item" name="itemName" id="newItemInput")
             input(type="submit" value="Add new Item" id="addItemButton")
         table
-            tr 
+            tr
                 th Article
         table(id= 'listItems')
             each item in listOfItems
-                tr   
+                tr 
+                    td
+                        button(id='modifyItemButton' value=item.id) Edit
                     td #{item.name}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
+
         script(type='text/javascript').
             $('button#deleteItemButton').click(function () {
                 const $tr = $(this).closest('tr');
@@ -26,5 +29,18 @@ html
                     success: function(data){
                         $tr.remove();                    
                     }
+                });
+            });
+
+            $('button#modifyItemButton').click(function() {
+                const idItemSelected = $(this).attr("value");
+                $.ajax({
+                    url: "http://localhost:3000/item/edit/" + idItemSelected,
+                    type: "PUT",
+                    //TODO: Add form to input the new name of item and get value
+                    data: { name: "newName" },
+                    success: function(data){
+                        alert("listo");
+                        }
                 });
             });

@@ -20,6 +20,11 @@ app.post('/item', (req, res) => {
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
+app.put('/item/edit/:id', (req, res) => {
+  itemHandler.modifyItem(req.params.id, req.body.name);
+  res.json({ ok: true });
+});
+
 app.delete('/item/:id', (req, res) => {
   itemHandler.removeItemOfList(req.params.id);
   res.json({ ok: true });
