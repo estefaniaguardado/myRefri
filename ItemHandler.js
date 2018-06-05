@@ -33,8 +33,7 @@ class ItemHandler {
   }
 
   removeItemOfList(id) {
-    const memoryList = this.list;
-    const filterList = memoryList.filter(item => item.id !== id);
+    const filterList = this.list.filter(item => item.id !== id);
     this.list = filterList;
   }
 }

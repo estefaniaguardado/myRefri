@@ -38,31 +38,34 @@ html
                 });
             });
 
-            $('button#modifyItemButton').click(function() {
+            
+            $('button#modifyItemButton').click(function(event) {
+                event.preventDefault();
+                
                 const idItemSelected = $(this).attr("value");
-                $( "#dialog-confirm" ).dialog({
+
+                function saveChange() {
+                    $.ajax({
+                        type: "PUT",
+                        url: "http://localhost:3000/item/" + idItemSelected,
+                        //TODO: Add form to input the new name of item and get value
+                        data: { name: "newName" },
+                        success: (data) => $(this).dialog("close")
+                    });
+                }
+
+                function cancelChange() {
+                    $(this).dialog( "close" );
+                }
+
+                $("#dialog-confirm").dialog({
                     resizable: false,
                     height: "auto",
                     width: 400,
                     modal: true,
                     buttons: {
-                        "Save Changes": function() {
-                            const input = $(this).find("input#modifiedNameItem").val();
-                            $( this ).dialog( "close" );
-                        },
-                        Cancel: function() {
-                            $( this ).dialog( "close" );
-                        }
+                        "Save Changes": saveChange,
+                        Cancel: cancelChange,
                     }
                 });
-
-                /*$.ajax({
-                            type: "PUT",
-                            url: "http://localhost:3000/item/edit/" + idItemSelected,
-                            //TODO: Add form to input the new name of item and get value
-                            data: { name: "newName" },
-                            success: function(data){
-                                alert("listo");
-                            }
-                        }); */
             });

@@ -20,7 +20,7 @@ app.post('/item', (req, res) => {
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
-app.put('/item/edit/:id', (req, res) => {
+app.put('/item/:id', (req, res) => {
   itemHandler.modifyItem(req.params.id, req.body.name);
   res.json({ ok: true });
 });
