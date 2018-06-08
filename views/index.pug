@@ -19,9 +19,10 @@ html
                 tr 
                     td
                         button(id='modifyItemButton' value=item.id) Edit
-                        div(id="dialog-confirm" title="Empty the recycle bin?" hidden)
+                        div(id="dialog-confirm" title="Modify item detail" hidden)
                             p Modify Item
-                            input(type="text" id="modifiedNameItem")
+                            form
+                                input(type="text" id="modifiedNameItem")
                     td #{item.name}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
@@ -45,11 +46,11 @@ html
                 const idItemSelected = $(this).attr("value");
 
                 function saveChange() {
+                    const newNameItem = $(this).find("input#modifiedNameItem").val();
                     $.ajax({
                         type: "PUT",
                         url: "http://localhost:3000/item/" + idItemSelected,
-                        //TODO: Add form to input the new name of item and get value
-                        data: { name: "newName" },
+                        data: { name: newNameItem },
                         success: (data) => $(this).dialog("close")
                     });
                 }
