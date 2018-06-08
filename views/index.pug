@@ -5,6 +5,7 @@ html
         script(src='http://code.jquery.com/jquery-1.11.0.min.js')
         script(src="https://code.jquery.com/jquery-1.12.4.js")
         script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     body
         h1 #{message}
@@ -31,6 +32,7 @@ html
             $('button#deleteItemButton').click(function () {
                 const $tr = $(this).closest('tr');
                 $.ajax({
+                    headers: { accept: "application/json" },
                     url: "http://localhost:3000/item/" + this.value,
                     type: "DELETE",
                     success: function(data){
@@ -45,13 +47,20 @@ html
                 
                 const idItemSelected = $(this).attr("value");
 
-                function saveChange() {
+                function saveChange(modalEvent) {
+                    modalEvent.preventDefault();
+
                     const newNameItem = $(this).find("input#modifiedNameItem").val();
                     $.ajax({
+                        headers: { accept: "application/json" },
                         type: "PUT",
                         url: "http://localhost:3000/item/" + idItemSelected,
                         data: { name: newNameItem },
-                        success: (data) => $(this).dialog("close")
+                        success: (data) => {
+                            // TODO: Update data from the list
+
+                            $(this).dialog("close")
+                        },
                     });
                 }
 
