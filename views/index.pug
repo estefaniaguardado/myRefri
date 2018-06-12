@@ -17,7 +17,7 @@ html
                 th Article
         table(id= 'listItems')
             each item in listOfItems
-                tr 
+                tr(id=item.id)
                     td
                         button(id='modifyItemButton' value=item.id) Edit
                         div(id="dialog-confirm" title="Modify item detail" hidden)
@@ -46,6 +46,7 @@ html
                 event.preventDefault();
                 
                 const idItemSelected = $(this).attr("value");
+                const currentCellNameItem = $(this).closest('tr#' + idItemSelected).children().eq(1);
 
                 function saveChange(modalEvent) {
                     modalEvent.preventDefault();
@@ -57,8 +58,7 @@ html
                         url: "http://localhost:3000/item/" + idItemSelected,
                         data: { name: newNameItem },
                         success: (data) => {
-                            // TODO: Update data from the list
-
+                            currentCellNameItem.replaceWith("<td>" + newNameItem + "</td>");
                             $(this).dialog("close")
                         },
                     });
