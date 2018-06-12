@@ -2,6 +2,8 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
+const debug = require('debug')('http');
+
 const ItemHandler = require('./ItemHandler');
 
 const itemHandler = new ItemHandler();
@@ -41,6 +43,5 @@ app.delete('/item/:id', (req, res) => {
 });
 
 app.listen(3000, () => {
-  // TODO: Use `debug` library instead
-  console.log('App is listening in port 3000');
+  debug('App is listening in port 3000');
 });
