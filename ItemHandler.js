@@ -25,9 +25,15 @@ class ItemHandler {
     this.list = memoryList;
   }
 
-  removeItemOfList(id) {
+  modifyItem(id, newName) {
     const memoryList = this.list;
-    const filterList = memoryList.filter(item => item.id !== id);
+    const indexModifiedItem = memoryList.findIndex(item => item.id === id);
+    memoryList[indexModifiedItem].name = newName;
+    this.list = memoryList;
+  }
+
+  removeItemOfList(id) {
+    const filterList = this.list.filter(item => item.id !== id);
     this.list = filterList;
   }
 }

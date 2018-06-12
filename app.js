@@ -20,9 +20,24 @@ app.post('/item', (req, res) => {
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
+app.put('/item/:id', (req, res) => {
+  itemHandler.modifyItem(req.params.id, req.body.name);
+
+  if (req.accepts('application/json')) {
+    return res.json({ ok: true });
+  }
+
+  return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+});
+
 app.delete('/item/:id', (req, res) => {
   itemHandler.removeItemOfList(req.params.id);
-  res.json({ ok: true });
+
+  if (req.accepts('application/json')) {
+    return res.json({ ok: true });
+  }
+
+  return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
 app.listen(3000, () => {
