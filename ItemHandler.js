@@ -4,14 +4,7 @@
 class ItemHandler {
   constructor() {
     // TODO: Remove once the list is in the DB
-    const memoryList = [];
-
-    for (let index = 0; index < 5; index += 1) {
-      const id = Math.random().toString(36).substring(2, 5);
-      const name = Math.random().toString(36).substring(2, 7);
-      memoryList.push({ id, name });
-    }
-    this.list = memoryList;
+    this.list = [];
   }
 
   getList() {
