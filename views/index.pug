@@ -19,7 +19,7 @@ html
             each item in listOfItems
                 tr(id=item.id)
                     td
-                        button(id='modifyItemButton' value=item.id) Edit
+                        button(id='modifyItemButton') Edit
                         div(id="dialog-confirm" title="Modify item detail" hidden)
                             p Modify Item
                             form
@@ -45,7 +45,7 @@ html
             $('button#modifyItemButton').click(function(event) {
                 event.preventDefault();
                 
-                const idItemSelected = $(this).attr("value");
+                const idItemSelected = $(this).closest('tr').attr("id");
                 const currentCellNameItem = $(this).closest('tr#' + idItemSelected).children().eq(1);
 
                 function saveChange(modalEvent) {
