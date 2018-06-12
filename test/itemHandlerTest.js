@@ -8,5 +8,5 @@ describe('Item Handler', () => {
     it('should return a new List', () => {
       assert.notEqual(itemHandler.getList().length, 0);
     });
-  }); 
+  });
 });
