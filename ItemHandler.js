@@ -11,17 +11,16 @@ class ItemHandler {
     return [...this.list];
   }
 
-  createNewItem(itemName) {
-    const itemId = Math.random().toString(36).substring(2, 5);
+  createNewItem(item) {
     const memoryList = this.list;
-    memoryList.push({ id: itemId, name: itemName });
+    memoryList.push(item);
     this.list = memoryList;
   }
 
-  modifyItem(id, newName) {
+  modifyItem(item) {
     const memoryList = this.list;
-    const indexModifiedItem = memoryList.findIndex(item => item.id === id);
-    memoryList[indexModifiedItem].name = newName;
+    const indexModifiedItem = memoryList.findIndex(previousItem => previousItem.id === item.id);
+    memoryList[indexModifiedItem] = item;
     this.list = memoryList;
   }
 
