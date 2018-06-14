@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "start": "node app.js",
+    "test": "npm run lint && npm run test-no-lint",
+    "test-no-lint": "mocha",
     "lint": "eslint .",
     "dev": "nodemon app.js"
   },
