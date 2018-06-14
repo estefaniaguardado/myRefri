@@ -8,8 +8,6 @@ const ItemHandler = require('./ItemHandler');
 
 const itemHandler = new ItemHandler();
 
-const Item = require('./model/Item');
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
