@@ -20,17 +20,12 @@ app.get('/item', (req, res) => {
 });
 
 app.post('/item', (req, res) => {
-  const itemId = Math.random().toString(36).substring(2, 5);
-  const newItem = new Item(itemId, req.body.itemName);
-
-  itemHandler.createNewItem(newItem);
+  itemHandler.createNewItem(req.body);
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
 app.put('/item/:id', (req, res) => {
-  const modifiedItem = new Item(req.params.id, req.body.name);
-
-  itemHandler.modifyItem(modifiedItem);
+  itemHandler.modifyItem(req.params.id, req.body);
 
   if (req.accepts('application/json')) {
     return res.json({ ok: true });
