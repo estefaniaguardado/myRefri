@@ -34,31 +34,29 @@ describe('Item Handler', () => {
           expect(sut.getList(), 'to satisfy', [item1, item2]);
         });
       });
-    });
 
-    describe('when modify the item1', () => {
-      beforeEach(() => {
-        item1 = sut.createNewItem('item1');
-        item1 = sut.modifyItem(item1.id, { name: 'modifiedItem1' });
+      describe('when modify the item1', () => {
+        beforeEach(() => {
+          item1 = sut.modifyItem(item1.id, { name: 'modifiedItem1' });
+        });
+  
+        it('should not change the list', () => {
+          expect(sut.getList(), 'to satisfy', [item1]);
+        });
+  
+        it('should rename the item name', () => {
+          expect(item1.name, 'to be', 'modifiedItem1');
+        });
       });
-
-      it('should not change the list', () => {
-        expect(sut.getList(), 'to satisfy', [item1]);
-      });
-
-      it('should rename the item name', () => {
-        expect(item1.name, 'to be', 'modifiedItem1');
-      });
-    });
-
-    describe('when remove the item1', () => {
-      beforeEach(() => {
-        item1 = sut.createNewItem('item1');
-        sut.removeItemOfList(item1.id);
-      });
-
-      it('should not have the item1', () => {
-        expect(sut.getList(), 'to be empty');
+  
+      describe('when remove the item1', () => {
+        beforeEach(() => {
+          sut.removeItemOfList(item1.id);
+        });
+  
+        it('should not have the item1', () => {
+          expect(sut.getList(), 'to be empty');
+        });
       });
     });
   });
