@@ -18,12 +18,12 @@ app.get('/item', (req, res) => {
 });
 
 app.post('/item', (req, res) => {
-  itemHandler.createNewItem(req.body.itemName);
+  itemHandler.createNewItem(req.body);
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
 app.put('/item/:id', (req, res) => {
-  itemHandler.modifyItem(req.params.id, req.body.name);
+  itemHandler.modifyItem(req.params.id, req.body);
 
   if (req.accepts('application/json')) {
     return res.json({ ok: true });

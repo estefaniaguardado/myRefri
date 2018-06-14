@@ -5,5 +5,8 @@ module.exports = {
           "error",
           "windows"
         ]
-      }
+      },
+    "env": {
+      "mocha": true,
+    }
 };
