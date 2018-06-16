@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const auth = require('./auth');
+require('./services/auth');
 const routes = require('./routes');
 
 
@@ -25,7 +25,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(auth);
 app.use(routes);
 
 
