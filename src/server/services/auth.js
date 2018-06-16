@@ -7,11 +7,11 @@ const userHandler = require('./userHandler');
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
     const user = await userHandler.findUserByName(username);
-    if (user.password !== password) throw new Error('ERROR_INVALID_PASSSWORD');
+    if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
 
     done(null, user);
   } catch (error) {
-    done(error);
+    done(null, false, error);
   }
 }));
 
@@ -23,6 +23,6 @@ passport.deserializeUser(async (id, done) => {
     const user = await userHandler.findUserById(id);
     done(null, user);
   } catch (error) {
-    done(error);
+    done(null, false, error);
   }
 });
