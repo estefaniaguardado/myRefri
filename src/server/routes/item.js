@@ -5,11 +5,7 @@ const ItemHandler = require('../services/ItemHandler');
 const itemHandler = new ItemHandler();
 
 router.get('/', (req, res) => {
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
-  }
+  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
 router.post('/', (req, res) => {

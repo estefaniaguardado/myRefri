@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local');
 
 const userHandler = require('../services/userHandler');
 
+// Note: Move if more strategies are added
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
     const user = await userHandler.findUserByName(username);
@@ -14,6 +15,7 @@ passport.use(new LocalStrategy(async (username, password, done) => {
     done(error);
   }
 }));
+
 
 passport.serializeUser((user, done) => done(null, user.id));
 
@@ -45,5 +47,15 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true,
 }));
 
+function authorized(req, res, next) {
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+}
 
-module.exports = router;
+module.exports = {
+  router,
+  authorized,
+};
