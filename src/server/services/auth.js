@@ -1,6 +1,5 @@
-const passport = require('passport');
-const router = require('express-promise-router')();
 const LocalStrategy = require('passport-local');
+const passport = require('passport');
 
 const userHandler = require('../services/userHandler');
 
@@ -27,35 +26,3 @@ passport.deserializeUser(async (id, done) => {
     done(error);
   }
 });
-
-
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/'));
-});
-
-router.get('/login', (req, res) => {
-  if (req.user) {
-    res.redirect('/');
-  } else {
-    res.render('login');
-  }
-});
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true,
-}));
-
-function authorized(req, res, next) {
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-}
-
-module.exports = {
-  router,
-  authorized,
-};
