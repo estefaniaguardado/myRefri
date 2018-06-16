@@ -1,18 +1,18 @@
 const users = [{ id: 1, username: 'annie', password: 'hola' }];
 
-function findUserByName(username, done) {
-  process.nextTick(() => {
+function findUserByName(username) {
+  return new Promise((resolve, reject) => {
     const userInfo = users.find(user => user.username === username);
-    if (!userInfo) return done(null, null);
-    return done(null, userInfo);
+    if (!userInfo) return reject(new Error('ERROR_USER_NOT_FOUND'));
+    return resolve(userInfo);
   });
 }
 
-function findUserById(id, done) {
-  process.nextTick(() => {
+function findUserById(id) {
+  return new Promise((resolve, reject) => {
     const userInfo = users.find(user => user.id === id);
-    if (!userInfo) return done(null, null);
-    return done(null, userInfo);
+    if (!userInfo) return reject(new Error('ERROR_USER_NOT_FOUND'));
+    return resolve(userInfo);
   });
 }
 

@@ -22,22 +22,26 @@ const flash = require('req-flash');
 
 const app = express();
 
-passport.use(new LocalStrategy({ passReqToCallback: true }, (username, password, done) => {
-  userHandler.findUserByName({ username }, (err, user) => {
-    if (err) return done(err);
-    if (!user) return done(null, false, { message: 'Incorrect username' });
-    if (user.password !== password) return done(null, false, { message: 'Incorrect Password' });
-    return done(null, user);
-  });
+passport.use(new LocalStrategy(async (username, password, done) => {
+  try {
+    const user = await userHandler.findUserByName(username);
+    if (user.password !== password) throw new Error('ERROR_INVALID_PASSSWORD');
+
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
 }));
 
 passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser((id, done) => {
-  userHandler.findUserById(id, (err, user) => {
-    if (err) return done(err);
-    return done(null, user);
-  });
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await userHandler.findUserById(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
 });
 
 app.set('view engine', 'pug');
@@ -54,16 +58,28 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  if (req.user) {
+    res.redirect('/item');
+  } else {
+    res.render('login');
+  }
 });
 
 app.get('/item', (req, res) => {
-  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  }
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => res.redirect('/'));
 });
 
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/login',
-  failureRedirect: '/item',
+  successRedirect: '/item',
+  failureRedirect: '/login',
   failureFlash: true,
 }));
 
