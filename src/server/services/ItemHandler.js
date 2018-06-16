@@ -1,5 +1,5 @@
 
-const Item = require('./model/Item');
+const Item = require('../../model/Item');
 // TODO: The list must be persisted in a DB, no in memory
 
 class ItemHandler {

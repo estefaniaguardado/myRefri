@@ -1,6 +1,6 @@
 const expect = require('unexpected');
 
-const ItemHandler = require('../ItemHandler');
+const ItemHandler = require('./ItemHandler');
 
 describe('Item Handler', () => {
   let sut;
