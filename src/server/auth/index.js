@@ -33,14 +33,14 @@ router.get('/logout', (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.user) {
-    res.redirect('/item');
+    res.redirect('/');
   } else {
     res.render('login');
   }
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/item',
+  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true,
 }));
