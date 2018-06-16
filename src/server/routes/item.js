@@ -1,28 +1,23 @@
-const express = require('express');
+const router = require('express-promise-router')();
 
-const bodyParser = require('body-parser');
-
-const debug = require('debug')('http');
-
-const ItemHandler = require('./ItemHandler');
+const ItemHandler = require('../services/ItemHandler');
 
 const itemHandler = new ItemHandler();
 
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.set('view engine', 'pug');
-
-app.get('/item', (req, res) => {
-  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+router.get('/', (req, res) => {
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  }
 });
 
-app.post('/item', (req, res) => {
+router.post('/', (req, res) => {
   itemHandler.createNewItem(req.body);
   res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
-app.put('/item/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   itemHandler.modifyItem(req.params.id, req.body);
 
   if (req.accepts('application/json')) {
@@ -32,7 +27,7 @@ app.put('/item/:id', (req, res) => {
   return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
-app.delete('/item/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   itemHandler.removeItemOfList(req.params.id);
 
   if (req.accepts('application/json')) {
@@ -42,6 +37,4 @@ app.delete('/item/:id', (req, res) => {
   return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
 });
 
-app.listen(3000, () => {
-  debug('App is listening in port 3000');
-});
+module.exports = router;

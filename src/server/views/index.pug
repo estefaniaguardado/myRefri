@@ -27,6 +27,8 @@ html
                     td #{item.name}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
+        form(action="/logout" method="get" id="logoutForm")
+            input(type="submit" value="Log Out")
 
         script(type='text/javascript').
             $('button#deleteItemButton').click(function () {
