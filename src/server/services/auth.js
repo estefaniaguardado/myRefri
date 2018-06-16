@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 
-const userHandler = require('../services/userHandler');
+const userHandler = require('./userHandler');
 
 // Note: Move if more strategies are added
 passport.use(new LocalStrategy(async (username, password, done) => {
