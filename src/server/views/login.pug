@@ -1,14 +1,21 @@
 html
     head
         title Login
+        script(src="https://code.jquery.com/jquery-1.12.4.js")
+        script(src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js")
+
     body
+        h1 Log In
         form(action="/login" method="post" id="loginForm")
             div
                 label Username:
-                input(type="text" name="username")
+                input(type="text" name="username" id="usernameInput")
+            div
                 label Password:
                 input(type="password" name="password")
             div
                 input(type="submit" value="Log In")
         - if(error)
             div#error #{error}
+        
+        script(src='/static/login.js')
