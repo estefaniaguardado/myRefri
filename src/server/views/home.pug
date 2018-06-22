@@ -3,11 +3,13 @@ html
         title MyAPP
         link(href='/static/css/home.css', rel='stylesheet')
     body
-        div(class='main-container')
-            div(class='navigation-container' role='navigation')
-                a(href='#' class="home") Home
-                form(class='button' action="/login" method="get" id="loginForm")
-                    input(type="submit" value="Log In")
+        header
+            ul(class='navigation-container' role='navigation')
+                li
+                    a(class="home" href='#') Home
+                li
+                    form(class='button' action="/login" method="get" id="loginForm")
+                        input(type="submit" value="Log In")
             div(class='logo-container')
                 h1 Welcome to MyAPP
             

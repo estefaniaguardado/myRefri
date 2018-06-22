@@ -1,4 +1,4 @@
-.main-container{
+header {
   width: 95%;
   display: flex;
   margin: 20px auto;
@@ -8,21 +8,31 @@
 
 .navigation-container {
   display: flex;
-  align-items: center;
-  background-color: black;
+  background-color: peru; 
+  list-style-type: none;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  height: 5%;
 }
 
-.home {
-  margin: auto auto auto 15px;
-  color: white;
+.navigation-container li form{
+  align-items: center;
+  padding: 20px;
+}
+
+li a {
+  display: block;
+  text-align: center;
+  padding: 24.5px;
+  color: black;
   text-decoration: none;
 }
 
-a:hover {
-  background-color: darkgray;
+li a:hover {
+  background-color: orange;
 }
 
 .button {
-  margin: auto 15px auto auto;
 }
 
