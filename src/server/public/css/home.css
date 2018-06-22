@@ -1,0 +1,28 @@
+.main-container{
+  width: 95%;
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.navigation-container {
+  display: flex;
+  align-items: center;
+  background-color: black;
+}
+
+.home {
+  margin: auto auto auto 15px;
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: darkgray;
+}
+
+.button {
+  margin: auto 15px auto auto;
+}
+
