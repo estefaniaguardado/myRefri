@@ -13,13 +13,12 @@ header {
   justify-content: space-between;
   margin: 0;
   padding: 0;
-  height: 5%;
 }
 
 li a {
-  display: block;
+  display: inline-block;
   text-align: center;
-  padding: 24.5px;
+  padding: 35px 15px;
   color: rgb(88, 61, 28);
   text-decoration: none;
 }
