@@ -4,7 +4,8 @@ header {
   margin: 20px auto;
   justify-content: center;
   flex-direction: column;
-  background: rgb(246, 247, 189)
+  background: rgb(246, 247, 189);
+  font-family: Verdana;
 }
 
 .navigation-container {
@@ -27,7 +28,7 @@ header {
 
 .navigation-container li a:hover {
   background: rgb(191, 77, 40);
-  color: black;
+  color: white;
 }
 
 .navigation-container li h1 {
