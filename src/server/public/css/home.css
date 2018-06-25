@@ -1,41 +1,36 @@
 header {
-  width: 95%;
+  width: 90%;
   display: flex;
   margin: 20px auto;
   justify-content: center;
   flex-direction: column;
+  background: rgb(246, 247, 189)
 }
 
 .navigation-container {
   display: flex;
-  background-color: rgb(173, 118, 51); 
   list-style-type: none;
+  align-items: center;
   justify-content: space-between;
   margin: 0;
   padding: 0;
 }
 
-li a {
+.navigation-container li a {
   display: inline-block;
   text-align: center;
-  padding: 35px 15px;
-  color: rgb(88, 61, 28);
+  padding: 30px 15px;
+  background: rgb(230, 172, 39);
+  color: rgb(101, 86, 67);
   text-decoration: none;
 }
 
-li a:hover {
-  background-color: orange;
+.navigation-container li a:hover {
+  background: rgb(191, 77, 40);
+  color: black;
 }
 
-input[type=submit] {
-  background:rgb(188, 131, 62);
-  border-color: orange;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 15px;
-}
-
-input[type=submit]:hover {
-  background: orange;
-  box-shadow:none;
+.navigation-container li h1 {
+  padding: 0px 150px;
+  color: rgb(101, 86, 67);
 }
