@@ -3,16 +3,14 @@ html
         title Login
         script(src="https://code.jquery.com/jquery-1.12.4.js")
         script(src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js")
-
+        link(href='/static/css/login.css', rel='stylesheet')
     body
-        h1 Log In
         form(action="/login" method="post" id="loginForm")
+            h1 Log In
             div
-                label Username:
-                input(type="text" name="username" id="usernameInput")
+                input(type="text" name="username" id="usernameInput" placeholder="Username")
             div
-                label Password:
-                input(type="password" name="password")
+                input(type="password" name="password" placeholder="Password")
             div
                 input(type="submit" value="Log In")
         - if(error)
