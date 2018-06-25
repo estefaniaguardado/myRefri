@@ -1,8 +1,14 @@
 html
     head
-        title Welcome to MyAPP
+        title MyAPP
+        link(href='/static/css/home.css', rel='stylesheet')
     body
-        h1 Welcome to MyAPP
-        form(action="/login" method="get" id="loginForm")
-            div
-                input(type="submit" value="Log In")
+        header
+            ul(class='navigation-container' role='navigation')
+                li
+                    a(href='/') Home
+                li 
+                    h1 MyAPP
+                li
+                    a(href="/login") Log In
+            
