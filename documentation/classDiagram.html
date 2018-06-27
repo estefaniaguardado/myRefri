@@ -1,0 +1,70 @@
+<body>
+  <h1>
+    Class Diagram
+  </h1>
+  <img src='https://g.gravizo.com/svg?
+@startuml;
+  class User {;
+ - id: Id;
+ + shoppingList: List;
+ + stockList: List;
+ + username: String;
+ + password: String;
+ + email: String;
+};
+
+class List {;
+ - id: Id;
+ + items: [Item];
+};
+
+class Item {;
+ - id: Id;
+ + product: Product;
+ + added: Date;
+ + unit: Unit;
+ + quantity: Int;
+ + active: Bool;
+};
+
+enum Unit {;
+ kg.;
+ gr.;
+ lb.;
+ oz.;
+ l.;
+ ml.;
+ qt.;
+ gal.;
+};
+
+class Notification {;
+ + item: Item;
+ + date: [Date];
+};
+
+class Product {;
+ - id: Id;
+ - name: Array[String];
+ - perishable: Bool;
+ - notification_Offset: Int;
+ - category: Category;
+};
+
+enum Category {;
+ Food;
+ Household;
+ Pharmacy;
+ Health;
+ Beauty;
+ Outdoor;
+ Pets;
+};
+
+Product "1" --* "0...*" Item;
+Item "0...*" --* "1" List;
+List "1...*" --* "1...*" User;
+Item "1" o-- "0...*" Notification;
+@enduml
+'>
+</body>
