@@ -1,0 +1,62 @@
+<body>
+  <h1>
+    Diagram Class
+  </h1>
+  <img src='https://g.gravizo.com/svg?
+  /**
+  *@opt all
+  *@note Class
+  */
+  class User {
+    private Id id;
+    public List shoppingList;
+    public List stockList;
+    public String usernamel;
+    public String password;
+    public String email;
+  }
+
+  /**
+  *@opt all
+  *@note Class
+  */
+  class List {
+    private Id id;
+    public Array items;
+  }
+  
+  /**
+  *@opt all
+  *@note Class
+  */
+  class Item {
+    private Id id;
+    public Product product;
+    public Date added;
+    public Unit unit;
+    public Int quantity;
+    public Bool active;
+  }
+
+  /**
+  *@opt all
+  *@note Class
+  */
+  class Notification {
+    public Item item;
+    public Array date;
+  }
+  
+  /**
+  *@opt all
+  *@note Class
+  */
+  class Product {
+    private Id id;
+    public Array name;
+    public Bool perishable;
+    public Int notification_Offset;
+    public Category category;
+  }
+'>
+</body>
