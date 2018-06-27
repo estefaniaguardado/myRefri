@@ -1,6 +1,6 @@
 /* global $ */
 
-$('button#deleteItemButton').click(() => {
+$('button#deleteItemButton').click(function deleteHandler() {
   const $tr = $(this).closest('tr');
   $.ajax({
     headers: { accept: 'application/json' },
@@ -13,7 +13,7 @@ $('button#deleteItemButton').click(() => {
 });
 
 
-$('button#modifyItemButton').click((event) => {
+$('button#modifyItemButton').click(function modifyHandler(event) {
   event.preventDefault();
 
   const idItemSelected = $(this).closest('tr').attr('id');
