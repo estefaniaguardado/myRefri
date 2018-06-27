@@ -5,7 +5,7 @@ My Refri allows you to plan and manage yours owns shopping and stock lists. It c
 MyRefri is an application web, it has developed in javascript.
 
 ## Wiki
-For more detail about the project please take a look at the wiki.
+For more details about the project please take a look at the wiki.
 
 - [Basic architecture](https://github.com/EstefaniaGuardado/myAppJs/wiki#basic-architecture)
 
