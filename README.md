@@ -8,7 +8,6 @@ MyRefri is an application web, it has developed in javascript.
 For more detail about the project please take a look at the wiki.
 
 - [Basic architecture](https://github.com/EstefaniaGuardado/myAppJs/wiki#basic-architecture)
-- [Database model definition]()
 
 ## Technologies / Frameworks
 - [Node js](https://nodejs.org/en/) - [Node.js Project Licensing Information](https://raw.githubusercontent.com/nodejs/node/master/LICENSE)
