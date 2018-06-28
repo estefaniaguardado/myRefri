@@ -1,6 +1,14 @@
 /* global $ */
 
-$('button#deleteItemButton').click(function deleteHandler() {
+$('form#itemForm').keypress(function enterSubmitEvent(e) {
+  if (e.keyCode === $.ui.keyCode.ENTER) {
+    e.preventDefault();
+    $(this).parent().find('input#addItemButton').trigger('click');
+  }
+});
+
+$('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
+  deleteEvent.preventDefault();
   const $tr = $(this).closest('tr');
   $.ajax({
     headers: { accept: 'application/json' },
@@ -28,7 +36,8 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
       type: 'PUT',
       url: `http://localhost:3000/item/${idItemSelected}`,
       data: { name: newNameItem },
-      success: () => {
+      success: function successUpdate(e) {
+        e.preventDefault();
         currentCellNameItem.replaceWith(`<td>${newNameItem}</td>`);
         $(this).dialog('close');
       },
@@ -39,14 +48,25 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
     $(this).dialog('close');
   }
 
+  function enterEvent() {
+
+    $('#dialog-confirm').keypress(function enterKeyPress(e) {
+      if (e.keyCode === $.ui.keyCode.ENTER) {
+        $(this).parent().find('button:contains(\'Save\')').trigger('click');
+      }
+    });
+  }
+
   $('#dialog-confirm').dialog({
+    closeOnEscape: false,
     resizable: false,
     height: 'auto',
     width: 400,
     modal: true,
     buttons: {
-      'Save Changes': saveChange,
+      Save: saveChange,
       Cancel: cancelChange,
     },
+    open: enterEvent,
   });
 });
