@@ -28,7 +28,7 @@ app.use(passport.session());
 app.use(routes);
 app.use('/static', express.static(path.join(__dirname, '/public')));
 
-
-app.listen(3000, () => {
-  debug('App is listening in port 3000');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  debug(`App is listening in port ${port}`);
 });
