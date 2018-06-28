@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "npm run lint && npm run test-no-lint",
     "test-no-lint": "mocha --exclude \"node_modules/**\" \"**/*.test.js\"",
     "lint": "eslint .",
-    "dev": "nodemon app.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
