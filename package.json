@@ -8,7 +8,7 @@
     "test": "npm run lint && npm run test-no-lint",
     "test-no-lint": "mocha --exclude \"node_modules/**\" \"**/*.test.js\"",
     "lint": "eslint .",
-    "dev": "nodemon index.js"
+    "dev": "set PORT=8000 && nodemon index.js"
   },
   "repository": {
     "type": "git",
