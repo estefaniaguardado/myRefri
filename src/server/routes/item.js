@@ -6,16 +6,14 @@ const itemHandler = new ItemHandler();
 
 const productHandler = require('../services/ProductHandler');
 
-const productsList = require('../../database/Product');
-
 router.get('/', (req, res) => {
-  res.render('index', { message: 'Shopping List', products: productsList, listOfItems: itemHandler.getList() });
+  res.render('index', { message: 'Shopping List', products: productHandler.getProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.post('/', (req, res) => {
   const productData = productHandler.getProductInfo(req.body);
   itemHandler.createNewItem(productData);
-  res.render('index', { message: 'Shopping List', products: productsList, listOfItems: itemHandler.getList() });
+  res.render('index', { message: 'Shopping List', products: productHandler.getProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.put('/:id', (req, res) => {
@@ -25,7 +23,7 @@ router.put('/:id', (req, res) => {
     return res.json({ ok: true });
   }
 
-  return res.render('index', { message: 'Shopping List', products: productsList, listOfItems: itemHandler.getList() });
+  return res.render('index', { message: 'Shopping List', products: productHandler.getProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.delete('/:id', (req, res) => {
@@ -35,7 +33,7 @@ router.delete('/:id', (req, res) => {
     return res.json({ ok: true });
   }
 
-  return res.render('index', { message: 'Shopping List', products: productsList, listOfItems: itemHandler.getList() });
+  return res.render('index', { message: 'Shopping List', products: productHandler.getProductsList(), listOfItems: itemHandler.getList() });
 });
 
 module.exports = router;
