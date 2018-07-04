@@ -1,12 +1,15 @@
 const Products = require('../../database/Product');
 
-module.exports = {
-  getProductsList() {
-    return Products;
-  },
+function findProductsList() {
+  return Products;
+}
 
-  getProductInfo({ selectedProduct }) {
-    const productInfo = Products.find(product => product.id === Number(selectedProduct));
-    return productInfo;
-  },
+function findProductInfo({ selectedProduct }) {
+  const productInfo = Products.find(product => product.id === Number(selectedProduct));
+  return productInfo;
+}
+
+module.exports = {
+  findProductInfo,
+  findProductsList,
 };
