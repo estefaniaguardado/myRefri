@@ -10,7 +10,7 @@ html
     body
         h1 #{message}
         form(action="/item" method="post" id="itemForm")
-            select(name="selectProduct" size=products.length)
+            select(name="selectedProduct" size=products.length)
                 each product in products
                     option(value=product.id) #{product.name}
             input(type="submit" value="Add new Item" id="addItemButton")

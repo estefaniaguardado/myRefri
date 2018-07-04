@@ -4,6 +4,8 @@ const ItemHandler = require('../services/ItemHandler');
 
 const itemHandler = new ItemHandler();
 
+const productHandler = require('../services/ProductHandler');
+
 const productsList = require('../../database/Product');
 
 router.get('/', (req, res) => {
@@ -11,7 +13,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  itemHandler.createNewItem(req.body);
+  const productData = productHandler.getProductInfo(req.body);
+  itemHandler.createNewItem(productData);
   res.render('index', { message: 'Shopping List', products: productsList, listOfItems: itemHandler.getList() });
 });
 
