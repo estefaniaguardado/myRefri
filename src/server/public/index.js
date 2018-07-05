@@ -4,7 +4,7 @@ $('button#deleteItemButton').click(function deleteHandler() {
   const $tr = $(this).closest('tr');
   $.ajax({
     headers: { accept: 'application/json' },
-    url: `http://localhost:3000/item/${this.value}`,
+    url: `/item/${this.value}`,
     type: 'DELETE',
     success() {
       $tr.remove();
@@ -26,7 +26,7 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
     $.ajax({
       headers: { accept: 'application/json' },
       type: 'PUT',
-      url: `http://localhost:3000/item/${idItemSelected}`,
+      url: `/item/${idItemSelected}`,
       data: { name: newNameItem },
       success: () => {
         currentCellNameItem.replaceWith(`<td>${newNameItem}</td>`);
