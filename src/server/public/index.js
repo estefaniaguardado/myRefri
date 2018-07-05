@@ -3,7 +3,10 @@
 $('select#selectProducts').change(function get() {
   const selectedOption = JSON.parse($(this).find(':selected').val());
   (selectedOption.unity).forEach((unit) => {
-    $('select#selectUnity').append(new Option(unit, 'hol'));
+    $('select#selectUnity').append($('<option>', {
+      value: unit,
+      text: unit,
+    }));
   });
   $('td#unity').show();
 });
