@@ -9,11 +9,19 @@ html
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     body
         h1 #{message}
-        form(action="/item" method="post" id="itemForm")
-            select(name="selectedProduct" size=products.length)
-                each product in products
-                    option(value=product.id) #{product.name}
-            input(type="submit" value="Add new Item" id="addItemButton")
+        table
+            tr
+                form(action="/item" method="post" id="itemForm")
+                    td
+                        select(id="selectProducts" name="selectedProduct" size=products.length)
+                            each product in products
+                                option(value=product) #{product.name}
+                    td(hidden id="unity")
+                        select(id="selectUnity" name="unityProduct" size=0)
+                    td(hidden id="quantity")
+                        input(type="number" name="quantityProduct" step="1")
+                    td
+                        input(type="submit" value="Add new Item" id="addItemButton")
         table
             tr
                 th Article

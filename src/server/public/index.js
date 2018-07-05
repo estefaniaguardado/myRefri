@@ -1,5 +1,13 @@
 /* global $ */
 
+$('select#selectProducts').change(function get() {
+  const selectedOption = JSON.parse($(this).find(':selected').val());
+  (selectedOption.unity).forEach((unit) => {
+    $('select#selectUnity').append(new Option(unit, 'hol'));
+  });
+  $('td#unity').show();
+});
+
 $('button#deleteItemButton').click(function deleteHandler() {
   const $tr = $(this).closest('tr');
   $.ajax({
