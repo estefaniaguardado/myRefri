@@ -19,7 +19,7 @@ html
                     td(hidden id="unity")
                         select(id="selectUnity" name="unityProduct" size=0)
                     td(hidden id="quantity")
-                        input(type="number" name="quantityProduct" step="1")
+                        input(type="number" id="quantityInput" name="quantityProduct" min=1 max=100 step=1 value=1)
                     td
                         input(type="submit" value="Add new Item" id="addItemButton")
         table
