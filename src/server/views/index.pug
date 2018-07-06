@@ -34,7 +34,7 @@ html
                             p Modify Item
                             form
                                 input(type="text" id="modifiedNameItem")
-                    td #{item.name}
+                    td #{item.product.names[0]}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
         form(action="/logout" method="get" id="logoutForm")

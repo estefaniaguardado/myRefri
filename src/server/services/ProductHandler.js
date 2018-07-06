@@ -13,8 +13,9 @@ function findProductsList() {
 }
 
 function findProductInfo({ selectedProduct }) {
-  const productInfo = Products.find(product => product.id === selectedProduct);
-  return productInfo;
+  const productInfo = JSON.parse(selectedProduct);
+
+  return Products.find(product => product.id === productInfo.id);
 }
 
 module.exports = {

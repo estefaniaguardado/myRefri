@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  itemHandler.createNewItem(req.body);
+  const product = productHandler.findProductInfo(req.body);
+  itemHandler.createNewItem(product, req.body);
   res.render('index', { message: 'Shopping List', products: productHandler.findProductsList(), listOfItems: itemHandler.getList() });
 });
 
