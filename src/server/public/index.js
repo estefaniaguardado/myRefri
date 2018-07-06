@@ -1,16 +1,16 @@
 /* global $ */
 
 $('select#selectProducts').change(function createUnitiesSelect() {
-  const hasPreviousOptions = $('select#selectUnity').children('option').length > 0;
+  const hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
 
   if (hasPreviousOptions) {
-    $('select#selectUnity option').remove();
+    $('select#unitySelect option').remove();
   }
 
   const selectedOption = JSON.parse($(this).find(':selected').val());
 
   (selectedOption.unities).forEach((unit) => {
-    $('select#selectUnity').append($('<option>', {
+    $('select#unitySelect').append($('<option>', {
       value: unit,
       text: unit,
     }));
@@ -18,7 +18,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
   $('td#unity').show();
 });
 
-$('select#selectUnity').change(function createQuantityInput() {
+$('select#unitySelect').change(function createQuantityInput() {
   const selectedOption = $(this).find(':selected').val();
 
   if (selectedOption === 'gr' || selectedOption === 'mL') {
