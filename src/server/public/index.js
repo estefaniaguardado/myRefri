@@ -9,7 +9,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
 
   const selectedOption = JSON.parse($(this).find(':selected').val());
 
-  (selectedOption.unity).forEach((unit) => {
+  (selectedOption.unities).forEach((unit) => {
     $('select#selectUnity').append($('<option>', {
       value: unit,
       text: unit,

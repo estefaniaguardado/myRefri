@@ -15,7 +15,7 @@ html
                     td
                         select(id="selectProducts" name="selectedProduct" size=products.length)
                             each product in products
-                                option(value=product) #{product.name}
+                                option(value=product) #{product.names[0]}
                     td(hidden id="unity")
                         select(id="selectUnity" name="unityProduct" size=0)
                     td(hidden id="quantity")
