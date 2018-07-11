@@ -42,3 +42,41 @@ header {
   background: rgb(191, 77, 40);
   color: white;
 }
+
+.productTable{
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: auto 150px;
+}
+
+select {
+  font-family: Verdana;
+  font-size: 14px;
+  border: .5px solid #ccc;
+  appearance: none;
+}
+
+#selectProducts {
+  width: 150px;
+  height: 75px;
+}
+
+.productTable input {
+  font-family: Verdana;
+  font-size: 14px;
+}
+
+#addItemButton {
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  background: rgb(243, 200, 151);
+  color: rgb(101, 86, 67);
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+}
