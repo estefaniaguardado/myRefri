@@ -35,6 +35,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
   setQuantityInput($('select#unitySelect'));
   $('td#unity').show();
   $('td#quantity').show();
+  $('td#submitNewItem').show();
 });
 
 $('select#unitySelect').change(function createQuantityInput() {
