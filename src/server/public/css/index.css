@@ -1,0 +1,44 @@
+header {
+  width: 90%;
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  flex-direction: column;
+  background: rgb(247, 169, 26);
+  font-family: Verdana;
+}
+
+.navigation-container {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-container h1 {
+  padding: 0px 50px;
+  color: rgb(101, 86, 67);
+}
+
+.navigation-container form {
+  padding: 0px 10px;
+}
+
+.navigation-container input{
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  padding: 25px 10px;
+  background: rgb(230, 141, 39);
+  color: rgb(101, 86, 67);
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+}
+
+.navigation-container li input:hover {
+  background: rgb(191, 77, 40);
+  color: white;
+}
