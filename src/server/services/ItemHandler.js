@@ -18,7 +18,7 @@ class ItemHandler {
     const quantity = itemData.quantityItem;
     const id = Math.random().toString(36).substring(2, 5);
 
-    const newItem = new Item (id, product, Date(), unity, quantity, true);
+    const newItem = new Item(id, product, Date(), unity, quantity, true);
 
     this.list.push(newItem);
     return newItem;

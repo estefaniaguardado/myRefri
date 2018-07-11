@@ -1,6 +1,3 @@
-const Product = require('./Product');
-const Unity = require('./Unity');
-
 class Item {
   /**
    * @param {String} id

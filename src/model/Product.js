@@ -1,6 +1,3 @@
-const Unity = require('./Unity');
-const Category = require('./Category');
-
 class Product {
   /**
    * Product details
