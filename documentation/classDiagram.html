@@ -27,7 +27,7 @@ class Item {;
  + active: Bool;
 };
 
-enum Unit {;
+enum Unity {;
  kg.;
  gr.;
  lb.;
@@ -61,8 +61,10 @@ enum Category {;
  Pets;
 };
 
-Product "1" --* "0...*" Item;
+Item "0...*" --* "1" Product;
+Product .. Category;
 Item "0...*" --* "1" List;
+Unity .. Item;
 List "1...*" --* "1...*" User;
 Item "1" o-- "0...*" Notification;
 @enduml
