@@ -22,21 +22,26 @@ html
                         input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
                     td
                         input(type="submit" value="Add new Item" id="addItemButton")
-        table
-            tr
-                th Article
         table(id= 'listItems')
+            tr
+                td 
+                    h4 Article
+                td
+                    h4 Quantity
+                td
+                    h4 Unity
             each item in listOfItems
-                tr(id=item.id)
+                tr(id=item.id)  
+                    td #{item.product.names[0]}
+                    td #{item.quantity}
+                    td #{item.unity}
                     td
                         button(id='modifyItemButton') Edit
-                        div(id="dialog-confirm" title="Modify item detail" hidden)
+                        button(type='submit' id='deleteItemButton' value=item.id) Delete
+        div(id="dialog-confirm" title="Modify item detail" hidden)
                             p Modify Item
                             form
                                 input(type="text" id="modifiedNameItem")
-                    td #{item.product.names[0]}
-                    td 
-                        button(type='submit' id='deleteItemButton' value=item.id) Delete
         form(action="/logout" method="get" id="logoutForm")
             input(type="submit" value="Log Out")
 
