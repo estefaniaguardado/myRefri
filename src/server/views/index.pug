@@ -8,7 +8,13 @@ html
 
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     body
-        h1 #{message}
+        header
+            ul
+                li
+                    h1 #{message}
+                li
+                    form(action="/logout" method="get" id="logoutForm")
+                        input(type="submit" value="Log Out")
         table
             tr
                 form(action="/item" method="post" id="itemForm")
@@ -42,7 +48,5 @@ html
                             p Modify Item
                             form
                                 input(type="text" id="modifiedNameItem")
-        form(action="/logout" method="get" id="logoutForm")
-            input(type="submit" value="Log Out")
 
         script(src='/static/index.js')
