@@ -1,25 +1,6 @@
 /* global $ */
-
-$('select#selectProducts').change(function createUnitiesSelect() {
-  const hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
-
-  if (hasPreviousOptions) {
-    $('select#unitySelect option').remove();
-  }
-
-  const selectedOption = JSON.parse($(this).find(':selected').val());
-
-  (selectedOption.unities).forEach((unit) => {
-    $('select#unitySelect').append($('<option>', {
-      value: unit,
-      text: unit,
-    }));
-  });
-  $('td#unity').show();
-});
-
-$('select#unitySelect').change(function createQuantityInput() {
-  const selectedOption = $(this).find(':selected').val();
+function setQuantityInput(unitySelect) {
+  const selectedOption = $(unitySelect).find(':selected').val();
 
   if (selectedOption === 'gr' || selectedOption === 'mL') {
     $('input#quantityInput').attr('value', 50);
@@ -32,6 +13,32 @@ $('select#unitySelect').change(function createQuantityInput() {
     $('input#quantityInput').attr('max', 100);
     $('input#quantityInput').attr('min', 1);
   }
+}
+
+$('select#selectProducts').change(function createUnitiesSelect() {
+  const hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
+
+  if (hasPreviousOptions) {
+    $('select#unitySelect option').remove();
+  }
+
+  const selectedOption = JSON.parse($(this).find(':selected').val());
+
+  (selectedOption.unities).forEach((unit) => {
+    $('select#unitySelect').append($('<option>', {
+      selected: false,
+      value: unit,
+      text: unit,
+    }));
+  });
+  $('select#unitySelect option:eq(0)').prop('selected', true);
+  setQuantityInput($('select#unitySelect'));
+  $('td#unity').show();
+  $('td#quantity').show();
+});
+
+$('select#unitySelect').change(function createQuantityInput() {
+  setQuantityInput($(this));
   $('td#quantity').show();
 });
 
