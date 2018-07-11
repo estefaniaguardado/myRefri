@@ -73,10 +73,55 @@ select {
   text-align: center;
   margin: auto;
   padding: 10px;
-  background: rgb(243, 200, 151);
-  color: rgb(101, 86, 67);
+  background: rgb(230, 141, 39);
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+}
+
+#addItemButton:hover{
+  background: rgb(191, 77, 40);
+  color: white;
+}
+
+#listItems{
+  display: flex;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 25px 50px;
+}
+
+#listItems h4{
+  margin: auto;
+  padding: 10px 35px;
+  text-align: center;
+  background-color: rgb(201, 164, 61);
+}
+
+#listItems td{
+  text-align: center; 
+  vertical-align: middle;
+  padding: 5px 10px;
+}
+
+#listItems tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+#listItems button {
+  display: inline-block;
+  text-align: center;
+  margin: auto 10px;
+  padding: 5px;
+  background: rgb(135, 141, 100);
+  color: rgb(247, 246, 244);
   font-weight: bold;
   text-decoration: none;
   border: none;
   border-radius: 10px;
+}
+
+#listItems button:hover {
+  background: rgb(245, 130, 92);
+  color: black;
 }
