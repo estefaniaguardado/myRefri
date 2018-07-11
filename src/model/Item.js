@@ -1,7 +1,20 @@
 class Item {
-  constructor(id, name) {
+  /**
+   * @param {String} id
+   * @param {Product} product
+   * @param {Date} date
+   * @param {Unity} unity
+   * @param {Number} quantity
+   * @param {Boolean} active
+   */
+
+  constructor(id, product, date, unity, quantity, active) {
     this.id = id;
-    this.name = name;
+    this.product = product;
+    this.added = date;
+    this.unity = unity;
+    this.quantity = quantity;
+    this.active = active;
   }
 }
 

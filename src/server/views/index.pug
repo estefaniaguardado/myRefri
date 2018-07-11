@@ -9,9 +9,19 @@ html
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     body
         h1 #{message}
-        form(action="/item" method="post" id="itemForm")
-            input(type="text" placeholder="Add new Item" name="name" id="newItemInput")
-            input(type="submit" value="Add new Item" id="addItemButton")
+        table
+            tr
+                form(action="/item" method="post" id="itemForm")
+                    td
+                        select(id="selectProducts" name="selectedProduct" size=products.length)
+                            each product in products
+                                option(value=product) #{product.names[0]}
+                    td(hidden id="unity")
+                        select(id="unitySelect" name="unityItem" size=0)
+                    td(hidden id="quantity")
+                        input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
+                    td
+                        input(type="submit" value="Add new Item" id="addItemButton")
         table
             tr
                 th Article
@@ -24,7 +34,7 @@ html
                             p Modify Item
                             form
                                 input(type="text" id="modifiedNameItem")
-                    td #{item.name}
+                    td #{item.product.names[0]}
                     td 
                         button(type='submit' id='deleteItemButton' value=item.id) Delete
         form(action="/logout" method="get" id="logoutForm")

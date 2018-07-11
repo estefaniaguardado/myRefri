@@ -4,13 +4,16 @@ const ItemHandler = require('../services/ItemHandler');
 
 const itemHandler = new ItemHandler();
 
+const productHandler = require('../services/ProductHandler');
+
 router.get('/', (req, res) => {
-  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  res.render('index', { message: 'Shopping List', products: productHandler.findProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.post('/', (req, res) => {
-  itemHandler.createNewItem(req.body);
-  res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  const product = productHandler.findProductInfo(req.body);
+  itemHandler.createNewItem(product, req.body);
+  res.render('index', { message: 'Shopping List', products: productHandler.findProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.put('/:id', (req, res) => {
@@ -20,7 +23,7 @@ router.put('/:id', (req, res) => {
     return res.json({ ok: true });
   }
 
-  return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  return res.render('index', { message: 'Shopping List', products: productHandler.findProductsList(), listOfItems: itemHandler.getList() });
 });
 
 router.delete('/:id', (req, res) => {
@@ -30,7 +33,7 @@ router.delete('/:id', (req, res) => {
     return res.json({ ok: true });
   }
 
-  return res.render('index', { message: 'Hello World!', listOfItems: itemHandler.getList() });
+  return res.render('index', { message: 'Shopping List', products: productHandler.findProductsList(), listOfItems: itemHandler.getList() });
 });
 
 module.exports = router;
