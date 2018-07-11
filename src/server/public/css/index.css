@@ -1,0 +1,130 @@
+header {
+  width: 90%;
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  flex-direction: column;
+  background: rgb(247, 169, 26);
+  font-family: Verdana;
+}
+
+.navigation-container {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-container h1 {
+  padding: 0px 50px;
+  color: rgb(101, 86, 67);
+}
+
+.navigation-container form {
+  padding: 0px 10px;
+}
+
+.navigation-container input{
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  padding: 25px 10px;
+  background: rgb(230, 141, 39);
+  color: rgb(101, 86, 67);
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+}
+
+.navigation-container li input:hover {
+  background: rgb(191, 77, 40);
+  color: white;
+}
+
+.productTable{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: auto 150px;
+}
+
+select {
+  font-family: Verdana;
+  font-size: 14px;
+  border: .5px solid rgb(177, 177, 177);
+  border-radius: 7px;
+}
+
+#selectProducts {
+  width: 150px;
+  height: 75px;
+}
+
+.productTable input {
+  font-family: Verdana;
+  text-align: center;
+  font-size: 14px;
+  border: .5px solid rgb(177, 177, 177);
+  border-radius: 7px;
+}
+
+#addItemButton {
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  background: rgb(230, 141, 39);
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+}
+
+#addItemButton:hover{
+  background: rgb(191, 77, 40);
+  color: white;
+}
+
+#listItems{
+  display: flex;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 25px 50px;
+}
+
+#listItems h4{
+  margin: auto;
+  padding: 10px 35px;
+  text-align: center;
+  background-color: rgb(201, 164, 61);
+}
+
+#listItems td{
+  text-align: center; 
+  vertical-align: middle;
+  padding: 5px 10px;
+}
+
+#listItems tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+#listItems button {
+  display: inline-block;
+  text-align: center;
+  margin: auto 10px;
+  padding: 5px;
+  background: rgb(135, 141, 100);
+  color: rgb(247, 246, 244);
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+}
+
+#listItems button:hover {
+  background: rgb(245, 130, 92);
+  color: black;
+}

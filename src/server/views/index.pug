@@ -7,15 +7,16 @@ html
         script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+        link(href='/static/css/index.css', rel='stylesheet')
     body
         header
-            ul
+            ul(class='navigation-container')
                 li
                     h1 #{message}
                 li
                     form(action="/logout" method="get" id="logoutForm")
                         input(type="submit" value="Log Out")
-        table
+        table(class='productTable')
             tr
                 form(action="/item" method="post" id="itemForm")
                     td
@@ -26,7 +27,7 @@ html
                         select(id="unitySelect" name="unityItem" size=0)
                     td(hidden id="quantity")
                         input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
-                    td
+                    td(hidden id="submitNewItem")
                         input(type="submit" value="Add new Item" id="addItemButton")
         table(id= 'listItems')
             tr
