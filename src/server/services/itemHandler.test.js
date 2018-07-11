@@ -2,10 +2,16 @@ const expect = require('unexpected');
 
 const ItemHandler = require('./ItemHandler');
 
+const Product = require('../../model/Product');
+const Unity = require('../../model/Unity');
+const Category = require('../../model/Category');
+
 describe('Item Handler', () => {
   let sut;
   let item1;
   let item2;
+  let itemData;
+  const product = new Product('1', ['Bread'], [Unity.piece, Unity.kilogram, Unity.gram, Unity.pound, Unity.ounce], true, 3, Category.food);
 
   beforeEach(() => {
     sut = new ItemHandler();
@@ -18,19 +24,21 @@ describe('Item Handler', () => {
 
     describe('adding the item1', () => {
       beforeEach(() => {
-        item1 = sut.createNewItem('item1');
+        itemData = { unityItem: 'pz', quantityItem: 2 };
+        item1 = sut.createNewItem(product, itemData);
       });
 
       it('should return the item1', () => {
         expect(sut.getList(), 'to satisfy', [item1]);
       });
 
-      describe('when adding the same item again', () => {
+      describe('when adding another item again of the same product type', () => {
         beforeEach(() => {
-          item2 = sut.createNewItem('item1');
+          itemData = { unityItem: 'kg', quantityItem: 1 };
+          item2 = sut.createNewItem(product, itemData);
         });
 
-        it('should have two of the same items', () => {
+        it('should have two items of the same product type', () => {
           expect(sut.getList(), 'to satisfy', [item1, item2]);
         });
       });
