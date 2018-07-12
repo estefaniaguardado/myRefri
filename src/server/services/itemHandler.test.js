@@ -3,15 +3,13 @@ const expect = require('unexpected');
 const ItemHandler = require('./ItemHandler');
 
 const Product = require('../../model/Product');
-const Unity = require('../../model/Unity');
-const Category = require('../../model/Category');
 
 describe('Item Handler', () => {
   let sut;
   let item1;
   let item2;
   let itemData;
-  const product = new Product('1', ['Bread'], [Unity.piece, Unity.kilogram, Unity.gram, Unity.pound, Unity.ounce], true, 3, Category.food);
+  const product = new Product('1');
 
   beforeEach(() => {
     sut = new ItemHandler();

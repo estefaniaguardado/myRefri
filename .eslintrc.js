@@ -2,7 +2,9 @@ const os = require('os');
 
 const config = {
     "extends": "airbnb-base",
-    "rules": {},
+    "rules": {
+      "no-underscore-dangle": 0,
+    },
     "env": {
       "mocha": true,
     }
