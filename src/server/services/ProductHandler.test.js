@@ -8,8 +8,8 @@ describe('Product Handler', () => {
     let sut;
 
     beforeEach(() => {
-      // TODO: Insert once function is available
-      sut = productHandler([]);
+      sut = productHandler();
+      sut.setProducts([]);
     });
 
     describe('when requesting the list of products', () => {
