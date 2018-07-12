@@ -15,11 +15,11 @@ module.exports = () => {
     products = newProducts;
   }
 
-  function findProductsList() {
+  function getProductList() {
     return [...products];
   }
 
-  function findProductInfo({ selectedProduct }) {
+  function findProduct({ selectedProduct }) {
     const productInfo = JSON.parse(selectedProduct);
 
     return products.find(product => product.id === productInfo.id);
@@ -27,7 +27,7 @@ module.exports = () => {
 
   return {
     setProducts,
-    findProductInfo,
-    findProductsList,
+    findProduct,
+    getProductList,
   };
 };

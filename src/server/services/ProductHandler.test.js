@@ -14,12 +14,12 @@ describe('Product Handler', () => {
 
     describe('when requesting the list of products', () => {
       it('should return an empty list', () => {
-        expect(sut.findProductsList(), 'to be empty');
+        expect(sut.getProductList(), 'to be empty');
       });
     });
 
     describe('when requesting to find a product by ID', () => {
-      xit('should return null');
+      it('should return null');
     });
   });
 
