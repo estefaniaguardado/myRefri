@@ -19,7 +19,6 @@ module.exports = () => {
     return [...products];
   }
 
-  // TODO: Modify method when include DB to findProduct by ID
   function findProduct(selectedProduct) {
     let productInfo;
 

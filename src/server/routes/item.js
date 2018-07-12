@@ -4,7 +4,7 @@ const ItemHandler = require('../services/ItemHandler');
 
 const itemHandler = new ItemHandler();
 
-const productHandler = require('../services/productHandler')();
+const productHandler = require('../services/ProductHandler')();
 
 router.get('/', (req, res) => {
   res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
