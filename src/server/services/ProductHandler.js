@@ -19,7 +19,7 @@ module.exports = () => {
     return [...products];
   }
 
-  function findProduct({ selectedProduct }) {
+  function findProduct(selectedProduct) {
     let productInfo;
 
     if ((typeof selectedProduct) === 'string') {
