@@ -1,16 +1,15 @@
-const rewire = require('rewire');
 const expect = require('unexpected');
 
 // TODO: ProductHandler should start with lowercase
-const sut = rewire('./ProductHandler');
+const productHandler = require('./ProductHandler');
 
 describe('Product Handler', () => {
   context('given no products', () => {
+    let sut;
+
     beforeEach(() => {
       // TODO: Insert once function is available
-      sut.__set__({
-        products: [],
-      });
+      sut = productHandler([]);
     });
 
     describe('when requesting the list of products', () => {
