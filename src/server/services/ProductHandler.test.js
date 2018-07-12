@@ -1,7 +1,6 @@
 const expect = require('unexpected');
 
-// TODO: ProductHandler should start with lowercase
-const productHandler = require('./ProductHandler');
+const productHandler = require('./productHandler');
 const Product = require('../../model/Product');
 
 describe('Product Handler', () => {
