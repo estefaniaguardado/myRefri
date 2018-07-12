@@ -2,14 +2,16 @@ const expect = require('unexpected');
 
 // TODO: ProductHandler should start with lowercase
 const productHandler = require('./ProductHandler');
+const Product = require('../../model/Product');
 
 describe('Product Handler', () => {
-  context('given no products', () => {
-    let sut;
+  const sut = productHandler();
+  let product1;
 
+  context('given no products', () => {
     beforeEach(() => {
-      sut = productHandler();
       sut.setProducts([]);
+      product1 = new Product('1', ['Bread'], 'kg', true, 3, 'Food');
     });
 
     describe('when requesting the list of products', () => {
@@ -19,7 +21,9 @@ describe('Product Handler', () => {
     });
 
     describe('when requesting to find a product by ID', () => {
-      it('should return null');
+      it('should return null', () => {
+        expect(sut.findProduct(product1), 'to be null');
+      });
     });
   });
 

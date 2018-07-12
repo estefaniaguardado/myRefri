@@ -20,9 +20,17 @@ module.exports = () => {
   }
 
   function findProduct({ selectedProduct }) {
-    const productInfo = JSON.parse(selectedProduct);
+    let productInfo;
 
-    return products.find(product => product.id === productInfo.id);
+    if ((typeof selectedProduct) === 'string') {
+      productInfo = JSON.parse(selectedProduct);
+    } else {
+      productInfo = selectedProduct;
+    }
+
+    const details = products.find(product => product.id === productInfo.id);
+
+    return details === undefined ? null : details;
   }
 
   return {
