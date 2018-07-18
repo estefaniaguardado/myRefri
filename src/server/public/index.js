@@ -33,14 +33,14 @@ $('select#selectProducts').change(function createUnitiesSelect() {
   });
   $('select#unitySelect option:eq(0)').prop('selected', true);
   setQuantityInput($('select#unitySelect'));
-  $('td#unity').show();
-  $('td#quantity').show();
-  $('td#submitNewItem').show();
+  $('li#unity').show();
+  $('li#quantity').show();
+  $('li#submitNewItem').show();
 });
 
 $('select#unitySelect').change(function createQuantityInput() {
   setQuantityInput($(this));
-  $('td#quantity').show();
+  $('li#quantity').show();
 });
 
 $('button#deleteItemButton').click(function deleteHandler() {
