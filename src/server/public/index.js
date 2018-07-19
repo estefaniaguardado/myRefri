@@ -2,7 +2,6 @@
 function setQuantityInput(unitySelect) {
   const selectedOption = $(unitySelect).find(':selected').val();
 
-<<<<<<< HEAD
   if (selectedOption === 'gr' || selectedOption === 'mL') {
     $('input#quantityInput').attr('value', 50);
     $('input#quantityInput').attr('step', 50);
@@ -56,8 +55,6 @@ $('select#unitySelect').change(function createQuantityInput() {
   $('li#quantity').show();
 });
 
-=======
->>>>>>> 43dc2f7b2ef9d8ac27e89f25f761c07d1c27b2d5
 $('form#itemForm').keypress(function enterSubmitEvent(e) {
   if (e.keyCode === $.ui.keyCode.ENTER) {
     e.preventDefault();
