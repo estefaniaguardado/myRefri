@@ -19,20 +19,6 @@ module.exports = () => {
     return [...products];
   }
 
-  function findProduct(selectedProduct) {
-    let productInfo;
-
-    if ((typeof selectedProduct) === 'string') {
-      productInfo = JSON.parse(selectedProduct);
-    } else {
-      productInfo = selectedProduct;
-    }
-
-    const details = products.find(product => product.id === productInfo.id);
-
-    return details === undefined ? null : details;
-  }
-
   /**
    *
    * @param {String} idProduct
@@ -45,7 +31,6 @@ module.exports = () => {
 
   return {
     setProducts,
-    findProduct,
     getProductList,
     findProductById,
   };
