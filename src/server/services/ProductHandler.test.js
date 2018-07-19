@@ -23,7 +23,7 @@ describe('Product Handler', () => {
 
     describe('when requesting to find a product by ID', () => {
       it('should return null', () => {
-        expect(sut.findProduct(product1), 'to be null');
+        expect(sut.findProductById(product1.id), 'to be falsy');
       });
     });
   });
@@ -42,7 +42,7 @@ describe('Product Handler', () => {
 
     describe('when requesting to find an existing product by ID', () => {
       it('should return the product', () => {
-        expect(sut.findProduct(product2), 'to equal', product2);
+        expect(sut.findProductById(product2.id), 'to equal', product2);
       });
     });
   });
