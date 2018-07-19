@@ -16,19 +16,19 @@ html
                 li
                     form(action="/logout" method="get" id="logoutForm")
                         input(type="submit" value="Log Out")
-        table(class='productTable')
-            tr
-                form(action="/item" method="post" id="itemForm")
-                    td
-                        select(id="selectProducts" name="selectedProduct" size=products.length)
+        
+        form(action="/item" method="post" id="itemForm")
+            ul(class='productTable')
+                li
+                    select(id="selectProducts" name="selectedProduct" size=products.length)
                             each product in products
-                                option(value=product) #{product.names[0]}
-                    td(hidden id="unity")
-                        select(id="unitySelect" name="unityItem" size=0)
-                    td(hidden id="quantity")
-                        input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
-                    td(hidden id="submitNewItem")
-                        input(type="submit" value="Add new Item" id="addItemButton")
+                                option(value=product.id) #{product.names[0]}
+                li(hidden id="unity")
+                    select(id="unitySelect" name="unityItem" size=0)
+                li(hidden id="quantity")
+                    input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
+                li(hidden id="submitNewItem")
+                    input(type="submit" value="Add new Item" id="addItemButton")
         table(id= 'listItems')
             tr
                 td 

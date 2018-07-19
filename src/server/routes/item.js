@@ -7,11 +7,19 @@ const itemHandler = new ItemHandler();
 const productHandler = require('../services/ProductHandler')();
 
 router.get('/', (req, res) => {
-  res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
+  if (req.accepts('text/html')) {
+    return res.render('index', {
+      message: 'Shopping List',
+      products: productHandler.getProductList(),
+      listOfItems: itemHandler.getList(),
+    });
+  }
+
+  return res.json({ ok: true, result: itemHandler.getList() });
 });
 
 router.post('/', (req, res) => {
-  const product = productHandler.findProduct(req.body.selectedProduct);
+  const product = productHandler.findProductById(req.body.selectedProduct);
   itemHandler.createNewItem(product, req.body);
   res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
 });
