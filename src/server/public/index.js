@@ -75,26 +75,91 @@ $('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
   });
 });
 
+function getDetailsItembyId(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      headers: { accept: 'application/json' },
+      type: 'GET',
+      url: `/item/${id}`,
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error));
+  });
+}
 
-$('button#modifyItemButton').click(function modifyHandler(event) {
+function getDetailsProductItemById(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      headers: { accept: 'application/json' },
+      type: 'GET',
+      url: `/products/${id}`,
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error));
+  });
+}
+
+function setItemUnitySelect(item, product) {
+  const hasPreviousOptions = $('select#itemUnitySelect').children('option').length > 0;
+
+  if (hasPreviousOptions) {
+    $('select#itemUnitySelect option').remove();
+  }
+
+  product.unities.forEach((unit) => {
+    let isSelected;
+
+    if (item.unity !== unit) {
+      isSelected = false;
+    } else {
+      isSelected = true;
+    }
+
+    $('select#itemUnitySelect').append($('<option>', {
+      selected: isSelected,
+      value: unit,
+      text: unit,
+    }));
+  });
+}
+
+function setItemQuantityInput(selectedUnity) {
+  if (selectedUnity === 'gr' || selectedUnity === 'mL') {
+    $('input#quantityInput').attr('value', 50);
+    $('input#quantityInput').attr('step', 50);
+    $('input#quantityInput').attr('max', 100000);
+    $('input#quantityInput').attr('min', 50);
+  } else {
+    $('input#quantityInput').attr('value', 1);
+    $('input#quantityInput').attr('step', 1);
+    $('input#quantityInput').attr('max', 100);
+    $('input#quantityInput').attr('min', 1);
+  }
+}
+
+$('button#modifyItemButton').click(async function modifyHandler(event) {
   event.preventDefault();
 
   const idItemSelected = $(this).closest('tr').attr('id');
-  const currentCellNameItem = $(this).closest(`tr#${idItemSelected}`).children().eq(1);
+  const item = (await getDetailsItembyId(idItemSelected)).result;
+  const product = await getDetailsProductItemById(item.product.id);
+
+  $('#modifyItemP').text(item.product.names[0]);
+  setItemUnitySelect(item, product);
+  setItemQuantityInput(item.unity);
 
   function saveChange(modalEvent) {
     modalEvent.preventDefault();
 
-    const newNameItem = $(this).find('input#modifiedNameItem').val();
+    const unityItem = $('select#itemUnitySelect').find(':selected').val();
+    const quantityItem = $('input#itemQuantityInput').val();
     $.ajax({
       headers: { accept: 'application/json' },
       type: 'PUT',
       url: `/item/${idItemSelected}`,
-      data: { name: newNameItem },
-      success: function successUpdate(e) {
-        e.preventDefault();
-        currentCellNameItem.replaceWith(`<td>${newNameItem}</td>`);
-        $(this).dialog('close');
+      data: { unityItem, quantityItem },
+      success: function successUpdate() {
+        $('#dialog-confirm').dialog('close');
       },
     });
   }
@@ -104,7 +169,6 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
   }
 
   function enterEvent() {
-
     $('#dialog-confirm').keypress(function enterKeyPress(e) {
       if (e.keyCode === $.ui.keyCode.ENTER) {
         $(this).parent().find('button:contains(\'Save\')').trigger('click');

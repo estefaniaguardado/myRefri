@@ -18,6 +18,10 @@ router.get('/', (req, res) => {
   return res.json({ ok: true, result: itemHandler.getList() });
 });
 
+router.get('/:id', (req, res) => {
+  res.json({ result: itemHandler.findItemById(req.params.id) });
+});
+
 router.post('/', (req, res) => {
   const product = productHandler.findProductById(req.body.selectedProduct);
   itemHandler.createNewItem(product, req.body);
