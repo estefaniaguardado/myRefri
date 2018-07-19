@@ -7,15 +7,15 @@ const itemHandler = new ItemHandler();
 const productHandler = require('../services/ProductHandler')();
 
 router.get('/', (req, res) => {
-  if (req.accepts('application/json')) {
-    return res.json({ ok: true, result: itemHandler.getList() });
+  if (req.accepts('text/html')) {
+    return res.render('index', {
+      message: 'Shopping List',
+      products: productHandler.getProductList(),
+      listOfItems: itemHandler.getList(),
+    });
   }
 
-  return res.render('index', {
-    message: 'Shopping List',
-    products: productHandler.getProductList(),
-    listOfItems: itemHandler.getList(),
-  });
+  return res.json({ ok: true, result: itemHandler.getList() });
 });
 
 router.post('/', (req, res) => {
