@@ -33,9 +33,20 @@ module.exports = () => {
     return details === undefined ? null : details;
   }
 
+  /**
+   *
+   * @param {String} idProduct
+   */
+  function findProductById(idProduct) {
+    const detailsProduct = products.find(product => product.id === idProduct);
+
+    return detailsProduct;
+  }
+
   return {
     setProducts,
     findProduct,
     getProductList,
+    findProductById,
   };
 };
