@@ -140,7 +140,7 @@ function setItemQuantityInput(selectedUnity) {
 $('button#modifyItemButton').click(async function modifyHandler(event) {
   event.preventDefault();
 
-  const idItemSelected = $(this).closest('tr').attr('id');
+  const idItemSelected = $(this).closest('.detailsItem').attr('id');
   const item = (await getDetailsItembyId(idItemSelected)).result;
   const product = await getDetailsProductItemById(item.product.id);
 
