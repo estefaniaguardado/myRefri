@@ -43,13 +43,13 @@ header {
   color: white;
 }
 
-.productTable{
-  display: flex;
-  justify-content: center;
+.productList{
+  width: 90%;
+  display:flex;
   list-style-type: none;
+  justify-content: center;
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: auto 150px;
 }
 
 select {
@@ -65,7 +65,7 @@ select {
   height: 75px;
 }
 
-.productTable input {
+.productList input {
   font-family: Verdana;
   text-align: center;
   margin: 0px 10px;
@@ -90,32 +90,55 @@ select {
   color: white;
 }
 
-#listItems{
-  display: flex;
+#listItemsHeader{
+  margin:30px;
+  display:flex;
+  flex-direction:row;
+  width:90%;
   justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: 25px 50px;
 }
 
-#listItems h4{
-  margin: auto;
-  padding: 10px 35px;
-  text-align: center;
+#listItemsHeader h4{
+  margin: auto 20px;
+  text-align:center;
+  height:20px;
+  padding: 10px 25px;
   background-color: rgb(201, 164, 61);
 }
 
-#listItems td{
-  text-align: center; 
-  vertical-align: middle;
+.detailsItem{
+  margin-left: 75px;
+  display:flex;
+  width:90%;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#nameDetailItem{
+  text-align:center;
+  margin: 10px 90px 10px 120px;
+  padding: 5px;
+}
+
+#quantiyDetailItem{
+  text-align:center;
+  margin: 10px 90px 10px 30px;
+  padding: 5px;
+}
+
+#unityDetailItem{
+  text-align:center;
+  margin: 10px 90px 10px 35px;
   padding: 5px 10px;
 }
 
-#listItems tr:nth-child(even){
-  background-color: #f2f2f2;
+#editDetailsItem {
+  text-align:center;
+  margin: 10px 10px 10px 0px;
 }
 
-#listItems button {
-  display: inline-block;
+#editDetailsItem button {
   text-align: center;
   margin: auto 10px;
   padding: 5px;
@@ -127,7 +150,7 @@ select {
   border-radius: 10px;
 }
 
-#listItems button:hover {
+#editDetailsItem button:hover {
   background: rgb(245, 130, 92);
   color: black;
 }

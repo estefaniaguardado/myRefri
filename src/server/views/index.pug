@@ -18,7 +18,7 @@ html
                         input(type="submit" value="Log Out")
         
         form(action="/item" method="post" id="itemForm")
-            ul(class='productTable')
+            ul(class='productList')
                 li
                     select(id="selectProducts" name="selectedProduct" size=products.length)
                             each product in products
@@ -29,22 +29,22 @@ html
                     input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
                 li(hidden id="submitNewItem")
                     input(type="submit" value="Add new Item" id="addItemButton")
-        table(id= 'listItems')
-            tr
-                td 
-                    h4 Article
-                td
-                    h4 Quantity
-                td
-                    h4 Unity
-            each item in listOfItems
-                tr(id=item.id)  
-                    td #{item.product.names[0]}
-                    td #{item.quantity}
-                    td #{item.unity}
-                    td
-                        button(id='modifyItemButton') Edit
-                        button(type='submit' id='deleteItemButton' value=item.id) Delete
+        
+        div(id='listItemsHeader')
+            div
+                h4 Article
+            div
+                h4 Quantity
+            div
+                h4 Unity
+        each item in listOfItems
+            div(id=item.id class="detailsItem")
+                div(id="nameDetailItem") #{item.product.names[0]}
+                div(id="quantiyDetailItem") #{item.quantity}
+                div(id="unityDetailItem") #{item.unity}
+                div(id="editDetailsItem")
+                    button(id='modifyItemButton') Edit
+                    button(type='submit' id='deleteItemButton' value=item.id) Delete
         div(id="dialog-confirm" title="Modify item detail" hidden)
             form(id='modifyForm')
                 p(id='modifyItemP') Modify Item
