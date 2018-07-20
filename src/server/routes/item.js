@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  itemHandler.modifyItem(req.params.id, req.body);
+  itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
 
   if (req.accepts('application/json')) {
     return res.json({ ok: true });

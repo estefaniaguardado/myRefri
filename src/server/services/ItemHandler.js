@@ -30,10 +30,11 @@ class ItemHandler {
     return newItem;
   }
 
-  modifyItem(itemId, { name }) {
+  modifyItem(itemId, newQuantityItem, newUnityItem) {
     const indexModifiedItem = this.list.findIndex(previousItem => previousItem.id === itemId);
 
-    this.list[indexModifiedItem].name = name;
+    this.list[indexModifiedItem].unityItem = newUnityItem;
+    this.list[indexModifiedItem].quantityItem = newQuantityItem;
     return this.list[indexModifiedItem];
   }
 
