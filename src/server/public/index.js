@@ -64,13 +64,13 @@ $('form#itemForm').keypress(function enterSubmitEvent(e) {
 
 $('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
   deleteEvent.preventDefault();
-  const $tr = $(this).closest('tr');
+  const idItemToRemove = $(this).closest('.detailsItem').attr('id');
   $.ajax({
     headers: { accept: 'application/json' },
-    url: `/item/${this.value}`,
+    url: `/item/${idItemToRemove}`,
     type: 'DELETE',
     success() {
-      $tr.remove();
+      $(`div#${idItemToRemove}`).remove();
     },
   });
 });
