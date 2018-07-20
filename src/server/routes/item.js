@@ -32,7 +32,7 @@ router.put('/:id', (req, res) => {
   itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
 
   if (req.accepts('application/json')) {
-    return res.json({ ok: true });
+    return res.json({ ok: true, result: req.params.id });
   }
 
   return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });

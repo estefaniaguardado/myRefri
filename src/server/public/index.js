@@ -123,17 +123,17 @@ function setItemUnitySelect(item, product) {
   });
 }
 
-function setItemQuantityInput(selectedUnity) {
-  if (selectedUnity === 'gr' || selectedUnity === 'mL') {
-    $('input#quantityInput').attr('value', 50);
-    $('input#quantityInput').attr('step', 50);
-    $('input#quantityInput').attr('max', 100000);
-    $('input#quantityInput').attr('min', 50);
+function setItemQuantityInput(unity, quantity) {
+  $('input#itemQuantityInput').attr('value', parseInt(quantity, 10));
+
+  if (unity === 'gr' || unity === 'mL') {
+    $('input#itemQuantityInput').attr('step', 50);
+    $('input#itemQuantityInput').attr('max', 100000);
+    $('input#itemQuantityInput').attr('min', 50);
   } else {
-    $('input#quantityInput').attr('value', 1);
-    $('input#quantityInput').attr('step', 1);
-    $('input#quantityInput').attr('max', 100);
-    $('input#quantityInput').attr('min', 1);
+    $('input#itemQuantityInput').attr('step', 1);
+    $('input#itemQuantityInput').attr('max', 100);
+    $('input#itemQuantityInput').attr('min', 1);
   }
 }
 
@@ -146,7 +146,7 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
 
   $('#modifyItemP').text(item.product.names[0]);
   setItemUnitySelect(item, product);
-  setItemQuantityInput(item.unity);
+  setItemQuantityInput(item.unity, item.quantity);
 
   function saveChange(modalEvent) {
     modalEvent.preventDefault();
@@ -158,7 +158,7 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
       type: 'PUT',
       url: `/item/${idItemSelected}`,
       data: { unityItem, quantityItem },
-      success: function successUpdate() {
+      success: (data) => {
         $('#dialog-confirm').dialog('close');
       },
     });
