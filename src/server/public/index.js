@@ -159,6 +159,9 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
       url: `/item/${idItemSelected}`,
       data: { unityItem, quantityItem },
       success: (data) => {
+        const contentItem = $(`div#${data.result}`).contents();
+        contentItem.filter('#quantiyDetailItem').contents().replaceWith(quantityItem);
+        contentItem.filter('#unityDetailItem').contents().replaceWith(unityItem);
         $('#dialog-confirm').dialog('close');
       },
     });
