@@ -108,34 +108,30 @@ select {
 }
 
 .detailsItem{
-  margin-left: 75px;
   display:flex;
-  width:90%;
-  justify-content: center;
+  width:50%;
+  justify-content: flex-start;
+  margin-left: 500px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #nameDetailItem{
-  text-align:center;
-  margin: 10px 90px 10px 120px;
-  padding: 5px;
+  margin-right: 80px;
+  padding: 15px 30px;
 }
 
 #quantityDetailItem{
-  text-align:center;
-  margin: 10px 90px 10px 30px;
-  padding: 5px;
+  padding: 15px 30px;
 }
 
 #unityDetailItem{
-  text-align:center;
-  margin: 10px 90px 10px 35px;
-  padding: 5px 10px;
+  margin-left: 70px;
+  padding: 15px 30px;
 }
 
 #editDetailsItem {
-  text-align:center;
-  margin: 10px 10px 10px 0px;
+  margin-left: 50px;
+  padding: 15px 30px;
 }
 
 #editDetailsItem button {
