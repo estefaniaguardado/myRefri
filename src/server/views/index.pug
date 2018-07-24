@@ -8,7 +8,7 @@ html
 
         link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
         link(href='/static/css/index.css', rel='stylesheet')
-    body
+    body(class='container')
         header
             ul(class='navigation-container')
                 li
@@ -18,7 +18,7 @@ html
                         input(type="submit" value="Log Out")
         
         form(action="/item" method="post" id="itemForm")
-            ul(class='productTable')
+            ul(class='productList')
                 li
                     select(id="selectProducts" name="selectedProduct" size=products.length)
                             each product in products
@@ -29,25 +29,26 @@ html
                     input(type="number" id="quantityInput" name="quantityItem" min=1 max=100 step=1 value=1)
                 li(hidden id="submitNewItem")
                     input(type="submit" value="Add new Item" id="addItemButton")
-        table(id= 'listItems')
-            tr
-                td 
-                    h4 Article
-                td
-                    h4 Quantity
-                td
-                    h4 Unity
-            each item in listOfItems
-                tr(id=item.id)  
-                    td #{item.product.names[0]}
-                    td #{item.quantity}
-                    td #{item.unity}
-                    td
-                        button(id='modifyItemButton') Edit
-                        button(type='submit' id='deleteItemButton' value=item.id) Delete
+        
+        div(id='listItemsHeader')
+            div
+                h4 Article
+            div
+                h4 Quantity
+            div
+                h4 Unity
+        each item in listOfItems
+            div(id=item.id class="detailsItem")
+                div(id="nameDetailItem") #{item.product.names[0]}
+                div(id="quantityDetailItem") #{item.quantity}
+                div(id="unityDetailItem") #{item.unity}
+                div(id="editDetailsItem")
+                    button(id='modifyItemButton') Edit
+                    button(type='submit' id='deleteItemButton' value=item.id) Delete
         div(id="dialog-confirm" title="Modify item detail" hidden)
-                            p Modify Item
-                            form
-                                input(type="text" id="modifiedNameItem")
+            form(id='modifyForm')
+                p(id='modifyItemP') Modify Item
+                select(id="itemUnitySelect" name="unityItem" size=0)
+                input(type="number" id="itemQuantityInput" min=1 max=100 step=1 value=1)
 
         script(src='/static/index.js')

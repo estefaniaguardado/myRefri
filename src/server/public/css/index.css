@@ -43,13 +43,18 @@ header {
   color: white;
 }
 
-.productTable{
-  display: flex;
+.container{
+  width: 90%;
+  align-content: center;
   justify-content: center;
+}
+
+.productList{
+  display:flex;
   list-style-type: none;
+  justify-content: center;
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: auto 150px;
 }
 
 select {
@@ -65,7 +70,7 @@ select {
   height: 75px;
 }
 
-.productTable input {
+.productList input {
   font-family: Verdana;
   text-align: center;
   margin: 0px 10px;
@@ -90,32 +95,56 @@ select {
   color: white;
 }
 
-#listItems{
-  display: flex;
-  justify-content: center;
+#listItemsHeader{
+  display:flex;
+  margin-left: 30px;
+  width: 60%;
+  justify-content: space-around;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: 25px 50px;
 }
 
-#listItems h4{
-  margin: auto;
-  padding: 10px 35px;
-  text-align: center;
+#listItemsHeader h4{
+  flex-grow: 0.5;
+  text-align:center;
+  height:20px;
+  padding: 10px 50px;
   background-color: rgb(201, 164, 61);
 }
 
-#listItems td{
-  text-align: center; 
-  vertical-align: middle;
-  padding: 5px 10px;
+.detailsItem{
+  display:flex;
+  width: 90%;
+  justify-content: flex-end;
+  align-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#listItems tr:nth-child(even){
-  background-color: #f2f2f2;
+#nameDetailItem{
+  flex-grow: 0.5;
+  text-align: center;
+  padding: 15px 30px;
 }
 
-#listItems button {
-  display: inline-block;
+#quantityDetailItem{
+  flex-grow: 0.5;
+  text-align: center;
+  padding: 15px 30px;
+}
+
+#unityDetailItem{
+  flex-grow: 0.5;
+  text-align: center;
+  padding: 15px 30px;
+}
+
+#editDetailsItem {
+  flex-grow: 0.5;
+  align-self: flex-end;
+  text-align: center;
+  padding: 15px 30px;
+}
+
+#editDetailsItem button {
   text-align: center;
   margin: auto 10px;
   padding: 5px;
@@ -127,7 +156,7 @@ select {
   border-radius: 10px;
 }
 
-#listItems button:hover {
+#editDetailsItem button:hover {
   background: rgb(245, 130, 92);
   color: black;
 }

@@ -2,7 +2,6 @@
 function setQuantityInput(unitySelect) {
   const selectedOption = $(unitySelect).find(':selected').val();
 
-<<<<<<< HEAD
   if (selectedOption === 'gr' || selectedOption === 'mL') {
     $('input#quantityInput').attr('value', 50);
     $('input#quantityInput').attr('step', 50);
@@ -56,8 +55,6 @@ $('select#unitySelect').change(function createQuantityInput() {
   $('li#quantity').show();
 });
 
-=======
->>>>>>> 43dc2f7b2ef9d8ac27e89f25f761c07d1c27b2d5
 $('form#itemForm').keypress(function enterSubmitEvent(e) {
   if (e.keyCode === $.ui.keyCode.ENTER) {
     e.preventDefault();
@@ -67,37 +64,108 @@ $('form#itemForm').keypress(function enterSubmitEvent(e) {
 
 $('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
   deleteEvent.preventDefault();
-  const $tr = $(this).closest('tr');
+  const idItemToRemove = $(this).closest('.detailsItem').attr('id');
   $.ajax({
     headers: { accept: 'application/json' },
-    url: `/item/${this.value}`,
+    url: `/item/${idItemToRemove}`,
     type: 'DELETE',
     success() {
-      $tr.remove();
+      $(`div#${idItemToRemove}`).remove();
     },
   });
 });
 
+function getDetailsItembyId(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      headers: { accept: 'application/json' },
+      type: 'GET',
+      url: `/item/${id}`,
+      success(data) {
+        resolve(data);
+      },
+      error(e) {
+        reject(e);
+      },
+    });
+  });
+}
 
-$('button#modifyItemButton').click(function modifyHandler(event) {
+function getDetailsProductItemById(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      headers: { accept: 'application/json' },
+      type: 'GET',
+      url: `/products/${id}`,
+      success(data) {
+        resolve(data);
+      },
+      error(e) {
+        reject(e);
+      },
+    });
+  });
+}
+
+function setItemUnitySelect(item, product) {
+  product.unities.forEach((unit) => {
+    let isSelected;
+
+    if (item.unity !== unit) {
+      isSelected = false;
+    } else {
+      isSelected = true;
+    }
+
+    $('select#itemUnitySelect').append($('<option>', {
+      selected: isSelected,
+      value: unit,
+      text: unit,
+    }));
+  });
+}
+
+function setItemQuantityInput(unity, quantity) {
+  $('input#itemQuantityInput').attr('value', parseInt(quantity, 10));
+
+  if (unity === 'gr' || unity === 'mL') {
+    $('input#itemQuantityInput').attr('step', 50);
+    $('input#itemQuantityInput').attr('max', 100000);
+    $('input#itemQuantityInput').attr('min', 50);
+  } else {
+    $('input#itemQuantityInput').attr('step', 1);
+    $('input#itemQuantityInput').attr('max', 100);
+    $('input#itemQuantityInput').attr('min', 1);
+  }
+}
+
+$('button#modifyItemButton').click(async function modifyHandler(event) {
   event.preventDefault();
 
-  const idItemSelected = $(this).closest('tr').attr('id');
-  const currentCellNameItem = $(this).closest(`tr#${idItemSelected}`).children().eq(1);
+  const idItemSelected = $(this).closest('.detailsItem').attr('id');
+  const item = (await getDetailsItembyId(idItemSelected)).result;
+  const product = await getDetailsProductItemById(item.product.id);
+
+  $('#modifyItemP').text(item.product.names[0]);
+  $('select#itemUnitySelect option').remove();
+  setItemUnitySelect(item, product);
+  setItemQuantityInput(item.unity, item.quantity);
 
   function saveChange(modalEvent) {
     modalEvent.preventDefault();
 
-    const newNameItem = $(this).find('input#modifiedNameItem').val();
+    const unityItem = $('select#itemUnitySelect').find(':selected').val();
+    const quantityItem = $('input#itemQuantityInput').val();
     $.ajax({
       headers: { accept: 'application/json' },
       type: 'PUT',
       url: `/item/${idItemSelected}`,
-      data: { name: newNameItem },
-      success: function successUpdate(e) {
-        e.preventDefault();
-        currentCellNameItem.replaceWith(`<td>${newNameItem}</td>`);
-        $(this).dialog('close');
+      data: { unityItem, quantityItem },
+      success: (data) => {
+        const contentItem = $(`div#${data.result}`).contents();
+        contentItem.filter('#quantityDetailItem').contents().replaceWith(quantityItem);
+        contentItem.filter('#unityDetailItem').contents().replaceWith(unityItem);
+        $('#dialog-confirm').dialog('close');
       },
     });
   }
@@ -107,7 +175,6 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
   }
 
   function enterEvent() {
-
     $('#dialog-confirm').keypress(function enterKeyPress(e) {
       if (e.keyCode === $.ui.keyCode.ENTER) {
         $(this).parent().find('button:contains(\'Save\')').trigger('click');
@@ -127,4 +194,20 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
     },
     open: enterEvent,
   });
+});
+
+$('select#itemUnitySelect').change(function modifiedItemQuantitySelect() {
+  const selectedOption = $(this).find(':selected').val();
+
+  if (selectedOption === 'gr' || selectedOption === 'mL') {
+    $('input#itemQuantityInput').attr('value', 50);
+    $('input#itemQuantityInput').attr('step', 50);
+    $('input#itemQuantityInput').attr('max', 100000);
+    $('input#itemQuantityInput').attr('min', 50);
+  } else {
+    $('input#itemQuantityInput').attr('value', 1);
+    $('input#itemQuantityInput').attr('step', 1);
+    $('input#itemQuantityInput').attr('max', 100);
+    $('input#itemQuantityInput').attr('min', 1);
+  }
 });

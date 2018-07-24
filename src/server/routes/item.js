@@ -18,6 +18,10 @@ router.get('/', (req, res) => {
   return res.json({ ok: true, result: itemHandler.getList() });
 });
 
+router.get('/:id', (req, res) => {
+  res.json({ result: itemHandler.findItemById(req.params.id) });
+});
+
 router.post('/', (req, res) => {
   const product = productHandler.findProductById(req.body.selectedProduct);
   itemHandler.createNewItem(product, req.body);
@@ -25,10 +29,10 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  itemHandler.modifyItem(req.params.id, req.body);
+  itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
 
   if (req.accepts('application/json')) {
-    return res.json({ ok: true });
+    return res.json({ ok: true, result: req.params.id });
   }
 
   return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
