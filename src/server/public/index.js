@@ -200,3 +200,19 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
     open: enterEvent,
   });
 });
+
+$('select#itemUnitySelect').change(function modifiedItemQuantitySelect() {
+  const selectedOption = $(this).find(':selected').val();
+
+  if (selectedOption === 'gr' || selectedOption === 'mL') {
+    $('input#itemQuantityInput').attr('value', 50);
+    $('input#itemQuantityInput').attr('step', 50);
+    $('input#itemQuantityInput').attr('max', 100000);
+    $('input#itemQuantityInput').attr('min', 50);
+  } else {
+    $('input#itemQuantityInput').attr('value', 1);
+    $('input#itemQuantityInput').attr('step', 1);
+    $('input#itemQuantityInput').attr('max', 100);
+    $('input#itemQuantityInput').attr('min', 1);
+  }
+});
