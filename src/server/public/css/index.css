@@ -43,8 +43,13 @@ header {
   color: white;
 }
 
-.productList{
+.container{
   width: 90%;
+  align-content: center;
+  justify-content: center;
+}
+
+.productList{
   display:flex;
   list-style-type: none;
   justify-content: center;
@@ -91,46 +96,51 @@ select {
 }
 
 #listItemsHeader{
-  margin:30px;
   display:flex;
-  flex-direction:row;
-  width:90%;
-  justify-content: center;
+  margin-left: 30px;
+  width: 60%;
+  justify-content: space-around;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #listItemsHeader h4{
-  margin: auto 20px;
+  flex-grow: 0.5;
   text-align:center;
   height:20px;
-  padding: 10px 25px;
+  padding: 10px 50px;
   background-color: rgb(201, 164, 61);
 }
 
 .detailsItem{
   display:flex;
-  width:50%;
-  justify-content: flex-start;
-  margin-left: 500px;
+  width: 90%;
+  justify-content: flex-end;
+  align-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #nameDetailItem{
-  margin-right: 80px;
+  flex-grow: 0.5;
+  text-align: center;
   padding: 15px 30px;
 }
 
 #quantityDetailItem{
+  flex-grow: 0.5;
+  text-align: center;
   padding: 15px 30px;
 }
 
 #unityDetailItem{
-  margin-left: 70px;
+  flex-grow: 0.5;
+  text-align: center;
   padding: 15px 30px;
 }
 
 #editDetailsItem {
-  margin-left: 50px;
+  flex-grow: 0.5;
+  align-self: flex-end;
+  text-align: center;
   padding: 15px 30px;
 }
 
