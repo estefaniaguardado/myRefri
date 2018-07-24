@@ -30,12 +30,10 @@ class ItemHandler {
     return newItem;
   }
 
-  modifyItem(itemId, newQuantityItem, newUnityItem) {
+  modifyItem(itemId, newUnityItem, newQuantityItem) {
     const indexModifiedItem = this.list.findIndex(previousItem => previousItem.id === itemId);
-    console.log('>>> previous ', this.list[indexModifiedItem]);
     this.list[indexModifiedItem].unity = newUnityItem;
     this.list[indexModifiedItem].quantity = newQuantityItem;
-    console.log('>>> update ', this.list[indexModifiedItem]);
 
     return this.list[indexModifiedItem];
   }

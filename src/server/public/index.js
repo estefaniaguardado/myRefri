@@ -108,12 +108,6 @@ function getDetailsProductItemById(id) {
 }
 
 function setItemUnitySelect(item, product) {
-  const hasPreviousOptions = $('select#itemUnitySelect').children('option').length > 0;
-
-  if (hasPreviousOptions) {
-    $('select#itemUnitySelect option').remove();
-  }
-
   product.unities.forEach((unit) => {
     let isSelected;
 
@@ -153,6 +147,7 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
   const product = await getDetailsProductItemById(item.product.id);
 
   $('#modifyItemP').text(item.product.names[0]);
+  $('select#itemUnitySelect option').remove();
   setItemUnitySelect(item, product);
   setItemQuantityInput(item.unity, item.quantity);
 
