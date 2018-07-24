@@ -43,15 +43,19 @@ describe('Item Handler', () => {
 
       describe('when modify the item1', () => {
         beforeEach(() => {
-          item1 = sut.modifyItem(item1.id, { name: 'modifiedItem1' });
+          item1 = sut.modifyItem(item1.id, 'pz', 2);
         });
 
         it('should not change the list', () => {
           expect(sut.getList(), 'to satisfy', [item1]);
         });
 
-        it('should rename the item name', () => {
-          expect(item1.name, 'to be', 'modifiedItem1');
+        it('should modify the item unity', () => {
+          expect(item1.unity, 'to be', 'pz');
+        });
+
+        it('should modify the item quantity', () => {
+          expect(item1.quantity, 'to be', 2);
         });
       });
 
