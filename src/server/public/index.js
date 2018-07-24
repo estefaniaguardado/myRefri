@@ -81,9 +81,13 @@ function getDetailsItembyId(id) {
       headers: { accept: 'application/json' },
       type: 'GET',
       url: `/item/${id}`,
-    })
-      .done(data => resolve(data))
-      .fail(error => reject(error));
+      success(data) {
+        resolve(data);
+      },
+      error(e) {
+        reject(e);
+      },
+    });
   });
 }
 
@@ -93,9 +97,13 @@ function getDetailsProductItemById(id) {
       headers: { accept: 'application/json' },
       type: 'GET',
       url: `/products/${id}`,
-    })
-      .done(data => resolve(data))
-      .fail(error => reject(error));
+      success(data) {
+        resolve(data);
+      },
+      error(e) {
+        reject(e);
+      },
+    });
   });
 }
 
