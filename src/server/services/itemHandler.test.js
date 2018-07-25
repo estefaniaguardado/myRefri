@@ -43,7 +43,7 @@ describe('Item Handler', () => {
 
       describe('when modify the item1', () => {
         beforeEach(() => {
-          item1 = sut.modifyItem(item1.id, 'pz', 2);
+          sut.modifyItem(item1.id, 'pz', 2);
         });
 
         it('should not change the list', () => {
