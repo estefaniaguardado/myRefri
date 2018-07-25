@@ -1,11 +1,12 @@
 class Item {
   /**
-   * @param {String} id
-   * @param {Product} product
-   * @param {Date} date
-   * @param {Unity} unity
-   * @param {Number} quantity
-   * @param {Boolean} active
+   * Item details
+   * @param {String} id - Item Identifier
+   * @param {Product} product - Product reference to which the item belongs
+   * @param {Date} date - Date item creation
+   * @param {Unity} unity - Selected item unit
+   * @param {Number} quantity - Selected item quantity
+   * @param {Boolean} active - Shopping status of item
    */
 
   constructor(id, product, date, unity, quantity, active) {
