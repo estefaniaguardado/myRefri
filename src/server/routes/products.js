@@ -3,20 +3,18 @@ const router = require('express-promise-router')();
 const productHandler = require('../services/ProductHandler')();
 
 /**
- * @memberof Router.products
- * @name get/products/id
- * @function
  * Router serving product details by id product through the request.
- * @inner
- * @param {String} path - Express path
- * @param {callback} middleware - Express middleware
- * @return {json} Id product and available unities
+ * @memberof Router.products
+ * @param {object} req - Express object
+ * @param {object} res - Express object
  */
-router.get('/:id', (req, res) => {
+function getProductDetails(req, res) {
   const product = productHandler.findProductById(req.params.id);
 
   return res.json({ id: req.params.id, unities: product.unities });
-});
+}
+
+router.get('/:id', getProductDetails);
 
 /**
  * @namespace Router.products

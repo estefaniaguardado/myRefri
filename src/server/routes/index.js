@@ -5,7 +5,6 @@ const auth = require('./auth');
 const products = require('./products');
 
 /**
- * @function
  * Verifies if the user has an active session,
  * it redirects him to the login router if the given data is incorrect.
  * @param {object} req - Express object
@@ -20,7 +19,6 @@ function authorized(req, res, next) {
 }
 
 /**
- * @function
  * Sets the headers in the responses middleware to not save cache.
  * @param {object} req - Express object
  * @param {object} res - Express object
@@ -35,47 +33,43 @@ function noCache(req, res, next) {
 }
 
 /**
- * @memberof Router.index
- * @function
- * Load auth middleware.
- * @param {auth} auth - Auth router
- */
-router.use(auth);
-
-/**
- * @memberof Router.index
- * @name get/
- * @function
- * Router serving the homepage but if the user has an active session,
+ * Renders the homepage but if the user has an active session,
  * it redirects him to items route.
- * @inner
- * @param {String} path - Express path
- * @param {callback} middleware - Express middleware
+ * @memberof Router.index
+ * @param {object} req - Express object
+ * @param {object} res - Express object
  */
-router.get('/', (req, res) => {
+function initialRoute(req, res) {
   if (req.user) {
     res.redirect('/item');
   } else {
     res.render('home');
   }
-});
+}
+
+router.get('/', initialRoute);
 
 /**
+ * Load auth middleware.
  * @memberof Router.index
- * @function
+ * @param {auth} auth - Auth router
+ */
+router.use(auth);
+
+/**
  * Load item middleware, it verifies the user active session and set no-cache into responses.
- * @param {String} path - Express path
- * @param {function} authorized - Function to verify user authorization
- * @param {function} noCache - Function to set no-cahce into responses
+ * @memberof Router.index
+ * @param {string} path - Express path
+ * @param {Function} authorized - Function to verify user authorization
+ * @param {Function} noCache - Function to set no-cahce into responses
  */
 router.use('/item', authorized, noCache, item);
 
 /**
- * @memberof Router.index
- * @function
  * Load product middleware, it verifies the user active session.
- * @param {String} path - Express path
- * @param {function} authorized - Function to verify user authorization
+ * @memberof Router.index
+ * @param {string} path - Express path
+ * @param {Function} authorized - Function to verify user authorization
  */
 router.use('/products', authorized, products);
 

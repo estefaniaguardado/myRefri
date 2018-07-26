@@ -15,7 +15,6 @@ module.exports = () => {
 
   /**
    * Set the available products into a local variable.
-   * @function
    * @param {[Product]} newProducts
    */
   function setProducts(newProducts) {
@@ -24,7 +23,6 @@ module.exports = () => {
 
   /**
    * Return registered and active products.
-   * @function
    * @returns {[Product]} Array of products.
    */
   function getProductList() {
@@ -33,8 +31,7 @@ module.exports = () => {
 
   /**
    * Return a product by id.
-   * @function
-   * @param {String} idProduct
+   * @param {string} idProduct
    * @returns {Product} Product object
    */
   function findProductById(idProduct) {

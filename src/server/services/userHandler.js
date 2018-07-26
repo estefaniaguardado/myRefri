@@ -2,7 +2,7 @@ const users = [{ id: 1, username: 'annie', password: 'hola' }];
 
 /**
  * Return an user information by username from registered/active Users database.
- * @param {String} username
+ * @param {string} username
  * @returns {JSON} User information
  */
 function findUserByName(username) {
@@ -15,7 +15,7 @@ function findUserByName(username) {
 
 /**
  * Return an user information by ID from registered/active Users database.
- * @param {String} id
+ * @param {string} id
  * @returns {JSON} User information
  */
 function findUserById(id) {
