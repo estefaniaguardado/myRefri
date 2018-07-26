@@ -6,7 +6,7 @@ const router = require('express-promise-router')();
  * @name get/login
  * @function
  * Router serving login form, but if the user has an active session,
- * it redirects to index route rather to login form.
+ * it redirects to items route rather to login form.
  * @inner
  * @param {String} path - Express path
  * @param {callback} middleware - Express middleware
@@ -24,7 +24,7 @@ router.get('/login', (req, res) => {
  * @name post/login
  * @function
  * Router serving login form and authenticate the user, it begins user session
- * and redirect the user to the index route if given data is correct.
+ * and redirect the user to the items route if the given data is correct.
  * @inner
  * @param {String} path - Express path
  * @param {callback} Passport.authenticate - Passport-Authenticate middleware
