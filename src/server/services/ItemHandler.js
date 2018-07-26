@@ -13,7 +13,7 @@ class ItemHandler {
   /**
    * Return items list of the current user.
    * @function
-   * @returns {Array[Item]} Array of items.
+   * @returns {[Item]} Array of items.
    */
   getList() {
     return [...this.list];
