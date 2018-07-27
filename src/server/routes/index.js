@@ -10,7 +10,6 @@ const products = require('./products');
  * @param {object} req - Express object
  * @param {object} res - Express object
  * @param {object} next - Express object
- * @return {object} Give the control to the next step in the middleware.
  */
 function authorized(req, res, next) {
   if (!req.user) return res.redirect('/login');
@@ -23,7 +22,6 @@ function authorized(req, res, next) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  * @param {object} next - Express object
- * @return {object} Give the control to the next step in the middleware.
  */
 function noCache(req, res, next) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
