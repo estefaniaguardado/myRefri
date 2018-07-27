@@ -1,9 +1,9 @@
 /**
- * Enum for unity values.
+ * Defines the unities, which can measure a product or item.
  * @readonly
- * @enum {String}
+ * @enum {string}
+ * @see {@link https://www.iso.org/standard/30669.html ISO/IEC 80000}
  */
-
 const Unity = {
   piece: 'pz',
   kilogram: 'kg',
