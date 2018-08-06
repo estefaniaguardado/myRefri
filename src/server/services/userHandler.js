@@ -1,7 +1,7 @@
 const users = [{ id: 1, username: 'annie', password: 'hola' }];
 
 /**
- * Return an user information by username from registered/active Users database.
+ * Return an user information by username.
  * @param {string} username
  * @returns {Promise<JSON>} User information
  */
@@ -14,7 +14,7 @@ function findUserByName(username) {
 }
 
 /**
- * Return an user information by ID from registered/active Users database.
+ * Return an user information by ID.
  * @param {string} id
  * @returns {Promise<JSON>} User information
  */
