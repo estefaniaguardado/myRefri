@@ -32,3 +32,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   debug(`App is listening in port ${port}`);
 });
+
+module.exports = app;
