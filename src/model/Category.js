@@ -1,9 +1,8 @@
 /**
- * Enum for category values.
+ * Defines different categories, where a product can be classified and belongs to one of these.
  * @readonly
- * @enum {String}
+ * @enum {string}
  */
-
 const Category = {
   food: 'Food',
   beverages: 'Beverages',
