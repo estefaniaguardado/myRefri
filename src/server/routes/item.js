@@ -28,7 +28,7 @@ function getItemList(req, res, next) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function shoopinListView(req, res, next) {
+function shoopingListView(req, res, next) {
   if (req.accepts('text/html')) {
     return res.render('index', {
       message: 'Shopping List',
@@ -130,7 +130,7 @@ function removeItemOfItemView(req, res, next) {
   return next();
 }
 
-router.get('/', shoopinListView, getItemList);
+router.get('/', shoopingListView, getItemList);
 router.get('/:id', getItemById);
 router.post('/', createNewItem);
 router.put('/:id', updateItemView, getIdModifiedItem);
