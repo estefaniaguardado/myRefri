@@ -150,9 +150,26 @@ describe('Item API', () => {
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
-            .expect(200);
+            .expect(404);
 
-          expect(response.body, 'to be empty');
+          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
+        });
+      });
+
+      context('when update an item details', () => {
+        it('should not update any item', async () => {
+          response = await agent
+            .put('/item/1')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .send({
+              unityItem: 'pz',
+              quantityItem: 2,
+            })
+            .expect(404);
+
+          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
         });
       });
     });

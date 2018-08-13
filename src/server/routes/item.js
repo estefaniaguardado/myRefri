@@ -47,7 +47,13 @@ function shoopingListView(req, res, next) {
  * @param {object} res - Express object
  */
 function getItemById(req, res) {
-  res.json({ result: itemHandler.findItemById(req.params.id) });
+  const item = itemHandler.findItemById(req.params.id);
+  if (item) return res.json({ result: item });
+  return res.status(404).send({
+    type: 'ERROR_ITEM_NOT_FOUND',
+    descripcion: 'The item has not been found in your shopping list.',
+    details: `Item ${req.params.id} has not found.`,
+  });
 }
 
 /**
@@ -69,31 +75,24 @@ function createNewItem(req, res) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function updateItemView(req, res, next) {
-  itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
+function updateItem(req, res) {
+  const item = itemHandler.findItemById(req.params.id);
 
-  if (req.accepts('text/html')) {
-    return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
+  if (item) {
+    itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
+
+    return res.render('index', {
+      message: 'Shopping List',
+      products: productHandler.getProductList(),
+      listOfItems: itemHandler.getList(),
+    });
   }
 
-  return next();
-}
-
-/**
- * Return the id reference of modified item.
- * @memberof Router.item
- * @param {object} req - Express object
- * @param {object} res - Express object
- * @param {object} next - Express object
- */
-function getIdModifiedItem(req, res, next) {
-  itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
-
-  if (req.accepts('application/json')) {
-    return res.json({ ok: true, result: req.params.id });
-  }
-
-  return next();
+  return res.status(404).send({
+    type: 'ERROR_ITEM_NOT_FOUND',
+    descripcion: 'The item has not been found in your shopping list.',
+    details: `Item ${req.params.id} has not found.`,
+  });
 }
 
 /**
@@ -133,7 +132,7 @@ function removeItemOfItemView(req, res, next) {
 router.get('/', shoopingListView, getItemList);
 router.get('/:id', getItemById);
 router.post('/', createNewItem);
-router.put('/:id', updateItemView, getIdModifiedItem);
+router.put('/:id', updateItem);
 router.delete('/:id', removeItemOfItemView, removeItem);
 
 /**
