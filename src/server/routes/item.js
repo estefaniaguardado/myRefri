@@ -96,44 +96,32 @@ function updateItem(req, res) {
 }
 
 /**
- * Removes a selected item by the given id.
- * @memberof Router.item
- * @param {object} req - Express object
- * @param {object} res - Express object
- * @param {object} next - Express object
- */
-function removeItem(req, res, next) {
-  itemHandler.removeItemOfList(req.params.id);
-
-  if (req.accepts('application/json')) {
-    return res.json({ ok: true });
-  }
-
-  return next();
-}
-
-/**
  * Update the item page without the selected item.
  * @memberof Router.item
  * @param {object} req - Express object
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function removeItemOfItemView(req, res, next) {
-  itemHandler.removeItemOfList(req.params.id);
+function removeItem(req, res) {
+  const item = itemHandler.findItemById(req.params.id);
 
-  if (req.accepts('text/html')) {
+  if (item) {
+    itemHandler.removeItemOfList(req.params.id);
     return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
   }
 
-  return next();
+  return res.status(404).send({
+    type: 'ERROR_ITEM_NOT_FOUND',
+    descripcion: 'The item has not been found in your shopping list.',
+    details: `Item ${req.params.id} has not found.`,
+  });
 }
 
 router.get('/', shoopingListView, getItemList);
 router.get('/:id', getItemById);
 router.post('/', createNewItem);
 router.put('/:id', updateItem);
-router.delete('/:id', removeItemOfItemView, removeItem);
+router.delete('/:id', removeItem);
 
 /**
  * @namespace Router.item

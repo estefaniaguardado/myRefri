@@ -172,6 +172,19 @@ describe('Item API', () => {
           expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
         });
       });
+
+      context('when delete an item', () => {
+        it('should not delete any item', async () => {
+          response = await agent
+            .delete('/item/1')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(404);
+
+          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
+        });
+      });
     });
 
     context('when the user has at least one item', () => {

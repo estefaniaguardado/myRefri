@@ -66,7 +66,6 @@ $('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
   deleteEvent.preventDefault();
   const idItemToRemove = $(this).closest('.detailsItem').attr('id');
   $.ajax({
-    headers: { accept: 'application/json' },
     url: `/item/${idItemToRemove}`,
     type: 'DELETE',
     success() {
