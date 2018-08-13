@@ -7,7 +7,6 @@ describe('Item API', () => {
   let agent;
   let response;
   let user;
-  let item1;
 
   before(() => {
     agent = supertest.agent(app);
@@ -185,9 +184,27 @@ describe('Item API', () => {
           expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
         });
       });
+
+      context('when create a new item', () => {
+        it('should add a new item into the shopping list', async () => {
+          response = await agent
+            .post('/item')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .send({
+              selectedProduct: '1',
+              unityItem: 'pz',
+              quantityItem: 2,
+            })
+            .expect(200);
+        });
+      });
     });
 
     context('when the user has at least one item', () => {
+      let item1;
+
       before(async () => {
         response = await agent
           .post('/item')
@@ -245,6 +262,68 @@ describe('Item API', () => {
             .expect(200);
 
           expect(response.body.result, 'to satisfy', item1);
+        });
+      });
+
+      context('when update the item details', () => {
+        it('should update the item', async () => {
+          response = await agent
+            .put(`/item/${item1.id}`)
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .send({
+              unityItem: 'L',
+              quantityItem: 5,
+            })
+            .expect(200);
+
+          const getUpdatedItem = await agent
+            .get(`/item/${item1.id}`)
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+
+          expect(getUpdatedItem.body.result, 'to satisfy', { unity: 'L', quantity: 5 });
+        });
+      });
+
+      context('when delete an item', () => {
+        it('should delete the item of the shopping list', async () => {
+          response = await agent
+            .delete(`/item/${item1.id}`)
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+
+          const getItemList = await agent
+            .get('/item')
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+
+          expect(getItemList.body.result, 'not to satisfy', item1);
+        });
+      });
+
+      context('when create a new item', () => {
+        it('should add a new item into the shopping list', async () => {
+          response = await agent
+            .post('/item')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .send({
+              selectedProduct: '2',
+              unityItem: 'pz',
+              quantityItem: 3,
+            })
+            .expect(200);
         });
       });
     });
