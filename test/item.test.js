@@ -7,6 +7,7 @@ describe('Item API', () => {
   let agent;
   let response;
   let user;
+  let item1;
 
   before(() => {
     agent = supertest.agent(app);
@@ -20,7 +21,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(302);
+          .expect(401);
 
         expect(response.headers.location, 'to be', '/login');
       });
@@ -34,7 +35,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(302);
+          .expect(401);
 
         expect(response.headers.location, 'to be', '/login');
       });
@@ -48,7 +49,55 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(302);
+          .expect(401);
+
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+
+    context('when create a new item', () => {
+      it('should redirect to the login', async () => {
+        response = await agent
+          .post('/item')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .send({
+            selectedProduct: '1',
+            unityItem: 'pz',
+            quantityItem: 2,
+          })
+          .expect(401);
+
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+
+    context('when update an item', () => {
+      it('should redirect to the login', async () => {
+        response = await agent
+          .put('/item/1')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .send({
+            unityItem: 'pz',
+            quantityItem: 2,
+          })
+          .expect(401);
+
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+
+    context('when delete an item', () => {
+      it('should redirect to the login', async () => {
+        response = await agent
+          .delete('/item/1')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .expect(401);
 
         expect(response.headers.location, 'to be', '/login');
       });
@@ -109,8 +158,6 @@ describe('Item API', () => {
     });
 
     context('when the user has at least one item', () => {
-      let item1;
-
       before(async () => {
         response = await agent
           .post('/item')
