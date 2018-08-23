@@ -151,7 +151,7 @@ describe('Item API', () => {
             .set('Pragma', 'no-cache')
             .expect(404);
 
-          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
+          expect(response.error, 'to have message', 'cannot GET /item/1 (404)');
         });
       });
 
@@ -168,7 +168,7 @@ describe('Item API', () => {
             })
             .expect(404);
 
-          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
+          expect(response.error, 'to have message', 'cannot PUT /item/1 (404)');
         });
       });
 
@@ -181,7 +181,7 @@ describe('Item API', () => {
             .set('Pragma', 'no-cache')
             .expect(404);
 
-          expect(response.body, 'to satisfy', { type: 'ERROR_ITEM_NOT_FOUND' });
+          expect(response.error, 'to have message', 'cannot DELETE /item/1 (404)');
         });
       });
 

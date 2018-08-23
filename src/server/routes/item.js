@@ -55,9 +55,8 @@ function getItemById(req, res, next) {
   error.statusCode = 404;
   error.description = 'The item has not been found in your shopping list.';
   error.details = `Item ${req.params.id} has not found.`;
-  next(error);
 
-  return next(new Error('ERROR_ITEM_NOT_FOUND'));
+  return next(error);
 }
 
 /**
@@ -96,9 +95,8 @@ function updateItem(req, res, next) {
   error.statusCode = 404;
   error.description = 'The item has not been found in your shopping list.';
   error.details = `Item ${req.params.id} has not found.`;
-  next(error);
 
-  return next(new Error('ERROR_ITEM_NOT_FOUND'));
+  return next(error);
 }
 
 /**
@@ -120,9 +118,8 @@ function removeItem(req, res, next) {
   error.statusCode = 404;
   error.description = 'The item has not been found in your shopping list.';
   error.details = `Item ${req.params.id} has not found.`;
-  next(error);
 
-  return next(new Error('ERROR_ITEM_NOT_FOUND'));
+  return next(error);
 }
 
 router.get('/', shoopingListView, getItemList);
