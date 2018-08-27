@@ -33,10 +33,13 @@ app.use((error, req, res, next) => {
   if (req.accepts('text/html')) {
     return res.render('error', { error });
   } else if (req.accepts('application/json')) {
-    return res.json(error);
+    return res.json({
+      ...error,
+      name: error.message,
+    });
   }
 
-  return next();
+  return next(error);
 });
 
 const port = process.env.PORT || 3000;
