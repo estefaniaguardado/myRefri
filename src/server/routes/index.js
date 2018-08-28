@@ -12,7 +12,11 @@ const products = require('./products');
  * @param {object} next - Express object
  */
 function authorized(req, res, next) {
-  if (!req.user) return res.redirect('/login');
+  if (!req.user) {
+    res.status(401);
+    res.set({ location: '/login' });
+    return res.render('login');
+  }
 
   return next();
 }

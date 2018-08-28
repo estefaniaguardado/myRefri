@@ -66,7 +66,6 @@ $('button#deleteItemButton').click(function deleteHandler(deleteEvent) {
   deleteEvent.preventDefault();
   const idItemToRemove = $(this).closest('.detailsItem').attr('id');
   $.ajax({
-    headers: { accept: 'application/json' },
     url: `/item/${idItemToRemove}`,
     type: 'DELETE',
     success() {
@@ -157,12 +156,11 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
     const unityItem = $('select#itemUnitySelect').find(':selected').val();
     const quantityItem = $('input#itemQuantityInput').val();
     $.ajax({
-      headers: { accept: 'application/json' },
       type: 'PUT',
       url: `/item/${idItemSelected}`,
       data: { unityItem, quantityItem },
-      success: (data) => {
-        const contentItem = $(`div#${data.result}`).contents();
+      success: () => {
+        const contentItem = $(`div#${idItemSelected}`).contents();
         contentItem.filter('#quantityDetailItem').contents().replaceWith(quantityItem);
         contentItem.filter('#unityDetailItem').contents().replaceWith(unityItem);
         $('#dialog-confirm').dialog('close');

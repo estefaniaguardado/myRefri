@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npm run lint && npm run test-no-lint",
-    "test-no-lint": "mocha --exclude \"node_modules/**\" \"**/*.test.js\"",
+    "test": "npm run lint && npm run unit-test && npm run integration-test",
+    "unit-test": "mocha --exclude \"node_modules/**\" \"src/**/*.test.js\"",
     "lint": "eslint .",
-    "dev": "set PORT=8000 && nodemon index.js"
+    "dev": "set PORT=8000 && nodemon index.js",
+    "integration-test": "mocha \"test/**.test.js\" --exit"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "eslint-plugin-react": "^7.4.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.17.5",
+    "supertest": "^3.1.0",
     "unexpected": "^10.38.0"
   },
   "keywords": []

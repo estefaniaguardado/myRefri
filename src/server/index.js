@@ -27,8 +27,24 @@ app.use(passport.session());
 
 app.use(routes);
 app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use((error, req, res, next) => {
+  res.status(error.statusCode || 500);
+
+  if (req.accepts('text/html')) {
+    return res.render('error', { error });
+  } else if (req.accepts('application/json')) {
+    return res.json({
+      ...error,
+      name: error.message,
+    });
+  }
+
+  return next(error);
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   debug(`App is listening in port ${port}`);
 });
+
+module.exports = app;
