@@ -1,10 +1,17 @@
-const router = require('express-promise-router')();
+import { Request, Response, NextFunction } from 'express';
+import expressRouter from 'express-promise-router';
 
-const ItemHandler = require('../services/ItemHandler');
+const router = expressRouter();
+
+import ItemHandler from '../services/ItemHandler';
 
 const itemHandler = new ItemHandler();
 
-const productHandler = require('../services/ProductHandler')();
+import ProductHandler from '../services/ProductHandler';
+
+const productHandler = ProductHandler();
+
+import ItemError from '../../model/ItemError';
 
 /**
  * Return the item page.
@@ -13,7 +20,7 @@ const productHandler = require('../services/ProductHandler')();
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function getItemList(req, res, next) {
+function getItemList(req: Request, res: Response, next: NextFunction) {
   if (req.accepts('application/json')) {
     return res.json({ ok: true, result: itemHandler.getList() });
   }
@@ -28,7 +35,7 @@ function getItemList(req, res, next) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function shoopingListView(req, res, next) {
+function shoopingListView(req: Request, res: Response, next: NextFunction) {
   if (req.accepts('text/html')) {
     return res.render('index', {
       message: 'Shopping List',
@@ -46,15 +53,16 @@ function shoopingListView(req, res, next) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function getItemById(req, res, next) {
+function getItemById(req: Request, res: Response, next: NextFunction) {
   const item = itemHandler.findItemById(req.params.id);
 
   if (item) return res.json({ result: item });
 
-  const error = new Error('ERROR_ITEM_NOT_FOUND');
-  error.statusCode = 404;
-  error.description = 'The item has not been found in your shopping list.';
-  error.details = `Item ${req.params.id} has not found.`;
+  const error = new ItemError(
+    'ERROR_ITEM_NOT_FOUND', 
+    404,
+    'The item has not been found in your shopping list.',
+    `Item ${req.params.id} has not found.`);
 
   return next(error);
 }
@@ -65,7 +73,7 @@ function getItemById(req, res, next) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function createNewItem(req, res) {
+function createNewItem(req: Request, res: Response) {
   const product = productHandler.findProductById(req.body.selectedProduct);
   itemHandler.createNewItem(product, req.body);
   res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
@@ -78,7 +86,7 @@ function createNewItem(req, res) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function updateItem(req, res, next) {
+function updateItem(req: Request, res: Response, next: NextFunction) {
   const item = itemHandler.findItemById(req.params.id);
 
   if (item) {
@@ -91,10 +99,11 @@ function updateItem(req, res, next) {
     });
   }
 
-  const error = new Error('ERROR_ITEM_NOT_FOUND');
-  error.statusCode = 404;
-  error.description = 'The item has not been found in your shopping list.';
-  error.details = `Item ${req.params.id} has not found.`;
+  const error = new ItemError(
+    'ERROR_ITEM_NOT_FOUND', 
+    404,
+    'The item has not been found in your shopping list.',
+    `Item ${req.params.id} has not found.`);
 
   return next(error);
 }
@@ -106,7 +115,7 @@ function updateItem(req, res, next) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function removeItem(req, res, next) {
+function removeItem(req: Request, res: Response, next: NextFunction) {
   const item = itemHandler.findItemById(req.params.id);
 
   if (item) {
@@ -114,10 +123,11 @@ function removeItem(req, res, next) {
     return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
   }
 
-  const error = new Error('ERROR_ITEM_NOT_FOUND');
-  error.statusCode = 404;
-  error.description = 'The item has not been found in your shopping list.';
-  error.details = `Item ${req.params.id} has not found.`;
+  const error = new ItemError(
+    'ERROR_ITEM_NOT_FOUND', 
+    404,
+    'The item has not been found in your shopping list.',
+    `Item ${req.params.id} has not found.`);
 
   return next(error);
 }
@@ -131,4 +141,4 @@ router.delete('/:id', removeItem);
 /**
  * @namespace Router.item
  */
-module.exports = router;
+export = router;

@@ -1,8 +1,11 @@
-const router = require('express-promise-router')();
+import { Request, Response, NextFunction } from 'express';
+import expressRouter from 'express-promise-router';
 
-const item = require('./item');
-const auth = require('./auth');
-const products = require('./products');
+const router = expressRouter();
+
+import auth from './auth';
+import item from './item';
+import products from './products';
 
 /**
  * Verifies if the user has an active session,
@@ -11,7 +14,7 @@ const products = require('./products');
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function authorized(req, res, next) {
+function authorized(req: Request, res: Response, next: NextFunction) {
   if (!req.user) {
     res.status(401);
     res.set({ location: '/login' });
@@ -27,7 +30,7 @@ function authorized(req, res, next) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function noCache(req, res, next) {
+function noCache(req: Request, res: Response, next: NextFunction) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
@@ -41,7 +44,7 @@ function noCache(req, res, next) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function initialRoute(req, res) {
+function initialRoute(req: Request, res: Response) {
   if (req.user) {
     res.redirect('/item');
   } else {
@@ -78,4 +81,4 @@ router.use('/products', authorized, products);
 /**
  * @namespace Router.index
  */
-module.exports = router;
+export = router;

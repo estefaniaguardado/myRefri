@@ -3,6 +3,10 @@
  * characteristics or properties that define an item.
  * @typedef {object} Product
  */
+
+import unity from './Unity';
+import category from './Category';
+
 class Product {
   /**
    * @param {string} id - Product Identifier
@@ -12,7 +16,14 @@ class Product {
    * @param {number} notificationOffset - Days limit to consume a product when it is perishable
    * @param {Category} category - Define category to classify a product
    */
-  constructor(id, names, unities, perishable, notificationOffset, category) {
+  id: string;
+  names: [string];
+  unities: Array<unity>;
+  perishable: boolean;
+  notificationOffset: number;
+  category: category;
+
+  constructor(id: string, names: [string], unities: Array<unity>, perishable: boolean, notificationOffset: number, category: category) {
     this.id = id;
     this.names = names;
     this.unities = unities;
@@ -22,4 +33,4 @@ class Product {
   }
 }
 
-module.exports = Product;
+export = Product;
