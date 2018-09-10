@@ -1,6 +1,6 @@
-import Product from '../../model/Product';
-import unity from '../../model/Unity';
-import category from '../../model/Category';
+import Product from '../model/Product';
+import unity from '../model/Unity';
+import category from '../model/Category';
 
 // TODO: Extract from DB using the DAO
 const product1 = new Product('1', ['Bread'], [unity.piece, unity.kilogram, unity.gram, unity.pound, unity.ounce], true, 3, category.food);

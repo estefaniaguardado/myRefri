@@ -11,7 +11,7 @@ import ProductHandler from '../services/ProductHandler';
 
 const productHandler = ProductHandler();
 
-import ItemError from '../../model/ItemError';
+import ItemError from '../ItemError';
 
 /**
  * Return the item page.

@@ -26,7 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routes);
-app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use('/static', express.static(path.join(__dirname, '../client')));
 app.use((error, req, res, next) => {
   res.status(error.statusCode || 500);
 

@@ -1,7 +1,7 @@
 
-import Item from '../../model/Item';
-import unity from '../../model/Unity';
-import Product from '../../model/Product';
+import Item from '../model/Item';
+import unity from '../model/Unity';
+import Product from '../model/Product';
 // TODO: The list must be persisted in a DB, no in memory
 
 class ItemHandler {
