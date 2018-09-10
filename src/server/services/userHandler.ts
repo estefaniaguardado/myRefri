@@ -1,6 +1,6 @@
 import { Promise } from 'es6-promise';
 
-const users = [{ id: "1", username: 'annie', password: 'hola' }];
+const users = [{ id: '1', username: 'annie', password: 'hola' }];
 
 /**
  * Return an user information by username.

@@ -3,14 +3,14 @@
  * @typedef {object} Item
  */
 import Product from './Product';
-import unity from './Unity';
+import Unity from './Unity';
 
 class Item {
   /**
    * @param {string} id - Item Identifier
    * @param {Product} product - Product reference to which the item belongs
    * @param {Date} date - Date item creation
-   * @param {unity} unity - Selected item unit
+   * @param {Unity} unity - Selected item unit
    * @param {number} quantity - Selected item quantity
    * @param {boolean} active - Shopping status of item
    */
@@ -18,11 +18,11 @@ class Item {
   id: string;
   product: Product;
   date!: Date;
-  unity: unity;
+  unity: Unity;
   quantity: number;
   active: boolean;
 
-  constructor(id: string, product: Product, date: Date, unity: unity, quantity: number, active: boolean) {
+  constructor(id: string, product: Product, date: Date, unity: Unity, quantity: number, active: boolean) {
     this.id = id;
     this.product = product;
     this.date = date;

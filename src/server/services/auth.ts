@@ -1,7 +1,7 @@
-const LocalStrategy = require('passport-local');
-const passport = require('passport');
+import LocalStrategy from 'passport-local';
+import passport from 'passport';
 
-const userHandler = require('./userHandler');
+import userHandler from './userHandler';
 
 /**
  * Authenticate if the given user already exists by the given username and password.
@@ -12,7 +12,7 @@ const userHandler = require('./userHandler');
  */
 async function validateUser(username:string, password: string, done: Function) {
   try {
-    const user = await userHandler.findUserByName(username);
+    const user: User = await userHandler.findUserByName(username);
     if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
 
     done(null, user);

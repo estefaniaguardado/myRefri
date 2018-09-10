@@ -1,14 +1,14 @@
 import path from 'path';
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
-import flash from 'express-flash';
+import expressFlash from 'express-flash';
 import passport from 'passport';
 import debug from 'debug';
 
 const http = debug('http');
 
 import bodyParser from 'body-parser';
-import session from 'express-session';
+import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 import routes from './routes';
 import DetailsError from './DetailsError';
@@ -22,8 +22,8 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-app.use(flash());
+app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(expressFlash());
 app.use(passport.initialize());
 app.use(passport.session());
 

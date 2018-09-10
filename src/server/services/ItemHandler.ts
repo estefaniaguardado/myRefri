@@ -1,11 +1,11 @@
 
 import Item from '../model/Item';
-import unity from '../model/Unity';
+import Unity from '../model/Unity';
 import Product from '../model/Product';
 // TODO: The list must be persisted in a DB, no in memory
 
 class ItemHandler {
-  list: Array<Item>;
+  list: [Item];
 
   constructor() {
     // TODO: Remove once the list is in the DB
@@ -26,7 +26,7 @@ class ItemHandler {
    * @returns {Item} Item object
    */
   findItemById(idItem: string) {
-    const detailsItem = this.list.filter((item: Item) => item.id === idItem );
+    const detailsItem = this.list.filter((item: Item) => item.id === idItem);
 
     return detailsItem[0];
   }
@@ -39,7 +39,7 @@ class ItemHandler {
    * @returns {Item} New Item object
    */
   createNewItem(product: Product, itemData: any) {
-    const unity: unity = itemData.unityItem;
+    const unity: Unity = itemData.unityItem;
     const quantity: number = itemData.quantityItem;
     const id = Math.random().toString(36).substring(2, 5);
 
@@ -53,11 +53,11 @@ class ItemHandler {
   /**
    * Modify an existing item with the new data in the items list of the current user.
    * @param {string} itemId
-   * @param {unity} newUnityItem
+   * @param {Unity} newUnityItem
    * @param {number} newQuantityItem
    */
-  modifyItem(itemId: string, newUnityItem: unity, newQuantityItem: number) {
-    const infoItem = this.list.filter((previousItem: Item) => previousItem.id === itemId );
+  modifyItem(itemId: string, newUnityItem: Unity, newQuantityItem: number) {
+    const infoItem = this.list.filter((previousItem: Item) => previousItem.id === itemId);
     const indexModifiedItem = this.list.indexOf(infoItem[0]);
 
     this.list[indexModifiedItem].unity = newUnityItem;

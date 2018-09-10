@@ -4,8 +4,8 @@
  * @typedef {object} Product
  */
 
-import unity from './Unity';
-import category from './Category';
+import Unity from './Unity';
+import Category from './Category';
 
 class Product {
   /**
@@ -18,12 +18,12 @@ class Product {
    */
   id: string;
   names: [string];
-  unities: Array<unity>;
+  unities: Array<Unity>;
   perishable: boolean;
   notificationOffset: number;
-  category: category;
+  category: Category;
 
-  constructor(id: string, names: [string], unities: Array<unity>, perishable: boolean, notificationOffset: number, category: category) {
+  constructor(id: string, names: [string], unities: Array<Unity>, perishable: boolean, notificationOffset: number, category: Category) {
     this.id = id;
     this.names = names;
     this.unities = unities;

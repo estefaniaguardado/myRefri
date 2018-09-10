@@ -1,8 +1,8 @@
-import expressRouter from "express-promise-router";
-import passport from "passport";
-import { Request, Response } from "express";
+import expressPromiseRouter from 'express-promise-router';
+import passport from 'passport';
+import { Request, Response } from 'express';
 
-const router = expressRouter();
+const router = expressPromiseRouter();
 
 /**
  * If the user has an active session, it redirects to items route rather to the login form.

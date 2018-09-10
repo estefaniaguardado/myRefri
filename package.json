@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npm run lint && npm run unit-test && npm run integration-test",
+    "test": "npm run tslint && npm run unit-test && npm run integration-test",
     "unit-test": "mocha --exclude \"node_modules/**\" \"src/**/*.test.js\"",
-    "lint": "eslint .",
+    "tslint": "tslint -c tslint.json 'src/server/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
     "integration-test": "mocha \"test/**.test.js\" --exit",
     "build-dev": "tsc"
@@ -47,16 +47,12 @@
     "@types/express-session": "^1.15.11",
     "@types/node": "^10.9.4",
     "@types/passport": "^0.4.6",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1",
+    "@types/passport-local": "^1.0.33",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "supertest": "^3.3.0",
     "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
     "unexpected": "^10.39.0"
   },
   "keywords": []

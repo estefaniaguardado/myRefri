@@ -12,6 +12,6 @@ enum Category {
   beauty = 'Beauty',
   outdoor = 'Outdoor',
   pets = 'Pets',
-};
+}
 
 export = Category;

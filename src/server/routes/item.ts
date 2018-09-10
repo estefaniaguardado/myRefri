@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import expressRouter from 'express-promise-router';
+import expressPromiseRouter from 'express-promise-router';
 
-const router = expressRouter();
+const router = expressPromiseRouter();
 
 import ItemHandler from '../services/ItemHandler';
 
@@ -59,7 +59,7 @@ function getItemById(req: Request, res: Response, next: NextFunction) {
   if (item) return res.json({ result: item });
 
   const error = new DetailsError(
-    'ERROR_ITEM_NOT_FOUND', 
+    'ERROR_ITEM_NOT_FOUND',
     404,
     'The item has not been found in your shopping list.',
     `Item ${req.params.id} has not found.`);
@@ -76,7 +76,11 @@ function getItemById(req: Request, res: Response, next: NextFunction) {
 function createNewItem(req: Request, res: Response) {
   const product = productHandler.findProductById(req.body.selectedProduct);
   itemHandler.createNewItem(product, req.body);
-  res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
+  res.render('index', {
+    message: 'Shopping List',
+    products: productHandler.getProductList(),
+    listOfItems: itemHandler.getList(),
+  });
 }
 
 /**
@@ -100,7 +104,7 @@ function updateItem(req: Request, res: Response, next: NextFunction) {
   }
 
   const error = new DetailsError(
-    'ERROR_ITEM_NOT_FOUND', 
+    'ERROR_ITEM_NOT_FOUND',
     404,
     'The item has not been found in your shopping list.',
     `Item ${req.params.id} has not found.`);
@@ -120,11 +124,15 @@ function removeItem(req: Request, res: Response, next: NextFunction) {
 
   if (item) {
     itemHandler.removeItemOfList(req.params.id);
-    return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
+    return res.render('index', {
+      message: 'Shopping List',
+      products: productHandler.getProductList(),
+      listOfItems: itemHandler.getList(),
+    });
   }
 
   const error = new DetailsError(
-    'ERROR_ITEM_NOT_FOUND', 
+    'ERROR_ITEM_NOT_FOUND',
     404,
     'The item has not been found in your shopping list.',
     `Item ${req.params.id} has not found.`);

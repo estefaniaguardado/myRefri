@@ -1,11 +1,11 @@
 import Product from '../model/Product';
-import unity from '../model/Unity';
-import category from '../model/Category';
+import Unity from '../model/Unity';
+import Category from '../model/Category';
 
 // TODO: Extract from DB using the DAO
-const product1 = new Product('1', ['Bread'], [unity.piece, unity.kilogram, unity.gram, unity.pound, unity.ounce], true, 3, category.food);
-const product2 = new Product('2', ['Beer'], [unity.piece, unity.liter, unity.mililiter, unity.quart, unity.gallon], false, 0, category.beverages);
-const product3 = new Product('3', ['Aspirin'], [unity.piece], false, 0, category.pharmacy);
+const product1 = new Product('1', ['Bread'], [Unity.piece, Unity.kilogram, Unity.gram, Unity.pound, Unity.ounce], true, 3, Category.food);
+const product2 = new Product('2', ['Beer'], [Unity.piece, Unity.liter, Unity.mililiter, Unity.quart, Unity.gallon], false, 0, Category.beverages);
+const product3 = new Product('3', ['Aspirin'], [Unity.piece], false, 0, Category.pharmacy);
 
 /**
  * @module Handler of product

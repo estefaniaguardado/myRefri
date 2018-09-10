@@ -14,6 +14,6 @@ enum Unity {
   mililiter = 'mL',
   quart = 'qt',
   gallon = 'gal',
-};
+}
 
 export = Unity;

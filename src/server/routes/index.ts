@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import expressRouter from 'express-promise-router';
+import expressPromiseRouter from 'express-promise-router';
 
-const router = expressRouter();
+const router = expressPromiseRouter();
 
 import auth from './auth';
 import item from './item';
