@@ -32,6 +32,7 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
+    "es6-promise": "^4.2.4",
     "express": "^4.16.3",
     "express-promise-router": "^3.0.2",
     "express-session": "^1.15.6",
@@ -43,6 +44,7 @@
     "typescript": "^3.0.3"
   },
   "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",

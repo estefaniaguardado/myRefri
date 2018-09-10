@@ -10,7 +10,7 @@ const userHandler = require('./userHandler');
  * @param {Function} done - Callback and return user if found it.
  * @see {@link http://www.passportjs.org/} Passportjs
  */
-async function validateUser(username, password, done) {
+async function validateUser(username:string, password: string, done: Function) {
   try {
     const user = await userHandler.findUserByName(username);
     if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
@@ -27,7 +27,7 @@ async function validateUser(username, password, done) {
  * @param {Function} done - Callback and return user.id, which will be restored in req.user.
  * @see {@link http://www.passportjs.org/docs/configure/} Passportjs
  */
-function serialize(user, done) {
+function serialize(user: any, done: Function) {
   done(null, user.id);
 }
 
@@ -37,7 +37,7 @@ function serialize(user, done) {
  * @param {Function} done - Callback and return user by user.id from req.user.
  * @see {@link http://www.passportjs.org/docs/configure/} Passportjs
  */
-async function deserialize(id, done) {
+async function deserialize(id: string, done: Function) {
   try {
     const user = await userHandler.findUserById(id);
     done(null, user);
