@@ -11,7 +11,7 @@ import ProductHandler from '../services/ProductHandler';
 
 const productHandler = ProductHandler();
 
-import ItemError from '../ItemError';
+import DetailsError from '../DetailsError';
 
 /**
  * Return the item page.
@@ -58,7 +58,7 @@ function getItemById(req: Request, res: Response, next: NextFunction) {
 
   if (item) return res.json({ result: item });
 
-  const error = new ItemError(
+  const error = new DetailsError(
     'ERROR_ITEM_NOT_FOUND', 
     404,
     'The item has not been found in your shopping list.',
@@ -99,7 +99,7 @@ function updateItem(req: Request, res: Response, next: NextFunction) {
     });
   }
 
-  const error = new ItemError(
+  const error = new DetailsError(
     'ERROR_ITEM_NOT_FOUND', 
     404,
     'The item has not been found in your shopping list.',
@@ -123,7 +123,7 @@ function removeItem(req: Request, res: Response, next: NextFunction) {
     return res.render('index', { message: 'Shopping List', products: productHandler.getProductList(), listOfItems: itemHandler.getList() });
   }
 
-  const error = new ItemError(
+  const error = new DetailsError(
     'ERROR_ITEM_NOT_FOUND', 
     404,
     'The item has not been found in your shopping list.',

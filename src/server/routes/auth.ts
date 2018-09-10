@@ -1,6 +1,6 @@
 import expressRouter from "express-promise-router";
 import passport from "passport";
-import { Request, Response, Router } from "express";
+import { Request, Response } from "express";
 
 const router = expressRouter();
 

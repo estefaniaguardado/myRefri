@@ -1,4 +1,4 @@
-class ItemError extends Error {
+class DetailsError extends Error {
   statusCode: number;
   description: string;
   details: string;
@@ -12,4 +12,4 @@ class ItemError extends Error {
   }
 }
 
-export = ItemError;
+export = DetailsError;

@@ -1,18 +1,20 @@
-const path = require('path');
-const express = require('express');
-const flash = require('req-flash');
-const passport = require('passport');
-const debug = require('debug')('http');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+import path from 'path';
+import express from 'express';
+import { Request, Response, NextFunction } from 'express';
+import flash from 'express-flash';
+import passport from 'passport';
+import debug from 'debug';
 
-require('./services/auth');
-const routes = require('./routes');
+const http = debug('http');
 
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import routes from './routes';
+import DetailsError from './DetailsError';
+import './services/auth';
 
 const app = express();
-
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
@@ -27,7 +29,7 @@ app.use(passport.session());
 
 app.use(routes);
 app.use('/static', express.static(path.join(__dirname, '../client')));
-app.use((error, req, res, next) => {
+app.use((error: DetailsError, req: Request, res: Response, next: NextFunction) => {
   res.status(error.statusCode || 500);
 
   if (req.accepts('text/html')) {
