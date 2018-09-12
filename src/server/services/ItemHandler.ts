@@ -5,7 +5,7 @@ import Product from '../model/Product';
 // TODO: The list must be persisted in a DB, no in memory
 
 class ItemHandler {
-  list: [Item];
+  list: Array<Item>;
 
   constructor() {
     // TODO: Remove once the list is in the DB

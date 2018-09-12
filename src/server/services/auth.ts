@@ -12,7 +12,7 @@ import userHandler from './userHandler';
  */
 async function validateUser(username:string, password: string, done: Function) {
   try {
-    const user: User = await userHandler.findUserByName(username);
+    const user: any = await userHandler.findUserByName(username);
     if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
 
     done(null, user);
@@ -47,6 +47,6 @@ async function deserialize(id: string, done: Function) {
 }
 
 // Note: Move if more strategies are added
-passport.use(new LocalStrategy(validateUser));
+passport.use(new LocalStrategy.Strategy(validateUser));
 passport.serializeUser(serialize);
 passport.deserializeUser(deserialize);
