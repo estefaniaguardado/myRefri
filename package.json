@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node index.js",
     "test": "npm run tslint && npm run unit-test && npm run integration-test",
-    "unit-test": "mocha --exclude \"node_modules/**\" \"src/**/*.test.js\"",
+    "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
     "tslint": "tslint -c tslint.json 'src/server/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
-    "integration-test": "mocha \"test/**.test.js\" --exit",
+    "integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
     "build-dev": "tsc"
   },
   "repository": {
@@ -45,12 +45,15 @@
     "@types/express-flash": "0.0.0",
     "@types/express-promise-router": "^2.0.0",
     "@types/express-session": "^1.15.11",
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.9.4",
     "@types/passport": "^0.4.6",
     "@types/passport-local": "^1.0.33",
+    "@types/supertest": "^2.0.6",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "supertest": "^3.3.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "unexpected": "^10.39.0"

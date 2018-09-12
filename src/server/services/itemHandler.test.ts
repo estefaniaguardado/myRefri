@@ -1,15 +1,16 @@
 const expect = require('unexpected');
 
-const ItemHandler = require('./ItemHandler');
-
-const Product = require('../../model/Product');
+import ItemHandler from './ItemHandler';
+import Product from '../model/Product';
+import Unity from '../model/Unity';
+import Category from '../model/Category';
 
 describe('Item Handler', () => {
   let sut;
   let item1;
   let item2;
   let itemData;
-  const product = new Product('1');
+  const product = new Product('1', ['Bread'], [Unity.kilogram], true, 3, Category.food);
 
   beforeEach(() => {
     sut = new ItemHandler();

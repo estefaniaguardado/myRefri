@@ -17,7 +17,7 @@ export = () => {
    * Set the available products into a local variable.
    * @param {[Product]} newProducts
    */
-  function setProducts(newProducts: [Product]) {
+  function setProducts(newProducts: Array<Product>) {
     products = newProducts;
   }
 
