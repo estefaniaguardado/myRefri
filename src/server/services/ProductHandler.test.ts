@@ -1,16 +1,18 @@
 const expect = require('unexpected');
 
 // TODO: ProductHandler should start with lowercase
-const productHandler = require('./ProductHandler');
-const Product = require('../../model/Product');
+import productHandler from './ProductHandler';
+import Product from '../model/Product';
+import Unity from '../model/Unity';
+import Category from '../model/Category';
 
 describe('Product Handler', () => {
   const sut = productHandler();
-  const product1 = new Product('1', ['Bread'], ['kg'], true, 3, 'Food');
+  const product1 = new Product('1', ['Bread'], [Unity.kilogram], true, 3, Category.food);
 
   context('given no products', () => {
     beforeEach(() => {
-      sut.setProducts([]);
+      sut.setProducts(Array<Product>());
     });
 
     describe('when requesting the list of products', () => {

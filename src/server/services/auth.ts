@@ -1,7 +1,7 @@
-const LocalStrategy = require('passport-local');
-const passport = require('passport');
+import LocalStrategy from 'passport-local';
+import passport from 'passport';
 
-const userHandler = require('./userHandler');
+import userHandler from './userHandler';
 
 /**
  * Authenticate if the given user already exists by the given username and password.
@@ -10,9 +10,9 @@ const userHandler = require('./userHandler');
  * @param {Function} done - Callback and return user if found it.
  * @see {@link http://www.passportjs.org/} Passportjs
  */
-async function validateUser(username, password, done) {
+async function validateUser(username:string, password: string, done: Function) {
   try {
-    const user = await userHandler.findUserByName(username);
+    const user: any = await userHandler.findUserByName(username);
     if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
 
     done(null, user);
@@ -27,7 +27,7 @@ async function validateUser(username, password, done) {
  * @param {Function} done - Callback and return user.id, which will be restored in req.user.
  * @see {@link http://www.passportjs.org/docs/configure/} Passportjs
  */
-function serialize(user, done) {
+function serialize(user: any, done: Function) {
   done(null, user.id);
 }
 
@@ -37,7 +37,7 @@ function serialize(user, done) {
  * @param {Function} done - Callback and return user by user.id from req.user.
  * @see {@link http://www.passportjs.org/docs/configure/} Passportjs
  */
-async function deserialize(id, done) {
+async function deserialize(id: string, done: Function) {
   try {
     const user = await userHandler.findUserById(id);
     done(null, user);
@@ -47,6 +47,6 @@ async function deserialize(id, done) {
 }
 
 // Note: Move if more strategies are added
-passport.use(new LocalStrategy(validateUser));
+passport.use(new LocalStrategy.Strategy(validateUser));
 passport.serializeUser(serialize);
 passport.deserializeUser(deserialize);

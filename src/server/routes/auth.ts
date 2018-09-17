@@ -1,13 +1,16 @@
-const passport = require('passport');
-const router = require('express-promise-router')();
+import expressPromiseRouter from 'express-promise-router';
+import passport from 'passport';
+import { Request, Response } from 'express';
+
+const router = expressPromiseRouter();
 
 /**
  * If the user has an active session, it redirects to items route rather to the login form.
  * @memberof Router.authenticate
- * @param {object} req - Express object
- * @param {object} res - Express object
+ * @param {Request} req - Express object
+ * @param {Response} res - Express object
  */
-function login(req, res) {
+function login(req: Request, res: Response) {
   if (req.user) {
     res.redirect('/');
   } else {
@@ -21,8 +24,8 @@ function login(req, res) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function logout(req, res) {
-  req.session.destroy(() => res.redirect('/'));
+function logout(req: Request, res: Response) {
+  req.session!.destroy(() => res.redirect('/'));
 }
 
 router.get('/login', login);
@@ -44,4 +47,4 @@ router.post('/login', passport.authenticate('local', {
 /**
  * @namespace Router.authenticate
  */
-module.exports = router;
+export = router;

@@ -1,6 +1,11 @@
-const router = require('express-promise-router')();
+import { Request, Response } from 'express';
+import expressPromiseRouter from 'express-promise-router';
 
-const productHandler = require('../services/ProductHandler')();
+const router = expressPromiseRouter();
+
+import ProductHandler from '../services/ProductHandler';
+
+const productHandler = ProductHandler();
 
 /**
  * Router serving product details by id product through the request.
@@ -8,7 +13,7 @@ const productHandler = require('../services/ProductHandler')();
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function getProductDetails(req, res) {
+function getProductDetails(req: Request, res: Response) {
   const product = productHandler.findProductById(req.params.id);
 
   return res.json({ id: req.params.id, unities: product.unities });
@@ -19,4 +24,4 @@ router.get('/:id', getProductDetails);
 /**
  * @namespace Router.products
  */
-module.exports = router;
+export = router;

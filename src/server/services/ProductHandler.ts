@@ -1,6 +1,6 @@
-const Product = require('../../model/Product');
-const Unity = require('../../model/Unity');
-const Category = require('../../model/Category');
+import Product from '../model/Product';
+import Unity from '../model/Unity';
+import Category from '../model/Category';
 
 // TODO: Extract from DB using the DAO
 const product1 = new Product('1', ['Bread'], [Unity.piece, Unity.kilogram, Unity.gram, Unity.pound, Unity.ounce], true, 3, Category.food);
@@ -10,14 +10,14 @@ const product3 = new Product('3', ['Aspirin'], [Unity.piece], false, 0, Category
 /**
  * @module Handler of product
  */
-module.exports = () => {
+export = () => {
   let products = [product1, product2, product3];
 
   /**
    * Set the available products into a local variable.
    * @param {[Product]} newProducts
    */
-  function setProducts(newProducts) {
+  function setProducts(newProducts: Array<Product>) {
     products = newProducts;
   }
 
@@ -34,10 +34,10 @@ module.exports = () => {
    * @param {string} idProduct
    * @returns {Product} Product object
    */
-  function findProductById(idProduct) {
-    const detailsProduct = products.find(product => product.id === idProduct);
+  function findProductById(idProduct: string) {
+    const detailsProduct = products.filter((product: Product) => product.id === idProduct);
 
-    return detailsProduct;
+    return detailsProduct[0];
   }
 
   return {

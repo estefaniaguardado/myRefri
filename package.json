@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npm run lint && npm run unit-test && npm run integration-test",
-    "unit-test": "mocha --exclude \"node_modules/**\" \"src/**/*.test.js\"",
-    "lint": "eslint .",
+    "test": "npm run tslint && npm run unit-test && npm run integration-test",
+    "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
+    "tslint": "tslint -c tslint.json 'src/server/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
-    "integration-test": "mocha \"test/**.test.js\" --exit"
+    "integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
+    "build-dev": "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,26 +26,37 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
+    "es6-promise": "^4.2.4",
     "express": "^4.16.3",
-    "express-promise-router": "^3.0.2",
+    "express-flash": "0.0.2",
+    "express-promise-router": "^3.0.3",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.3",
-    "req-flash": "0.0.3"
+    "typescript": "^3.0.3"
   },
   "devDependencies": {
-    "eslint": "^4.9.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/debug": "0.0.30",
+    "@types/es6-promise": "^3.3.0",
+    "@types/express": "^4.16.0",
+    "@types/express-flash": "0.0.0",
+    "@types/express-promise-router": "^2.0.0",
+    "@types/express-session": "^1.15.11",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.9.4",
+    "@types/passport": "^0.4.6",
+    "@types/passport-local": "^1.0.33",
+    "@types/supertest": "^2.0.6",
     "mocha": "^5.2.0",
-    "nodemon": "^1.17.5",
-    "supertest": "^3.1.0",
-    "unexpected": "^10.38.0"
+    "nodemon": "^1.18.4",
+    "supertest": "^3.3.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "unexpected": "^10.39.0"
   },
   "keywords": []
 }

@@ -1,5 +1,5 @@
-const supertest = require('supertest');
 const expect = require('unexpected');
+import supertest from 'supertest';
 
 const app = require('../src/server/index');
 
