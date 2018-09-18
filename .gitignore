@@ -4,7 +4,6 @@
 /dist
 /tmp
 /out-tsc
-/src/server/**/*.js
 
 # Runtime data
 pids
