@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "npm run tslint && npm run unit-test && npm run integration-test",
     "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
-    "tslint": "tslint -c tslint.json 'src/server/**/*.ts'",
+    "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
     "integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
     "build-dev": "tsc"
@@ -45,6 +45,9 @@
     "@types/express-flash": "0.0.0",
     "@types/express-promise-router": "^2.0.0",
     "@types/express-session": "^1.15.11",
+    "@types/jquery": "^3.3.6",
+    "@types/jquery.validation": "^1.16.4",
+    "@types/jqueryui": "^1.12.4",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.9.4",
     "@types/passport": "^0.4.6",
