@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/EstefaniaGuardado/myAppJs#readme",
   "dependencies": {
+    "@types/typescript": "^2.0.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
