@@ -1,11 +1,16 @@
 const expect = require('unexpected');
 
-const ItemHandler = require('./ItemHandler');
+import ItemHandler from './ItemHandler';
+import Product from '../model/Product';
+import Unity from '../model/Unity';
+import Category from '../model/Category';
 
 describe('Item Handler', () => {
   let sut;
   let item1;
   let item2;
+  let itemData;
+  const product = new Product('1', ['Bread'], [Unity.kilogram], true, 3, Category.food);
 
   beforeEach(() => {
     sut = new ItemHandler();
@@ -18,34 +23,40 @@ describe('Item Handler', () => {
 
     describe('adding the item1', () => {
       beforeEach(() => {
-        item1 = sut.createNewItem('item1');
+        itemData = { unityItem: 'pz', quantityItem: 2 };
+        item1 = sut.createNewItem(product, itemData);
       });
 
       it('should return the item1', () => {
         expect(sut.getList(), 'to satisfy', [item1]);
       });
 
-      describe('when adding the same item again', () => {
+      describe('when adding another item again of the same product type', () => {
         beforeEach(() => {
-          item2 = sut.createNewItem('item1');
+          itemData = { unityItem: 'kg', quantityItem: 1 };
+          item2 = sut.createNewItem(product, itemData);
         });
 
-        it('should have two of the same items', () => {
+        it('should have two items of the same product type', () => {
           expect(sut.getList(), 'to satisfy', [item1, item2]);
         });
       });
 
       describe('when modify the item1', () => {
         beforeEach(() => {
-          item1 = sut.modifyItem(item1.id, { name: 'modifiedItem1' });
+          sut.modifyItem(item1.id, 'pz', 2);
         });
 
         it('should not change the list', () => {
           expect(sut.getList(), 'to satisfy', [item1]);
         });
 
-        it('should rename the item name', () => {
-          expect(item1.name, 'to be', 'modifiedItem1');
+        it('should modify the item unity', () => {
+          expect(item1.unity, 'to be', 'pz');
+        });
+
+        it('should modify the item quantity', () => {
+          expect(item1.quantity, 'to be', 2);
         });
       });
 
