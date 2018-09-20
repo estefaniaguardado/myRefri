@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run postinstall && node index.js",
     "test": "npm run tslint && npm run unit-test && npm run integration-test",
     "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
+    "postinstall": "npm run build-ts",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
     "integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
-    "build-dev": "tsc"
+    "build-ts": "tsc"
   },
   "repository": {
     "type": "git",
