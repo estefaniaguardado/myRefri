@@ -9,10 +9,11 @@
     "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
     "postinstall": "npm run build-ts",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
-    "dev": "set PORT=8000 && npm run database-connection && nodemon index.js",
+    "dev": "set PORT=8000 && nodemon index.js",
     "integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
     "build-ts": "tsc",
-    "database-connection": "node src/server/db/connector.js"
+    "database-connection": "node src/server/db/connector.js",
+    "database-dev": "node src/server/db/schema/index.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "@types/passport": "^0.4.6",
     "@types/passport-local": "^1.0.33",
     "@types/pg": "^7.4.10",
+    "@types/pg-promise": "^5.4.3",
     "@types/supertest": "^2.0.6",
     "@types/typescript": "^2.0.0",
     "body-parser": "^1.18.3",
@@ -54,6 +56,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.4.3",
+    "pg-promise": "^8.4.6",
     "pug": "^2.0.3",
     "typescript": "^3.0.3"
   },
