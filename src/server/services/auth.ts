@@ -2,8 +2,12 @@ import LocalStrategy from 'passport-local';
 import passport from 'passport';
 
 import UserHandler from './UserHandler';
+import UserDAO from '../dao/UserDAO';
 
-const userHandler = new UserHandler();
+// TODO: Implement Dependency Injection
+import { db } from '../db/connector';
+const userDAO = new UserDAO(db);
+const userHandler = new UserHandler(userDAO);
 
 /**
  * Authenticate if the given user already exists by the given username and password.

@@ -16,6 +16,4 @@ const config = {
 };
 
 const pgp = pgPromise(initOptions);
-const db = pgp(config);
-
-export = db;
+export const db = pgp(config);

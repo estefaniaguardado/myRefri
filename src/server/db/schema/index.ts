@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import * as db from '../connector';
+import { db } from '../connector';
 
 async function restoreDatabase() {
   const createSql = fs.readFileSync(path.join(__dirname, './create.sql'), 'utf-8');

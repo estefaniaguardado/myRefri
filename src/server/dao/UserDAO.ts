@@ -1,12 +1,13 @@
 import { IUserDAO } from './IUserDAO';
 import User from '../model/User';
-import * as db from '../db/connector';
+import pgPromise from 'pg-promise';
 
 export default class UserDAO implements IUserDAO {
+  constructor(readonly db: pgPromise.IDatabase<{}>) {}
 
   async getUserByName(username: string): Promise<User | null> {
     try {
-      const data = await db.oneOrNone('SELECT * FROM main.user WHERE username = $1', [username]);
+      const data = await this.db.oneOrNone('SELECT * FROM main.user WHERE username = $1', [username]);
       if (!data) return null;
 
       const user: User = {
@@ -23,7 +24,7 @@ export default class UserDAO implements IUserDAO {
 
   async getUserById(id: string): Promise<User | null> {
     try {
-      const data = await db.oneOrNone('SELECT * FROM main.user WHERE id = $1', [id]);
+      const data = await this.db.oneOrNone('SELECT * FROM main.user WHERE id = $1', [id]);
       if (!data) return null;
 
       const user: User = {

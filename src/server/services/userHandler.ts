@@ -1,14 +1,14 @@
 import User from '../model/User';
-import UserDAO from '../dao/UserDAO';
-
-const dao = new UserDAO();
+import { IUserDAO } from '../dao/IUserDAO';
 
 export default class UserHandler {
+  constructor(readonly dao: IUserDAO) {}
+
   findUserByName(username: string): Promise<User | null> {
-    return dao.getUserByName(username);
+    return this.dao.getUserByName(username);
   }
 
   findUserById(id: string): Promise<User | null> {
-    return dao.getUserById(id);
+    return this.dao.getUserById(id);
   }
 }
