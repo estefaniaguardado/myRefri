@@ -1,32 +1,18 @@
 import Product from '../model/Product';
-import Unity from '../model/Unity';
-import Category from '../model/Category';
-
-// TODO: Extract from DB using the DAO
-const product1 = new Product('1', ['Bread'], [Unity.piece, Unity.kilogram, Unity.gram, Unity.pound, Unity.ounce], true, 3, Category.food);
-const product2 = new Product('2', ['Beer'], [Unity.piece, Unity.liter, Unity.mililiter, Unity.quart, Unity.gallon], false, 0, Category.beverages);
-const product3 = new Product('3', ['Aspirin'], [Unity.piece], false, 0, Category.pharmacy);
+import { IProductDAO } from '../dao/IProductDAO';
 
 /**
  * @module Handler of product
  */
-export = () => {
-  let products = [product1, product2, product3];
-
-  /**
-   * Set the available products into a local variable.
-   * @param {[Product]} newProducts
-   */
-  function setProducts(newProducts: Array<Product>) {
-    products = newProducts;
-  }
+export default class ProductHandler {
+  constructor(readonly dao: IProductDAO) {}
 
   /**
    * Return registered and active products.
    * @returns {[Product]} Array of products.
    */
-  function getProductList() {
-    return [...products];
+  fetchProductList(): Promise<Product[]> {
+    return this.dao.getProducts();
   }
 
   /**
@@ -34,15 +20,7 @@ export = () => {
    * @param {string} idProduct
    * @returns {Product} Product object
    */
-  function findProductById(idProduct: string) {
-    const detailsProduct = products.filter((product: Product) => product.id === idProduct);
-
-    return detailsProduct[0];
+  findProductById(idProduct: string): Promise<Product | null> {
+    return this.dao.getProductById(idProduct);
   }
-
-  return {
-    setProducts,
-    getProductList,
-    findProductById,
-  };
-};
+}

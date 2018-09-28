@@ -1,13 +1,22 @@
 const expect = require('unexpected');
 
 // TODO: ProductHandler should start with lowercase
-import productHandler from './ProductHandler';
+import ProductHandler from './ProductHandler';
 import Product from '../model/Product';
 import Unity from '../model/Unity';
 import Category from '../model/Category';
+import { IProductDAO } from '../dao/IProductDAO';
 
 describe('Product Handler', () => {
-  const sut = productHandler();
+  // sinon.js?
+  const daoMock: IProductDAO = {
+    createProduct: () => Promise.resolve(null),
+    getProductById: () => Promise.resolve(null),
+    getProducts: () => Promise.resolve([]),
+    updateDataProduct: () => Promise.resolve(null),
+  };
+
+  const sut = new ProductHandler(daoMock);
   const product1 = new Product('1', ['Bread'], [Unity.kilogram], true, 3, Category.food);
 
   context('given no products', () => {

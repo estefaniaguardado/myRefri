@@ -4,8 +4,12 @@ import expressPromiseRouter from 'express-promise-router';
 const router = expressPromiseRouter();
 
 import ProductHandler from '../services/ProductHandler';
+import ProductDAO from '../dao/ProductDAO';
 
-const productHandler = ProductHandler();
+// TODO: Implement Dependency Injection
+import { db } from '../db/connector';
+const productDAO = new ProductDAO(db);
+const productHandler = new ProductHandler(productDAO);
 
 /**
  * Router serving product details by id product through the request.
@@ -13,8 +17,9 @@ const productHandler = ProductHandler();
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function getProductDetails(req: Request, res: Response) {
-  const product = productHandler.findProductById(req.params.id);
+async function getProductDetails(req: Request, res: Response) {
+  const product = await productHandler.findProductById(req.params.id);
+  if (!product) return new Error('INCORRECT_PRODUCT_ID');
 
   return res.json({ id: req.params.id, unities: product.unities });
 }

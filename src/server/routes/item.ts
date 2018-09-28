@@ -8,8 +8,12 @@ import ItemHandler from '../services/ItemHandler';
 const itemHandler = new ItemHandler();
 
 import ProductHandler from '../services/ProductHandler';
+import ProductDAO from '../dao/ProductDAO';
 
-const productHandler = ProductHandler();
+// TODO: Implement Dependency Injection
+import { db } from '../db/connector';
+const productDAO = new ProductDAO(db);
+const productHandler = new ProductHandler(productDAO);
 
 import DetailsError from '../DetailsError';
 
@@ -35,11 +39,11 @@ function getItemList(req: Request, res: Response, next: NextFunction) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function shoopingListView(req: Request, res: Response, next: NextFunction) {
+async function shoopingListView(req: Request, res: Response, next: NextFunction) {
   if (req.accepts('text/html')) {
     return res.render('index', {
       message: 'Shopping List',
-      products: productHandler.getProductList(),
+      products: await productHandler.fetchProductList(),
       listOfItems: itemHandler.getList(),
     });
   }
@@ -73,12 +77,14 @@ function getItemById(req: Request, res: Response, next: NextFunction) {
  * @param {object} req - Express object
  * @param {object} res - Express object
  */
-function createNewItem(req: Request, res: Response) {
-  const product = productHandler.findProductById(req.body.selectedProduct);
+async function createNewItem(req: Request, res: Response) {
+  const product = await productHandler.findProductById(req.body.selectedProduct);
+  if (!product) return new Error('INCORRECT_PRODUCT_ID');
+
   itemHandler.createNewItem(product, req.body);
   res.render('index', {
     message: 'Shopping List',
-    products: productHandler.getProductList(),
+    products: await productHandler.fetchProductList(),
     listOfItems: itemHandler.getList(),
   });
 }
@@ -90,7 +96,7 @@ function createNewItem(req: Request, res: Response) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function updateItem(req: Request, res: Response, next: NextFunction) {
+async function updateItem(req: Request, res: Response, next: NextFunction) {
   const item = itemHandler.findItemById(req.params.id);
 
   if (item) {
@@ -98,7 +104,7 @@ function updateItem(req: Request, res: Response, next: NextFunction) {
 
     return res.render('index', {
       message: 'Shopping List',
-      products: productHandler.getProductList(),
+      products: await productHandler.fetchProductList(),
       listOfItems: itemHandler.getList(),
     });
   }
@@ -119,14 +125,14 @@ function updateItem(req: Request, res: Response, next: NextFunction) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function removeItem(req: Request, res: Response, next: NextFunction) {
+async function removeItem(req: Request, res: Response, next: NextFunction) {
   const item = itemHandler.findItemById(req.params.id);
 
   if (item) {
     itemHandler.removeItemOfList(req.params.id);
     return res.render('index', {
       message: 'Shopping List',
-      products: productHandler.getProductList(),
+      products: await productHandler.fetchProductList(),
       listOfItems: itemHandler.getList(),
     });
   }
