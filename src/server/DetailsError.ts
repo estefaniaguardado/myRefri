@@ -1,15 +1,14 @@
-class DetailsError extends Error {
+export default interface DetailsError extends Error {
+  /**
+   * HTTP response status code by the server to the client
+   */
   statusCode: number;
+  /**
+   * Description to show in the client
+   */
   description: string;
+  /**
+   * Details about the info that can help to fix
+   */
   details: string;
-
-  constructor(message: string, status: number, description: string, details: string) {
-    super(message);
-
-    this.statusCode = status;
-    this.description = description;
-    this.details = details;
-  }
 }
-
-export = DetailsError;
