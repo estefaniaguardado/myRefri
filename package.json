@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/EstefaniaGuardado/myAppJs#readme",
   "dependencies": {
+    "@types/connect-pg-simple": "^4.2.0",
     "@types/cookie-parser": "^1.4.1",
     "@types/debug": "0.0.30",
     "@types/es6-promise": "^3.3.0",
@@ -45,6 +46,7 @@
     "@types/supertest": "^2.0.6",
     "@types/typescript": "^2.0.0",
     "body-parser": "^1.18.3",
+    "connect-pg-simple": "^5.0.0",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "es6-promise": "^4.2.4",

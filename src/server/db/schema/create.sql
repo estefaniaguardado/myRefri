@@ -62,4 +62,13 @@ CREATE TABLE IF NOT EXISTS "main"."notification" (
   notification_date DATE NOT NULL
 );
 
+CREATE TABLE "main"."session" (
+  sid VARCHAR NOT NULL COLLATE "default",
+	sess JSON NOT NULL,
+	expire TIMESTAMP(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "main"."session" ADD CONSTRAINT "session_pkey" PRIMARY KEY (sid) NOT DEFERRABLE INITIALLY IMMEDIATE;
+
 END$$

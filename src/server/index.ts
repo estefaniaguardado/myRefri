@@ -8,13 +8,15 @@ import debug from 'debug';
 const http = debug('http');
 
 import bodyParser from 'body-parser';
-import expressSession from 'express-session';
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import routes from './routes';
 import DetailsError from './DetailsError';
 import './services/auth';
+import connectPgSession from 'connect-pg-simple';
 
 const app = express();
+const pgSession = connectPgSession(session);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
@@ -22,7 +24,17 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(session({
+  store: new pgSession({
+    conString: 'postgresql://postgres:12345@localhost:5432/myRefri',
+    schemaName: 'main',
+    tableName: 'session',
+  }),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 900000 },
+}));
 app.use(expressFlash());
 app.use(passport.initialize());
 app.use(passport.session());
