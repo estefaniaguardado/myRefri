@@ -16,11 +16,11 @@ export interface IProductDAO {
   fetchProductById(id: string): Promise<Product | null>;
 
   /**
-   * Return the information of category.
+   * Return the identifier of category.
    * @param {Category} name
    * @returns {Promise} Promise object represent the category data
    */
-  fetchCategoryData(name: Category): Promise<Category | null>;
+  getCategoryId(name: Category): Promise<string | null>;
 
   /**
    * Return the product identifier that has been created.

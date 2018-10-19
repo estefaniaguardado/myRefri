@@ -41,10 +41,14 @@ export default class ProductDAO implements IProductDAO {
     }
   }
 
-  async fetchCategoryData(name: Category): Promise<Category | null> {
+  async getCategoryId(name: Category): Promise<string | null> {
     try {
       const queryCategory = 'SELECT id FROM main.category WHERE category_name = $1';
-      return await await this.db.one(queryCategory, name);
+      const data = await this.db.one(queryCategory, name);
+
+      if (!data) return null;
+
+      return data.id;
     } catch (error) {
       console.error('Error fetching category of product', error);
       throw new Error('ERROR_FETCHING_CATEGORY');

@@ -40,18 +40,17 @@ export default class ProductHandler {
                         perishable: boolean,
                         notificationOffset: number,
                         category: Category): Promise<Product | null> {
-    const categoryInfo = await this.dao.fetchCategoryData(category);
+    const categoryId = await this.dao.getCategoryId(category);
 
-    if (!categoryInfo) throw new Error('ERROR_GETTING_CATEGORY_INFORMATION');
+    if (!categoryId) throw new Error('ERROR_GETTING_CATEGORY_INFORMATION');
 
-    const productId = await this.dao.createProduct(perishable, notificationOffset, categoryInfo['id']);
+    const productId = await this.dao.createProduct(perishable, notificationOffset, categoryId);
 
     if (!productId) throw new Error('ERROR_REGISTERING_PRODUCT');
 
     await this.dao.registerNamesProduct(productId, names);
     await this.dao.registerUnitsProduct(productId, units);
 
-    return await this.dao.fetchProductById(productId);;
-
+    return await this.dao.fetchProductById(productId);
   }
 }
