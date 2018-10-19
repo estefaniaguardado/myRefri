@@ -21,7 +21,7 @@ async function getProductDetails(req: Request, res: Response) {
   const product = await productHandler.findProductById(req.params.id);
   if (!product) return new Error('INCORRECT_PRODUCT_ID');
 
-  return res.json({ id: req.params.id, unities: product.unities });
+  return res.json({ id: req.params.id, units: product.units });
 }
 
 router.get('/:id', getProductDetails);

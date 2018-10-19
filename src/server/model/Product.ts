@@ -15,11 +15,11 @@ export default interface Product {
   /**
    * Potential names to identify a product
    */
-  names: [string];
+  names: string[];
   /**
    * Potential units to size a product
    */
-  unities: Array<Unity>;
+  units: Unity[];
   /**
    * Define perishable possibility of a product
    */

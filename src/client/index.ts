@@ -17,8 +17,8 @@ function setQuantityInput(unitySelect) {
   }
 }
 
-function setUnitySelect(unities) {
-  unities.forEach((unit) => {
+function setUnitySelect(units) {
+  units.forEach((unit) => {
     $('select#unitySelect').append($('<option>', {
       selected: false,
       value: unit,
@@ -33,7 +33,7 @@ function setUnitySelect(unities) {
   $('li#submitNewItem').show();
 }
 
-$('select#selectProducts').change(function createUnitiesSelect() {
+$('select#selectProducts').change(function createUnitsSelect() {
   const hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
 
   if (hasPreviousOptions) {
@@ -47,7 +47,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
     url: `/products/${selectedOption}`,
     type: 'GET',
     success: (data) => {
-      setUnitySelect(data.unities);
+      setUnitySelect(data.units);
     },
   });
 });
@@ -109,7 +109,7 @@ function getDetailsProductItemById(id) {
 }
 
 function setItemUnitySelect(item, product) {
-  product.unities.forEach((unit) => {
+  product.units.forEach((unit) => {
     let isSelected;
 
     if (item.unity !== unit) {
