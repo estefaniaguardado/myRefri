@@ -10,7 +10,7 @@ import Unity from '../model/Unity';
 import Category from '../model/Category';
 import ProductDAO from '../dao/ProductDAO';
 
-describe.only('Product Handler', () => {
+describe('Product Handler', () => {
   let sut;
   let productDAO;
 

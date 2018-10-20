@@ -1,73 +1,107 @@
-const expect = require('unexpected');
+import expect from 'unexpected';
+expect.clone();
+import unexpectedSinon from 'unexpected-sinon';
+expect.use(unexpectedSinon);
+import sinon from 'sinon';
 
 import ItemHandler from './ItemHandler';
-import Product from '../model/Product';
-import Unity from '../model/Unity';
-import Category from '../model/Category';
+import Unit from '../model/Unity';
+import ItemDAO from '../dao/ItemDAO';
+
+const itemId = '6fg7hdf';
+const productId = '2adsf4';
+const unit = Unit.kilogram;
+const quantity = 5;
 
 describe('Item Handler', () => {
   let sut;
-  let item1;
-  let item2;
-  let itemData;
-  const product = new Product('1', ['Bread'], [Unity.kilogram], true, 3, Category.food);
+  let itemDAO;
+  let itemMock;
 
   beforeEach(() => {
-    sut = new ItemHandler();
+    itemDAO = sinon.createStubInstance(ItemDAO);
+
+    sut = new ItemHandler(itemDAO);
   });
 
   context('when starting the system', () => {
-    it('should start with an empty list', () => {
-      expect(sut.getList(), 'to be empty');
+    const userId = '5jadsfn';
+    let response;
+
+    describe('when searching an item by the id', () => {
+      beforeEach(async () => {
+        itemMock = sinon.mock();
+
+        itemDAO.getItemById.resolves(itemMock);
+
+        response = await sut.findItemById(itemId);
+      });
+
+      it('should pass the item identifier', () =>
+        expect(itemDAO.getItemById, 'was called with', itemId),
+      );
+
+      it('should return the searched item', () =>
+        expect(response, 'to be', itemMock),
+      );
     });
 
-    describe('adding the item1', () => {
+    describe('when requesting the list of items', () => {
       beforeEach(() => {
-        itemData = { unityItem: 'pz', quantityItem: 2 };
-        item1 = sut.createNewItem(product, itemData);
+        itemMock = sinon.mock();
+        itemDAO.getItemListByUser.resolves([itemMock]);
+
+        response = sut.getList(userId);
       });
 
-      it('should return the item1', () => {
-        expect(sut.getList(), 'to satisfy', [item1]);
+      it('should pass user identifier', () => {
+        expect(itemDAO.getItemListByUser, 'was called with', userId);
       });
 
-      describe('when adding another item again of the same product type', () => {
-        beforeEach(() => {
-          itemData = { unityItem: 'kg', quantityItem: 1 };
-          item2 = sut.createNewItem(product, itemData);
-        });
+      it('should return an empty list', () => {
+        expect(response, 'to be fulfilled with', [itemMock]);
+      });
+    });
 
-        it('should have two items of the same product type', () => {
-          expect(sut.getList(), 'to satisfy', [item1, item2]);
-        });
+    describe('when adding items to the list', () => {
+      beforeEach(async () => {
+        itemDAO.createItem.onCall(0).resolves(null)
+                          .onCall(1).resolves(null);
+
+        await sut.createNewItem(productId, unit, quantity, userId);
+        await sut.createNewItem(productId, unit, quantity, userId);
       });
 
-      describe('when modify the item1', () => {
-        beforeEach(() => {
-          sut.modifyItem(item1.id, 'pz', 2);
-        });
+      it('should pass the item information', () => {
+        sinon.assert.calledWith(itemDAO.createItem.firstCall, productId, sinon.match.date, unit, quantity, userId);
+        sinon.assert.calledWith(itemDAO.createItem.secondCall, productId, sinon.match.date, unit, quantity, userId);
+      });
+    });
 
-        it('should not change the list', () => {
-          expect(sut.getList(), 'to satisfy', [item1]);
-        });
+    describe('when modify an item', () => {
+      const newUnit = Unit.gram;
+      const newQuantity = 6;
 
-        it('should modify the item unity', () => {
-          expect(item1.unity, 'to be', 'pz');
-        });
+      beforeEach(async () => {
+        itemDAO.updateItem.resolves();
 
-        it('should modify the item quantity', () => {
-          expect(item1.quantity, 'to be', 2);
-        });
+        await sut.modifyItem(itemId, newUnit, newQuantity);
       });
 
-      describe('when remove the item1', () => {
-        beforeEach(() => {
-          sut.removeItemOfList(item1.id);
-        });
+      it('should pass the new item information', () =>
+        expect(itemDAO.updateItem, 'was called with', itemId, newUnit, newQuantity),
+      );
+    });
 
-        it('should not have the item1', () => {
-          expect(sut.getList(), 'to be empty');
-        });
+    describe('when remove an item', () => {
+      beforeEach(async () => {
+        itemDAO.deleteItem.resolves();
+
+        await sut.removeItemOfList(itemId);
+      });
+
+      it('should pass the identifier of the item to remove', () => {
+        expect(itemDAO.deleteItem, 'was called with', itemId);
       });
     });
   });
