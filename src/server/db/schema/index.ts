@@ -7,10 +7,11 @@ async function restoreDatabase() {
   const dropSql = fs.readFileSync(path.join(__dirname, './drop.sql'), 'utf-8');
 
   try {
+    console.log('Drop schema');
     await db.none(dropSql);
-    await db.none(createSql);
 
     console.log('Create schema');
+    await db.none(createSql);
   } catch (error) {
     console.error(error);
   }
