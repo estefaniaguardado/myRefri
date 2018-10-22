@@ -38,21 +38,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var enterKeycode = 13;
 function setQuantityInput(unitySelect) {
     var selectedOption = $(unitySelect).find(':selected').val();
-    if (selectedOption === 'gr' || selectedOption === 'mL') {
-        $('input#quantityInput').attr('value', 50);
+    if (selectedOption === 'gram' || selectedOption === 'mililiter') {
+        $('input#quantityInput').val(50);
         $('input#quantityInput').attr('step', 50);
         $('input#quantityInput').attr('max', 100000);
         $('input#quantityInput').attr('min', 50);
     }
     else {
-        $('input#quantityInput').attr('value', 1);
+        $('input#quantityInput').val(1);
         $('input#quantityInput').attr('step', 1);
         $('input#quantityInput').attr('max', 100);
         $('input#quantityInput').attr('min', 1);
     }
 }
-function setUnitySelect(unities) {
-    unities.forEach(function (unit) {
+function setUnitySelect(units) {
+    units.forEach(function (unit) {
         $('select#unitySelect').append($('<option>', {
             selected: false,
             value: unit,
@@ -65,7 +65,7 @@ function setUnitySelect(unities) {
     $('li#quantity').show();
     $('li#submitNewItem').show();
 }
-$('select#selectProducts').change(function createUnitiesSelect() {
+$('select#selectProducts').change(function createUnitsSelect() {
     var hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
     if (hasPreviousOptions) {
         $('select#unitySelect option').remove();
@@ -76,7 +76,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
         url: "/products/" + selectedOption,
         type: 'GET',
         success: function (data) {
-            setUnitySelect(data.unities);
+            setUnitySelect(data.units);
         },
     });
 });
@@ -132,7 +132,7 @@ function getDetailsProductItemById(id) {
     });
 }
 function setItemUnitySelect(item, product) {
-    product.unities.forEach(function (unit) {
+    product.units.forEach(function (unit) {
         var isSelected;
         if (item.unity !== unit) {
             isSelected = false;
@@ -148,8 +148,8 @@ function setItemUnitySelect(item, product) {
     });
 }
 function setItemQuantityInput(unity, quantity) {
-    $('input#itemQuantityInput').attr('value', parseInt(quantity, 10));
-    if (unity === 'gr' || unity === 'mL') {
+    $('input#itemQuantityInput').val(quantity);
+    if (unity === 'gram' || unity === 'mililiter') {
         $('input#itemQuantityInput').attr('step', 50);
         $('input#itemQuantityInput').attr('max', 100000);
         $('input#itemQuantityInput').attr('min', 50);
@@ -193,12 +193,12 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
                     idItemSelected = $(this).closest('.detailsItem').attr('id');
                     return [4 /*yield*/, getDetailsItembyId(idItemSelected)];
                 case 1:
-                    result = (_a.sent());
+                    result = _a.sent();
                     item = result['result'];
-                    return [4 /*yield*/, getDetailsProductItemById(item.product.id)];
+                    return [4 /*yield*/, getDetailsProductItemById(item.productId)];
                 case 2:
                     product = _a.sent();
-                    $('#modifyItemP').text(item.product.names[0]);
+                    $('#modifyItemP').text(item.name);
                     $('select#itemUnitySelect option').remove();
                     setItemUnitySelect(item, product);
                     setItemQuantityInput(item.unity, item.quantity);
@@ -223,14 +223,14 @@ $('button#modifyItemButton').click(function modifyHandler(event) {
 });
 $('select#itemUnitySelect').change(function modifiedItemQuantitySelect() {
     var selectedOption = $(this).find(':selected').val();
-    if (selectedOption === 'gr' || selectedOption === 'mL') {
-        $('input#itemQuantityInput').attr('value', 50);
+    if (selectedOption === 'gram' || selectedOption === 'mililiter') {
+        $('input#itemQuantityInput').val(50);
         $('input#itemQuantityInput').attr('step', 50);
         $('input#itemQuantityInput').attr('max', 100000);
         $('input#itemQuantityInput').attr('min', 50);
     }
     else {
-        $('input#itemQuantityInput').attr('value', 1);
+        $('input#itemQuantityInput').val(1);
         $('input#itemQuantityInput').attr('step', 1);
         $('input#itemQuantityInput').attr('max', 100);
         $('input#itemQuantityInput').attr('min', 1);
