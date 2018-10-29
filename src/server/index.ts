@@ -14,6 +14,7 @@ import routes from './routes';
 import DetailsError from './DetailsError';
 import './services/auth';
 import connectPgSession from 'connect-pg-simple';
+import config from '../config';
 
 const app = express();
 const pgSession = connectPgSession(session);
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
   store: new pgSession({
-    conString: 'postgresql://postgres:12345@localhost:5432/myRefri',
+    conString: config('database'),
     schemaName: 'main',
     tableName: 'session',
   }),
@@ -56,7 +57,7 @@ app.use((error: DetailsError, req: Request, res: Response, next: NextFunction) =
   return next(error);
 });
 
-const port = process.env.PORT || 3000;
+const port = config('PORT');
 app.listen(port, () => {
   debug(`App is listening in port ${port}`);
 });

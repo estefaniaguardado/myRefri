@@ -1,4 +1,5 @@
 import pgPromise from 'pg-promise';
+import config from '../../config';
 
 const initOptions = {
   connect(client) {
@@ -7,13 +8,6 @@ const initOptions = {
   },
 };
 
-const config = {
-  user: process.env.USER || 'postgres',
-  host: 'localhost',
-  database: process.env.USER || 'myRefri',
-  password: '12345',
-  port: 5432,
-};
-
 const pgp = pgPromise(initOptions);
-export const db = pgp(config);
+const database = config('database');
+export const db = pgp(database);

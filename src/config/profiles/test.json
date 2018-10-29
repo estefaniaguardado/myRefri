@@ -1,0 +1,4 @@
+{
+  "database" : "postgres://postgres:12345@localhost:5432/myRefri-test",
+  "PORT": 8080
+}
