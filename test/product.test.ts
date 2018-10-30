@@ -1,7 +1,9 @@
-const expect = require('unexpected');
+import expect from 'unexpected';
 import supertest from 'supertest';
 
-const app = require('../src/server/index');
+import Unit from '../src/server/model/Unity';
+import Category from '../src/server/model/Category';
+import app from '../src/server/index';
 
 describe('Product API', () => {
   let user;
@@ -21,27 +23,53 @@ describe('Product API', () => {
         expect(response.headers.location, 'to be', '/login');
       });
     });
+  });
 
-    context('when accessing with the valid user', () => {
+    // TODO: Support user creation - issue #55
+  context('when accessing with authorized user', () => {
+    before(async () => {
+      user = { username: 'annie', password: 'hola' };
+      await agent
+        .post('/login')
+        .send(user)
+        .expect(302);
+    });
+
+    context('when exist at least one product', () => {
       let response;
+      let product;
       before(async () => {
-        user = { username: 'annie', password: 'hola' };
         response = await agent
-          .post('/login')
-          .send(user)
-          .expect(302);
+          .post('/products/')
+          .send({
+            names: ['Milch'],
+            units: [Unit.liter],
+            perishable: true,
+            notificationOffset: 5,
+            category: Category.food,
+          })
+          .expect(200);
+
+        product = response.body.product;
+      });
+
+      context('when fetch products', async () => {
+        it('should return the registered products', async () => {
+          response = await agent
+            .get('/products')
+            .expect(200);
+
+          expect(response.body, 'not to be empty');
+        });
       });
 
       context('when fetching the product by id', () => {
         it('should return the product info', async () => {
           response = await agent
-            .get('/products/1')
+            .get(`/products/${product.id}`)
             .expect(200);
 
-          expect(response.body, 'to satisfy', {
-            id: '1',
-            unities: ['pz', 'kg', 'gr', 'lb', 'oz'],
-          });
+          expect(response.body.id, 'to be', product.id);
         });
       });
     });
