@@ -1,7 +1,9 @@
-const expect = require('unexpected');
+import expect from 'unexpected';
 import supertest from 'supertest';
 
-const app = require('../src/server/index');
+import Category from '../src/server/model/Category';
+import Unit from '../src/server/model/Unity';
+import app from '../src/server/index';
 
 describe('Item API', () => {
   let agent;
@@ -14,20 +16,22 @@ describe('Item API', () => {
 
   context('when not authorized User', () => {
     context('when access to shopping list view', () => {
-      it('should redirect to the login', async () => {
+      before(async () => {
         response = await agent
           .get('/item')
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
           .expect(401);
+      });
 
+      it('should redirect to the login', async () => {
         expect(response.headers.location, 'to be', '/login');
       });
     });
 
     context('when fetching the item list', () => {
-      it('should redirect to the login', async () => {
+      before(async () => {
         response = await agent
           .get('/item')
           .set('Accept', 'application/json')
@@ -35,13 +39,15 @@ describe('Item API', () => {
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
           .expect(401);
+      });
 
+      it('should redirect to the login', () => {
         expect(response.headers.location, 'to be', '/login');
       });
     });
 
     context('when fetching the item by id', () => {
-      it('should redirect to the login', async () => {
+      before(async () => {
         response = await agent
           .get('/item/1')
           .set('Accept', 'application/json')
@@ -49,158 +55,14 @@ describe('Item API', () => {
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
           .expect(401);
+      });
 
+      it('should redirect to the login', async () => {
         expect(response.headers.location, 'to be', '/login');
       });
     });
 
     context('when create a new item', () => {
-      it('should redirect to the login', async () => {
-        response = await agent
-          .post('/item')
-          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-          .set('Expires', '-1')
-          .set('Pragma', 'no-cache')
-          .send({
-            selectedProduct: '1',
-            unityItem: 'pz',
-            quantityItem: 2,
-          })
-          .expect(401);
-
-        expect(response.headers.location, 'to be', '/login');
-      });
-    });
-
-    context('when update an item', () => {
-      it('should redirect to the login', async () => {
-        response = await agent
-          .put('/item/1')
-          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-          .set('Expires', '-1')
-          .set('Pragma', 'no-cache')
-          .send({
-            unityItem: 'pz',
-            quantityItem: 2,
-          })
-          .expect(401);
-
-        expect(response.headers.location, 'to be', '/login');
-      });
-    });
-
-    context('when delete an item', () => {
-      it('should redirect to the login', async () => {
-        response = await agent
-          .delete('/item/1')
-          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-          .set('Expires', '-1')
-          .set('Pragma', 'no-cache')
-          .expect(401);
-
-        expect(response.headers.location, 'to be', '/login');
-      });
-    });
-  });
-
-  context('when accessing with the valid user', () => {
-    before(async () => {
-      user = { username: 'annie', password: 'hola' };
-      response = await agent
-        .post('/login')
-        .send(user)
-        .expect(302);
-    });
-
-    context('when the user has not items', () => {
-      context('when access to shopping list view', () => {
-        it('should render the empty shopping list', async () => {
-          response = await agent
-            .get('/item')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200);
-
-          expect(response.text, 'not to contain', 'detailsItem');
-        });
-      });
-
-      context('when fetching the item list', () => {
-        it('should return the empty item list', async () => {
-          response = await agent
-            .get('/item')
-            .set('Accept', 'application/json')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .expect(200);
-
-          expect(response.body.result, 'to be empty');
-        });
-      });
-
-      context('when fetching an item by id', () => {
-        it('should not return info', async () => {
-          response = await agent
-            .get('/item/1')
-            .set('Accept', 'application/json')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .expect(404);
-
-          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_NOT_FOUND' });
-        });
-      });
-
-      context('when update an item details', () => {
-        it('should not update any item', async () => {
-          response = await agent
-            .put('/item/1')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .send({
-              unityItem: 'pz',
-              quantityItem: 2,
-            })
-            .expect(404);
-        });
-      });
-
-      context('when delete an item', () => {
-        it('should not delete any item', async () => {
-          response = await agent
-            .delete('/item/1')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .expect(404);
-        });
-      });
-
-      context('when create a new item', () => {
-        it('should add a new item into the shopping list', async () => {
-          response = await agent
-            .post('/item')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .send({
-              selectedProduct: '1',
-              unityItem: 'pz',
-              quantityItem: 2,
-            })
-            .expect(200);
-        });
-      });
-    });
-
-    context('when the user has at least one item', () => {
-      let item1;
-
       before(async () => {
         response = await agent
           .post('/item')
@@ -212,11 +74,63 @@ describe('Item API', () => {
             unityItem: 'pz',
             quantityItem: 2,
           })
-          .expect(200);
+          .expect(401);
       });
 
+      it('should redirect to the login', () => {
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+
+    context('when update an item', () => {
+      before(async () => {
+        response = await agent
+          .put('/item/1')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .send({
+            unityItem: 'pz',
+            quantityItem: 2,
+          })
+          .expect(401);
+      });
+
+      it('should redirect to the login', () => {
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+
+    context('when delete an item', () => {
+      before(async () => {
+        response = await agent
+          .delete('/item/1')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .expect(401);
+      });
+
+      it('should redirect to the login', () => {
+        expect(response.headers.location, 'to be', '/login');
+      });
+    });
+  });
+
+  context('when accessing with authorized user', () => {
+    before(async () => {
+      user = { username: 'annie', password: 'hola' };
+      response = await agent
+      .post('/login')
+      .send(user)
+      .expect(302);
+    });
+
+    context('when the user has not items', () => {
+      const itemId = 'aa87496c-0685-4de5-a169-4958e71e4d74';
+
       context('when access to shopping list view', () => {
-        it('should render the shopping list', async () => {
+        before(async () => {
           response = await agent
             .get('/item')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
@@ -224,13 +138,15 @@ describe('Item API', () => {
             .set('Pragma', 'no-cache')
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200);
+        });
 
-          expect(response.text, 'to contain', 'detailsItem');
+        it('should render the empty shopping list', () => {
+          expect(response.text, 'not to contain', 'detailsItem');
         });
       });
 
       context('when fetching the item list', () => {
-        it('should return the item list', async () => {
+        before(async () => {
           response = await agent
             .get('/item')
             .set('Accept', 'application/json')
@@ -238,88 +154,224 @@ describe('Item API', () => {
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
             .expect(200);
+        });
 
-          expect(response.body.result, 'to be non-empty')
-            .and('to have an item satisfying', (item) => {
-              item1 = item;
-              expect(item.product.id, 'to be', '1');
-            });
+        it('should return the empty item list', () => {
+          expect(response.body.result, 'to be empty');
         });
       });
 
       context('when fetching an item by id', () => {
-        it('should return the item details', async () => {
+        before(async () => {
           response = await agent
-            .get(`/item/${item1.id}`)
+            .get(`/item/${itemId}`)
             .set('Accept', 'application/json')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
-            .expect(200);
+            .expect(404);
+        });
 
-          expect(response.body.result, 'to satisfy', item1);
+        it('should not return info', async () => {
+          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_NOT_FOUND' });
         });
       });
 
-      context('when update the item details', () => {
-        it('should update the item', async () => {
+      context('when update an item details', () => {
+        before(async () => {
           response = await agent
-            .put(`/item/${item1.id}`)
+            .put(`/item/${itemId}`)
+            .set('Accept', 'application/json')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
             .send({
-              unityItem: 'L',
-              quantityItem: 5,
+              unityItem: 'piece',
+              quantityItem: 2,
             })
-            .expect(200);
+            .expect(400);
+        });
 
-          const getUpdatedItem = await agent
-            .get(`/item/${item1.id}`)
-            .set('Accept', 'application/json')
-            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-            .set('Expires', '-1')
-            .set('Pragma', 'no-cache')
-            .expect(200);
-
-          expect(getUpdatedItem.body.result, 'to satisfy', { unity: 'L', quantity: 5 });
+        it('should not update any item', () => {
+          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_HAS_NOT_BE_UPDATED' });
         });
       });
 
       context('when delete an item', () => {
-        it('should delete the item of the shopping list', async () => {
+        before(async () => {
           response = await agent
-            .delete(`/item/${item1.id}`)
+            .delete(`/item/${itemId}`)
+            .set('Accept', 'application/json')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
-            .expect(200);
+            .expect(400);
+        });
 
-          const getItemList = await agent
+        it('should not delete any item', () => {
+          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_HAS_NOT_BE_REMOVED' });
+        });
+      });
+    });
+
+    context('when the user has at least one item', () => {
+      let item;
+      let product;
+
+      before(async () => {
+        response = await agent
+          .post('/products/')
+          .send({
+            names: ['Milk'],
+            units: [Unit.liter, Unit.mililiter, Unit.piece],
+            perishable: true,
+            notificationOffset: 5,
+            category: Category.food,
+          })
+          .expect(200);
+
+        product = response.body.product;
+
+        response = await agent
+          .post('/item')
+          .set('Accept', 'application/json')
+          .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+          .set('Expires', '-1')
+          .set('Pragma', 'no-cache')
+          .send({
+            selectedProduct: product.id,
+            unityItem: 'liter',
+            quantityItem: 2,
+          })
+          .expect(200);
+
+        item = response.body.result;
+      });
+
+      context('when access to shopping list view', () => {
+        before(async () => {
+          response = await agent
+            .get('/item')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200);
+        });
+
+        it('should render the items', async () => {
+          expect(response.text, 'to contain', item.id);
+        });
+      });
+
+      context('when fetching the item list', () => {
+        before(async () => {
+          response = await agent
             .get('/item')
             .set('Accept', 'application/json')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
             .expect(200);
+        });
 
-          expect(getItemList.body.result, 'not to satisfy', item1);
+        it('should return the item list', async () => {
+          expect(response.body.result, 'to satisfy', [item]);
         });
       });
 
-      context('when create a new item', () => {
-        it('should add a new item into the shopping list', async () => {
+      context('when fetching an item by id', () => {
+        before(async () => {
           response = await agent
-            .post('/item')
+            .get(`/item/${item.id}`)
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+        });
+
+        it('should return the item details', async () => {
+          expect(response.body.result, 'to satisfy', item);
+        });
+      });
+
+      context('when update the item details', () => {
+        let updateItem;
+        before(async () => {
+          response = await agent
+            .put(`/item/${item.id}`)
+            .set('Accept', 'application/json')
             .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
             .set('Expires', '-1')
             .set('Pragma', 'no-cache')
             .send({
-              selectedProduct: '2',
-              unityItem: 'pz',
-              quantityItem: 3,
+              unityItem: 'mililiter',
+              quantityItem: 1500,
             })
             .expect(200);
+
+          updateItem = response.body.result;
+        });
+
+        it('should update the item', async () => {
+          expect(updateItem, 'not to equal', item);
+        });
+      });
+
+      context('when delete an item', () => {
+        before(async () => {
+          response = await agent
+            .delete(`/item/${item.id}`)
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+
+          response = await agent
+            .get('/item')
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+        });
+
+        it('should remove the item of the shopping list', () => {
+          expect(response.body.result, 'not to satisfy', [item]);
+        });
+      });
+
+      context('when create a new item', () => {
+        let newItem;
+
+        before(async () => {
+          response = await agent
+            .post('/item')
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .send({
+              selectedProduct: product.id,
+              unityItem: 'piece',
+              quantityItem: 1,
+            })
+            .expect(200);
+
+          newItem = response.body.result;
+
+          response = await agent
+            .get('/item')
+            .set('Accept', 'application/json')
+            .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            .set('Expires', '-1')
+            .set('Pragma', 'no-cache')
+            .expect(200);
+        });
+
+        it('should add a new item into the shopping list', () => {
+          expect(response.body.result, 'to satisfy', [newItem]);
         });
       });
     });

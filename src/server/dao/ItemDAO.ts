@@ -1,6 +1,6 @@
 import { IItemDAO } from '../dao/IItemDAO';
 import Item from '../model/Item';
-import Unity from '../model/Unity';
+import Unit from '../model/Unity';
 import pgPromise from 'pg-promise';
 
 export default class ItemDAO implements IItemDAO {
@@ -66,19 +66,22 @@ export default class ItemDAO implements IItemDAO {
   }
 
   // TODO: Review the userId as parameter to identigy list(s)
-  async createItem(productId: string, date: Date, unity: Unity, quantity: number, userId: string) {
+  async createItem(productId: string, date: Date, unity: Unit, quantity: number, userId: string): Promise<string | null> {
     try {
       const query = `INSERT INTO main.item (product_id, added, unit, quantity, list_id, active)
-      VALUES ($1, $2, $3, $4, (SELECT ul.list_id FROM main.user_list ul WHERE ul.user_id = $5), true)`;
+      VALUES ($1, $2, $3, $4, (SELECT ul.list_id FROM main.user_list ul WHERE ul.user_id = $5), true) RETURNING id`;
+      const data = await this.db.oneOrNone(query, [productId, date, unity, quantity, userId]);
 
-      return await this.db.none(query, [productId, date, unity, quantity, userId]);
+      if (!data) return null;
+
+      return data;
     } catch (error) {
       console.error('Error creating Item', error);
       throw new Error('ERROR_CREATING_ITEM');
     }
   }
 
-  async updateItem(id: string, unity: Unity, quantity: number) {
+  async updateItem(id: string, unity: Unit, quantity: number) {
     try {
       const query = 'UPDATE main.item SET unit = $1, quantity = $2 where id = $3';
 

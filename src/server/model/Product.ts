@@ -4,7 +4,7 @@
  * @typedef {object} Product
  */
 
-import Unity from './Unity';
+import Unit from './Unity';
 import Category from './Category';
 
 export default interface Product {
@@ -19,7 +19,7 @@ export default interface Product {
   /**
    * Potential units to size a product
    */
-  units: Unity[];
+  units: Unit[];
   /**
    * Define perishable possibility of a product
    */

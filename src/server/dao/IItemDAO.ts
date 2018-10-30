@@ -1,5 +1,5 @@
 import Item from '../model/Item';
-import Unity from '../model/Unity';
+import Unit from '../model/Unity';
 
 export interface IItemDAO {
   /**
@@ -12,21 +12,21 @@ export interface IItemDAO {
    */
   getItemById(id: string): Promise<Item | null>;
   /**
-   * Create a new item with the specified data and add it to the items list of the current user.
+   * Return the identifier of new item with the specified data and add it to the items list of the current user.
    * @param {Product} productId
    * @param {date} date
-   * @param {Unity} unity
+   * @param {Unit} unity
    * @param {number} quantity
    * @param {string} userId
    */
-  createItem(productId: string, date: Date, unity: Unity, quantity: number, userId: string);
+  createItem(productId: string, date: Date, unity: Unit, quantity: number, userId: string): Promise<string | null>;
   /**
-   * Modify an existing item with the new data in the items list of the current user.
+   * Update an item with the new data in the items list of the current user.
    * @param {string} id
-   * @param {Unity} unity - Updated unity of item
+   * @param {Unit} unity - Updated unity of item
    * @param {number} quantity - Updated quantity of item
    */
-  updateItem(id: string, unity: Unity, quantity: number);
+  updateItem(id: string, unity: Unit, quantity: number);
   /**
    * Remove an existing item by ID of the items list of the current user.
    * @param {string} id

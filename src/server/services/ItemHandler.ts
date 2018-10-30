@@ -1,6 +1,6 @@
 
 import Item from '../model/Item';
-import Unity from '../model/Unity';
+import Unit from '../model/Unity';
 import { IItemDAO } from '../dao/IItemDAO';
 
 export default class ItemHandler {
@@ -14,16 +14,30 @@ export default class ItemHandler {
     return this.dao.getItemById(idItem);
   }
 
-  async createNewItem(productId: string, unityItem: Unity, quantityItem: number, userId: string) {
+  async createNewItem(productId: string, unityItem: Unit, quantityItem: number, userId: string): Promise<Item | null> {
     const date = new Date();
-    await this.dao.createItem(productId, date, unityItem, quantityItem, userId);
+    const itemId = await this.dao.createItem(productId, date, unityItem, quantityItem, userId);
+
+    if (!itemId) throw new Error('ERROR_CREATING_NEW_ITEM');
+
+    return await this.dao.getItemById(itemId['id']);
   }
 
-  async modifyItem(itemId: string, newUnityItem: Unity, newQuantityItem: number) {
+  async modifyItem(itemId: string, newUnityItem: Unit, newQuantityItem: number): Promise<Item | null> {
+    const item = await this.dao.getItemById(itemId);
+
+    if (!item) throw new Error('ERROR_FETCHING_ITEM_TO_UPDATE');
+
     await this.dao.updateItem(itemId, newUnityItem, newQuantityItem);
+
+    return await this.dao.getItemById(itemId);
   }
 
   async removeItemOfList(id: string) {
+    const item = await this.dao.getItemById(id);
+
+    if (!item) throw new Error('ERROR_FETCHING_ITEM_TO_DELETE');
+
     await this.dao.deleteItem(id);
   }
 }

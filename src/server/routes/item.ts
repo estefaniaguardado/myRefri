@@ -88,9 +88,13 @@ async function createNewItem(req: Request, res: Response, next: NextFunction) {
 
   try {
     // TODO: Review the userId as parameter to identigy list(s)
-    await itemHandler.createNewItem(productId, unity, quantity, userId);
+    const newItem = await itemHandler.createNewItem(productId, unity, quantity, userId);
 
-    res.render('index', {
+    if (req.accepts('application/json')) {
+      return res.json({ ok: true, result: newItem });
+    }
+
+    return res.render('index', {
       message: 'Shopping List',
       products: await productHandler.fetchProductList(),
       listOfItems: await itemHandler.getList(req.user.id),
@@ -120,7 +124,11 @@ async function createNewItem(req: Request, res: Response, next: NextFunction) {
  */
 async function updateItem(req: Request, res: Response, next: NextFunction) {
   try {
-    await itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
+    const updatedItem = await itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
+
+    if (req.accepts('application/json')) {
+      return res.json({ ok: true, result: updatedItem });
+    }
 
     return res.render('index', {
       message: 'Shopping List',
@@ -133,7 +141,7 @@ async function updateItem(req: Request, res: Response, next: NextFunction) {
     const itemError: DetailsError = {
       name: 'ERROR_ITEM',
       message: 'ERROR_ITEM_HAS_NOT_BE_UPDATED',
-      statusCode: 404,
+      statusCode: 400,
       description: 'The item has not be updated.',
       details: `Item ${req.params.id} has not be updated with the input values:
       unity: ${req.body.unityItem}, quantity: ${req.body.quantityItem}`,
@@ -165,7 +173,7 @@ async function removeItem(req: Request, res: Response, next: NextFunction) {
     const itemError: DetailsError = {
       name: 'ERROR_ITEM',
       message: 'ERROR_ITEM_HAS_NOT_BE_REMOVED',
-      statusCode: 404,
+      statusCode: 400,
       description: 'The item has not be removed of your list.',
       details: `Item ${req.params.id} has not be removed of the list`,
     };

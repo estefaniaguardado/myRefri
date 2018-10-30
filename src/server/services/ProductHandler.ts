@@ -1,7 +1,7 @@
 import Product from '../model/Product';
 import { IProductDAO } from '../dao/IProductDAO';
 import Category = require('../model/Category');
-import Unity = require('../model/Unity');
+import Unit = require('../model/Unity');
 
 /**
  * @module Handler of product
@@ -29,14 +29,14 @@ export default class ProductHandler {
   /**
    * Return the id of created product
    * @param {string} name
-   * @param {Unity[]} units
+   * @param {Unit[]} units
    * @param {boolean} perishable
    * @param {number} notificationOffset
    * @param {Category} category
    * @returns {Promise} Promise object represents the created product id
    */
   async registerProduct(names: string[],
-                        units: Unity[],
+                        units: Unit[],
                         perishable: boolean,
                         notificationOffset: number,
                         category: Category): Promise<Product | null> {

@@ -1,5 +1,5 @@
 import Product from '../model/Product';
-import Unity = require('../model/Unity');
+import Unit = require('../model/Unity');
 import Category = require('../model/Category');
 
 export interface IProductDAO {
@@ -26,7 +26,7 @@ export interface IProductDAO {
    * Return the product identifier that has been created.
    * @param {boolean} perishable
    * @param {string[]} notificationOffset
-   * @param {Unity[]} categoryId
+   * @param {Unit[]} categoryId
    * @returns {Promise} Promise object represent the information of created product
    */
   createProduct(perishable: boolean,
@@ -43,7 +43,7 @@ export interface IProductDAO {
   /**
    * Register the units information of the product.
    * @param {string} productId
-   * @param {Unity[]} units
+   * @param {Unit[]} units
    */
   registerUnitsProduct(productId:string, units: string[]);
 

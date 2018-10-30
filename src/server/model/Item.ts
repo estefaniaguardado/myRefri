@@ -2,7 +2,7 @@
  * Defines the properties of an item that user has set and added to his shopping list.
  * @typedef {object} Item
  */
-import Unity from './Unity';
+import Unit from './Unity';
 
 export default interface Item {
   /**
@@ -24,7 +24,7 @@ export default interface Item {
   /**
    * Selected item unit
    */
-  unity: Unity;
+  unity: Unit;
   /**
    * Selected item quantity
    */

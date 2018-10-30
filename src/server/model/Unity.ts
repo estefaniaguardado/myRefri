@@ -4,7 +4,7 @@
  * @enum {string}
  * @see {@link https://www.iso.org/standard/30669.html ISO/IEC 80000}
  */
-enum Unity {
+enum Unit {
   piece = 'piece',
   kilogram = 'kilogram',
   gram = 'gram',
@@ -16,4 +16,4 @@ enum Unity {
   gallon = 'gallon',
 }
 
-export = Unity;
+export = Unit;

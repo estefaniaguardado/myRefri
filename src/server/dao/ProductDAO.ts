@@ -3,7 +3,7 @@
 import { IProductDAO } from '../dao/IProductDAO';
 import Product from '../model/Product';
 import pgPromise from 'pg-promise';
-import Unity = require('../model/Unity');
+import Unit = require('../model/Unity');
 import Category = require('../model/Category');
 
 export default class ProductDAO implements IProductDAO {
