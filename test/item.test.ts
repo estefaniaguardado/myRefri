@@ -117,7 +117,7 @@ describe('Item API', () => {
     });
   });
 
-  context('when accessing with authorized user', () => {
+  context('when access authorized user', () => {
     before(async () => {
       user = { username: 'annie', password: 'hola' };
       response = await agent
@@ -193,7 +193,7 @@ describe('Item API', () => {
         });
 
         it('should not update any item', () => {
-          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_HAS_NOT_BE_UPDATED' });
+          expect(response.body, 'to satisfy', { message: 'ERROR_INCORRECT_DATA_ITEM_TO_UPDATE' });
         });
       });
 
@@ -209,7 +209,7 @@ describe('Item API', () => {
         });
 
         it('should not delete any item', () => {
-          expect(response.body, 'to satisfy', { name: 'ERROR_ITEM_HAS_NOT_BE_REMOVED' });
+          expect(response.body, 'to satisfy', { message: 'ERROR_INCORRECT_DATA_ITEM_TO_REMOVE' });
         });
       });
     });

@@ -27,6 +27,7 @@ describe('Item Handler', () => {
   context('when starting the system', () => {
     const userId = '5jadsfn';
     let response;
+    let idItemMock;
 
     describe('when searching an item by the id', () => {
       beforeEach(async () => {
@@ -63,38 +64,53 @@ describe('Item Handler', () => {
       });
     });
 
-    describe('when adding items to the list', () => {
-      beforeEach(async () => {
-        itemDAO.createItem.onCall(0).resolves(null)
-                          .onCall(1).resolves(null);
+    describe('when add an item to the list', () => {
+      beforeEach(() => {
+        idItemMock = sinon.mock();
+        itemMock = sinon.mock();
+        itemDAO.createItem.resolves(idItemMock);
+        itemDAO.getItemById.resolves(itemMock);
 
-        await sut.createNewItem(productId, unit, quantity, userId);
-        await sut.createNewItem(productId, unit, quantity, userId);
+        response = sut.createNewItem(productId, unit, quantity, userId);
       });
 
       it('should pass the item information', () => {
-        sinon.assert.calledWith(itemDAO.createItem.firstCall, productId, sinon.match.date, unit, quantity, userId);
-        sinon.assert.calledWith(itemDAO.createItem.secondCall, productId, sinon.match.date, unit, quantity, userId);
+        sinon.assert.calledWith(itemDAO.createItem, productId, sinon.match.date, unit, quantity, userId);
+      });
+
+      it('should return the created item', () => {
+        expect(response, 'to be fulfilled with', itemMock);
       });
     });
 
     describe('when modify an item', () => {
       const newUnit = Unit.gram;
       const newQuantity = 6;
+      let updateItemMock;
 
       beforeEach(async () => {
+        itemMock = sinon.mock();
+        updateItemMock = sinon.mock();
+        itemDAO.getItemById.onCall(0).returns(itemMock);
+        itemDAO.getItemById.onCall(1).returns(updateItemMock);
         itemDAO.updateItem.resolves();
 
-        await sut.modifyItem(itemId, newUnit, newQuantity);
+        response = await sut.modifyItem(itemId, newUnit, newQuantity);
       });
 
       it('should pass the new item information', () =>
         expect(itemDAO.updateItem, 'was called with', itemId, newUnit, newQuantity),
       );
+
+      it('should return the updated item', () => {
+        expect(response, 'to be', updateItemMock);
+      });
     });
 
     describe('when remove an item', () => {
       beforeEach(async () => {
+        itemMock = sinon.mock();
+        itemDAO.getItemById.resolves(itemMock);
         itemDAO.deleteItem.resolves();
 
         await sut.removeItemOfList(itemId);

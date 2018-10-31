@@ -18,7 +18,7 @@ export default class ItemHandler {
     const date = new Date();
     const itemId = await this.dao.createItem(productId, date, unityItem, quantityItem, userId);
 
-    if (!itemId) throw new Error('ERROR_CREATING_NEW_ITEM');
+    if (!itemId) return null;
 
     return await this.dao.getItemById(itemId['id']);
   }
@@ -26,18 +26,20 @@ export default class ItemHandler {
   async modifyItem(itemId: string, newUnityItem: Unit, newQuantityItem: number): Promise<Item | null> {
     const item = await this.dao.getItemById(itemId);
 
-    if (!item) throw new Error('ERROR_FETCHING_ITEM_TO_UPDATE');
+    if (!item) return null;
 
     await this.dao.updateItem(itemId, newUnityItem, newQuantityItem);
 
     return await this.dao.getItemById(itemId);
   }
 
-  async removeItemOfList(id: string) {
+  async removeItemOfList(id: string): Promise<Item | null> {
     const item = await this.dao.getItemById(id);
 
-    if (!item) throw new Error('ERROR_FETCHING_ITEM_TO_DELETE');
+    if (!item) return null;
 
     await this.dao.deleteItem(id);
+
+    return item;
   }
 }

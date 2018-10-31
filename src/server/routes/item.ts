@@ -102,15 +102,15 @@ async function createNewItem(req: Request, res: Response, next: NextFunction) {
         unity: ${unity}, quantity: ${quantity}, userId: ${userId}`);
     }
 
-    if (req.accepts('application/json')) {
-      return res.json({ ok: true, result: newItem });
+    if (req.accepts('text/html')) {
+      return res.render('index', {
+        message: 'Shopping List',
+        products: await productHandler.fetchProductList(),
+        listOfItems: await itemHandler.getList(req.user.id),
+      });
     }
 
-    return res.render('index', {
-      message: 'Shopping List',
-      products: await productHandler.fetchProductList(),
-      listOfItems: await itemHandler.getList(req.user.id),
-    });
+    return res.json({ ok: true, result: newItem });
   } catch (error) {
     log.error('ERROR_CREATING_NEW_ITEM', error);
 
