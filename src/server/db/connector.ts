@@ -1,10 +1,13 @@
 import pgPromise from 'pg-promise';
 import config from '../../config';
+import logger from '../logger';
+
+const log = logger('connector');
 
 const initOptions = {
   connect(client) {
     const cp = client.connectionParameters;
-    console.log('Connected to database:', cp.database);
+    log.info('Connected to database...');
   },
 };
 

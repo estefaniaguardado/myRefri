@@ -2,6 +2,9 @@ import { IItemDAO } from '../dao/IItemDAO';
 import Item from '../model/Item';
 import Unit from '../model/Unity';
 import pgPromise from 'pg-promise';
+import logger from '../logger';
+
+const log = logger('ItemDAO');
 
 export default class ItemDAO implements IItemDAO {
   constructor(readonly db: pgPromise.IDatabase<{}>) {}
@@ -35,7 +38,7 @@ export default class ItemDAO implements IItemDAO {
 
       return items;
     } catch (error) {
-      console.error('Error fetching items', error);
+      log.error('Error fetching items', error);
       throw new Error('ERROR_FETCHING_ITEMS');
     }
   }
@@ -60,7 +63,7 @@ export default class ItemDAO implements IItemDAO {
 
       return item;
     } catch (error) {
-      console.error('Error fetching item by Id', error);
+      log.error('Error fetching item by Id', error);
       throw new Error('ERROR_FETCHING_ITEM');
     }
   }
@@ -76,7 +79,7 @@ export default class ItemDAO implements IItemDAO {
 
       return data;
     } catch (error) {
-      console.error('Error creating Item', error);
+      log.error('Error creating Item', error);
       throw new Error('ERROR_CREATING_ITEM');
     }
   }
@@ -87,7 +90,7 @@ export default class ItemDAO implements IItemDAO {
 
       return await this.db.none(query, [unity, quantity, id]);
     } catch (error) {
-      console.error('Error updating Item', error);
+      log.error('Error updating Item', error);
       throw new Error('ERROR_UPDATING_ITEM');
     }
   }
@@ -98,7 +101,7 @@ export default class ItemDAO implements IItemDAO {
 
       return await this.db.none(query, [id]);
     } catch (error) {
-      console.error('Error deleting Item', error);
+      log.error('Error deleting Item', error);
       throw new Error('ERROR_DELETING_ITEM');
     }
   }

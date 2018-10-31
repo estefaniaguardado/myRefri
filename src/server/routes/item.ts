@@ -10,7 +10,9 @@ import ItemDAO from '../dao/ItemDAO';
 import ProductHandler from '../services/ProductHandler';
 import ProductDAO from '../dao/ProductDAO';
 import DetailsError from '../DetailsError';
+import logger from '../logger';
 
+const log = logger('ItemService');
 const itemDAO = new ItemDAO(db);
 const itemHandler = new ItemHandler(itemDAO);
 const productDAO = new ProductDAO(db);
@@ -62,20 +64,20 @@ async function getItemById(req: Request, res: Response, next: NextFunction) {
 
   if (item) return res.json({ result: item });
 
-  const error: DetailsError = {
-    name: 'ERROR_ITEM',
-    message: 'ERROR_ITEM_NOT_FOUND',
-    statusCode: 404,
-    description: 'The item has not been found in your list.',
-    details: `Item ${req.params.id} has not found.`,
-  };
+  const error = new DetailsError(
+    'ERROR_ITEM',
+    'ERROR_ITEM_NOT_FOUND',
+    404,
+    'The item has not been found in your list.',
+    `Item ${req.params.id} has not found.`,
+  );
 
   return next(error);
 }
 
 /**
  * @memberof Router.item
- * Ccreates and adds a new item with the given data into the list.
+ * Creates and adds a new item with the given data into the list.
  * @param {object} req - Express object
  * @param {object} res - Express object
  * @param {object} next - Express object
@@ -90,6 +92,16 @@ async function createNewItem(req: Request, res: Response, next: NextFunction) {
     // TODO: Review the userId as parameter to identigy list(s)
     const newItem = await itemHandler.createNewItem(productId, unity, quantity, userId);
 
+    if (!newItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_CREATE',
+        400,
+        'The item has not be created into your list.',
+        `Item has not be created with the input values: idProduct: ${productId},
+        unity: ${unity}, quantity: ${quantity}, userId: ${userId}`);
+    }
+
     if (req.accepts('application/json')) {
       return res.json({ ok: true, result: newItem });
     }
@@ -100,16 +112,17 @@ async function createNewItem(req: Request, res: Response, next: NextFunction) {
       listOfItems: await itemHandler.getList(req.user.id),
     });
   } catch (error) {
-    console.error(error);
+    log.error('ERROR_CREATING_NEW_ITEM', error);
 
-    const itemError: DetailsError = {
-      name: 'ERROR_ITEM',
-      message: 'ERROR_ITEM_HAS_NOT_BE_CREATED',
-      statusCode: 404,
-      description: 'The item has not be created into your list.',
-      details: `Item has not be created with the input values: idProduct: ${productId},
-      unity: ${unity}, quantity: ${quantity}, userId: ${userId}`,
-    };
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_CREATED',
+      404,
+      'The item has not be created into your list.',
+      `Item has not be created with the input values: idProduct: ${productId},
+      unity: ${unity}, quantity: ${quantity}, userId: ${userId}`);
 
     return next(itemError);
   }
@@ -126,6 +139,17 @@ async function updateItem(req: Request, res: Response, next: NextFunction) {
   try {
     const updatedItem = await itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
 
+    if (!updatedItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_UPDATE',
+        400,
+        'The item has not be updated.',
+        `Item ${req.params.id} has not be updated with the input values:
+        unity: ${req.body.unityItem}, quantity: ${req.body.quantityItem}`,
+      );
+    }
+
     if (req.accepts('application/json')) {
       return res.json({ ok: true, result: updatedItem });
     }
@@ -136,16 +160,18 @@ async function updateItem(req: Request, res: Response, next: NextFunction) {
       listOfItems: await itemHandler.getList(req.user.id),
     });
   } catch (error) {
-    console.error(error);
+    log.error('ERROR_UPDATING_ITEM', error);
 
-    const itemError: DetailsError = {
-      name: 'ERROR_ITEM',
-      message: 'ERROR_ITEM_HAS_NOT_BE_UPDATED',
-      statusCode: 400,
-      description: 'The item has not be updated.',
-      details: `Item ${req.params.id} has not be updated with the input values:
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_UPDATED',
+      400,
+      'The item has not be updated.',
+      `Item ${req.params.id} has not be updated with the input values:
       unity: ${req.body.unityItem}, quantity: ${req.body.quantityItem}`,
-    };
+    );
 
     return next(itemError);
   }
@@ -160,7 +186,17 @@ async function updateItem(req: Request, res: Response, next: NextFunction) {
  */
 async function removeItem(req: Request, res: Response, next: NextFunction) {
   try {
-    await itemHandler.removeItemOfList(req.params.id);
+    const removedItem = await itemHandler.removeItemOfList(req.params.id);
+
+    if (!removedItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_REMOVE',
+        400,
+        'The item has not be removed of your list.',
+        `Item ${req.params.id} has not be removed of the list`,
+      );
+    }
 
     return res.render('index', {
       message: 'Shopping List',
@@ -168,15 +204,17 @@ async function removeItem(req: Request, res: Response, next: NextFunction) {
       listOfItems: await itemHandler.getList(req.user.id),
     });
   } catch (error) {
-    console.error(error);
+    log.error('ERROR_REMOVING_ITEM', error);
 
-    const itemError: DetailsError = {
-      name: 'ERROR_ITEM',
-      message: 'ERROR_ITEM_HAS_NOT_BE_REMOVED',
-      statusCode: 400,
-      description: 'The item has not be removed of your list.',
-      details: `Item ${req.params.id} has not be removed of the list`,
-    };
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_REMOVED',
+      400,
+      'The item has not be removed of your list.',
+      `Item ${req.params.id} has not be removed of the list`,
+    );
 
     return next(itemError);
   }

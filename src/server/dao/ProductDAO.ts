@@ -5,6 +5,9 @@ import Product from '../model/Product';
 import pgPromise from 'pg-promise';
 import Unit = require('../model/Unity');
 import Category = require('../model/Category');
+import logger from '../logger';
+
+const log = logger('ProductDAO');
 
 export default class ProductDAO implements IProductDAO {
   constructor(readonly db: pgPromise.IDatabase<{}>) {}
@@ -19,7 +22,7 @@ export default class ProductDAO implements IProductDAO {
 
       return mapProducts(data);
     } catch (error) {
-      console.error('Error fetching products', error);
+      log.error('Error fetching products', error);
       throw new Error('ERROR_FETCHING_PRODUCTS');
     }
   }
@@ -36,7 +39,7 @@ export default class ProductDAO implements IProductDAO {
 
       return mapProducts(data)[0];
     } catch (error) {
-      console.error('Error fetching product', error);
+      log.error('Error fetching product', error);
       throw new Error('ERROR_FETCHING_PRODUCT');
     }
   }
@@ -50,7 +53,7 @@ export default class ProductDAO implements IProductDAO {
 
       return data.id;
     } catch (error) {
-      console.error('Error fetching category of product', error);
+      log.error('Error fetching category of product', error);
       throw new Error('ERROR_FETCHING_CATEGORY');
     }
   }
@@ -64,7 +67,7 @@ export default class ProductDAO implements IProductDAO {
 
       return await Promise.all(actions);
     } catch (error) {
-      console.error('Error registering names of product', error);
+      log.error('Error registering names of product', error);
       throw new Error('ERROR_REGISTERING_NAMES_PRODUCT');
     }
   }
@@ -78,7 +81,7 @@ export default class ProductDAO implements IProductDAO {
 
       return await Promise.all(actions);
     } catch (error) {
-      console.error('Error registering units of product', error);
+      log.error('Error registering units of product', error);
       throw new Error('ERROR_REGISTERING_UNITS_PRODUCT');
     }
   }
@@ -94,7 +97,7 @@ export default class ProductDAO implements IProductDAO {
 
       return data.id;
     } catch (error) {
-      console.error('Error creating product', error);
+      log.error('Error creating product', error);
       throw new Error('ERROR_CREATING_PRODUCT');
     }
   }

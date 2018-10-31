@@ -3,16 +3,19 @@
 import path from 'path';
 import fs from 'fs';
 import { db } from './connector';
+import logger from '../logger';
+
+const log = logger('loadSeedsTest');
 
 async function loadSeeds() {
   const seedsSql = fs.readFileSync(path.join(__dirname, './seedsTest.sql'), 'utf-8');
 
   try {
-    await db.none(seedsSql);
+    log.info('Loaded data');
 
-    console.log('Loaded data');
+    await db.none(seedsSql);
   } catch (error) {
-    console.error(error);
+    log.error('ERROR_LOADING_SEEDS', error);
   }
 }
 

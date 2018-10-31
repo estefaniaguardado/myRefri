@@ -3,10 +3,6 @@ import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import expressFlash from 'express-flash';
 import passport from 'passport';
-import debug from 'debug';
-
-const http = debug('http');
-
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -15,7 +11,9 @@ import DetailsError from './DetailsError';
 import './services/auth';
 import connectPgSession from 'connect-pg-simple';
 import config from '../config';
+import logger from './logger';
 
+const log = logger('server');
 const app = express();
 const pgSession = connectPgSession(session);
 
@@ -59,7 +57,7 @@ app.use((error: DetailsError, req: Request, res: Response, next: NextFunction) =
 
 const port = config('PORT');
 app.listen(port, () => {
-  debug(`App is listening in port ${port}`);
+  log.info(`App is listening in port ${port}`);
 });
 
 export = app;
