@@ -5,16 +5,16 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/repo
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.0.0
+      - image: circleci/node:10.6
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
+      - image: circleci/postgres:9.6-alpine-ram
+          environment:
+            NODE_ENV: test
+            POSTGRES_USER: postgres
+            POSTGRES_DB: myRefri-test
 
     steps:
       - checkout
@@ -33,30 +33,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-  test:
-      docker:
-        - image: circleci/node:10.6
-          environment:
-            NODE_ENV: test
-            TZ: Europe/Berlin
-        - image: circleci/postgres:9.6-alpine-ram
-          environment:
-            POSTGRES_USER: postgres
-            POSTGRES_DB: myRefri-test
-      working_directory: ~/repo
-      steps:
-        - checkout
+      - attach_workspace:
+        at: ~/repo
 
-        - restore_cache:
-            keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-
-        - run: yarn install
-
-        - attach_workspace:
-            at: ~/repo
-        - run:
+      - run:
             name: Wait for db
             command: dockerize -wait tcp://localhost:5432 -timeout 1m
         - run:
@@ -64,10 +44,3 @@ jobs:
             command: npm run integration-test
         # run tests!
         - run: yarn test
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test
