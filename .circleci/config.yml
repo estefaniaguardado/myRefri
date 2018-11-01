@@ -33,9 +33,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn test
-
 integration-test:
     docker:
       - image: circleci/node:10.6
@@ -44,8 +41,9 @@ integration-test:
           TZ: Europe/Berlin
       - image: circleci/postgres:9.6-alpine-ram
         environment:
-            database : postgres://postgres:12345@localhost:5432/myRefri-test
-    working_directory: ~/test
+          POSTGRES_USER: postgres
+          POSTGRES_DB: myRefri-test
+    working_directory: ~/repo
     steps:
       - checkout
       - attach_workspace:
@@ -53,6 +51,10 @@ integration-test:
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
+        environment:
+          database : postgres://postgres:12345@localhost:5432/myRefri-test
       - run:
           name: Run integration test
           command: npm run integration-test
+      # run tests!
+      - run: yarn test
