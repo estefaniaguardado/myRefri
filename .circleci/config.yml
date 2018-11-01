@@ -44,9 +44,8 @@ integration-test:
           TZ: Europe/Berlin
       - image: circleci/postgres:9.6-alpine-ram
         environment:
-          POSTGRES_DB: myRefri-test
-          POSTGRES_USER: postgres
-    working_directory: ~/repo
+            database : postgres://postgres:12345@localhost:5432/myRefri-test
+    working_directory: ~/test
     steps:
       - checkout
       - attach_workspace:
