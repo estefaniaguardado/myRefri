@@ -10,7 +10,7 @@
     "postinstall": "npm run build-ts",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "dev": "set PORT=8000 && nodemon index.js",
-    "integration-test": "npm run build-ts && set PROFILE=test&& npm run database-dev && npm run database-seeds-test && npm run build-integration-test",
+    "integration-test": "npm run postinstall && set PROFILE=test&& npm run database-dev && npm run database-seeds-test && npm run build-integration-test",
     "build-integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
     "build-ts": "tsc",
     "database-connection": "node src/server/db/connector.js",
