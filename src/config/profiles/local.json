@@ -1,4 +1,4 @@
 {
-  "database" : "postgres://postgres:12345@localhost:5432/myRefri-local",
+  "POSTGRES_URL": "postgres://dbuser@localhost:5431/myRefriDB",
   "PORT": 3000
 }

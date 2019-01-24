@@ -12,5 +12,5 @@ const initOptions = {
 };
 
 const pgp = pgPromise(initOptions);
-const database = config('database');
+const database = config('POSTGRES_URL');
 export const db = pgp(database);
