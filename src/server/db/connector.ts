@@ -9,6 +9,11 @@ const initOptions = {
     const cp = client.connectionParameters;
     log.info('Connected to database...');
   },
+  error(error, e) {
+    if (e.cn) {
+      log.error('Error connection database', { error });
+    }
+  },
 };
 
 const pgp = pgPromise(initOptions);
