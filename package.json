@@ -4,19 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run postinstall && npm run database-connection && node index.js",
-    "test": "npm run tslint && npm run unit-test && npm run integration-test",
+    "start": "ts-node ./src",
+    "dev": "nodemon",
+    "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
+    "test": "npm run lint && npm run unit-test && npm run integration-test",
     "unit-test": "mocha --require \"ts-node/register\" \"src/**/*.test.ts\"",
-    "postinstall": "npm run build-ts",
-    "tslint": "tslint -c tslint.json 'src/**/*.ts'",
-    "dev": "set PORT=8000 && nodemon index.js",
-    "integration-test": "npm run build-ts && set PROFILE=test&& npm run database-dev && npm run database-seeds-test && npm run build-integration-test",
     "build-integration-test": "mocha --require \"ts-node/register\" \"test/**.test.ts\" --exit",
-    "build-ts": "tsc",
-    "database-connection": "node src/server/db/connector.js",
-    "database-dev": "node src/server/db/schema/index.js",
-    "database-seeds": "node src/server/db/loadSeeds.js",
-    "database-seeds-test": "node src/server/db/loadSeedsTest.js"
+    "integration-test": "npm run tsc && set PROFILE=test&& npm run database-dev && npm run database-seeds-test && npm run build-integration-test",
+    "database-dev": "ts-node src/server/db/schema/index.ts",
+    "database-seeds": "ts-node src/server/db/loadSeeds.ts",
+    "database-seeds-test": "nts-node src/server/db/loadSeedsTest.ts"
   },
   "repository": {
     "type": "git",
