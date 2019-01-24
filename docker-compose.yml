@@ -1,0 +1,18 @@
+version: "3"
+services:
+  postgresdb:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: myRefriDB
+      POSTGRES_USER: dbuser
+    ports:
+      - "5431:5432"
+  myrefri:
+    build: .
+    depends_on:
+      - postgresdb
+    environment:
+      POSTGRES_URL: postgres://dbuser@postgresdb:5432/myRefriDB
+      DEBUG: app*
+    ports:
+      - "3000:3000"
