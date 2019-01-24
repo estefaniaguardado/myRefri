@@ -12,6 +12,7 @@ import './services/auth';
 import connectPgSession from 'connect-pg-simple';
 import config from '../config';
 import logger from './logger';
+import { db } from './db/connector';
 
 const log = logger('server');
 const app = express();
@@ -25,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
   store: new pgSession({
-    conString: config('database'),
+    pgPromise: db,
     schemaName: 'main',
     tableName: 'session',
   }),
