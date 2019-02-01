@@ -14,7 +14,7 @@
     "database-init": "npm run database-schema && npm run database-seeds",
     "database-schema": "ts-node src/server/db/schema/index.ts",
     "database-seeds": "ts-node src/server/db/loadSeeds.ts",
-    "database-test": "cross-env PROFILE=test npm run database-schema && npm run database-seeds-test",
+    "database-test": "cross-env PROFILE=test ts-node src/server/db/schema/index.ts && npm run database-seeds-test",
     "database-seeds-test": " cross-env PROFILE=test ts-node src/server/db/loadSeedsTest.ts"
   },
   "repository": {
