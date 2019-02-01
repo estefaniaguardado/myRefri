@@ -35,15 +35,15 @@ jobs:
 
   test:
       docker:
-        - image: circleci/postgres:9.6-alpine-ram
-          environment:
-            POSTGRES_USER: dbuser
-            POSTGRES_DB: myRefriDB
         - image: circleci/node:10.6
           environment:
             PROFILE: test
-            POSTGRES_URL: postgres://dbuser@localhost:5432/myRefriDB
+            POSTGRES_URL: postgres://dbuser@localhost:5431/myRefriDB
             TZ: Europe/Berlin
+        - image: circleci/postgres:9.6
+          environment:
+            POSTGRES_USER: dbuser
+            POSTGRES_DB: myRefriDB
       working_directory: ~/repo
       steps:
         - checkout
