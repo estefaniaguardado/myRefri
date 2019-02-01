@@ -36,10 +36,6 @@ jobs:
   test:
       docker:
         - image: circleci/node:10.6
-          environment:
-            PROFILE: test
-            POSTGRES_URL: postgres://dbuser@localhost:5431/myRefriDB
-            TZ: Europe/Berlin
         - image: circleci/postgres:9.6
           environment:
             POSTGRES_USER: dbuser
@@ -57,17 +53,24 @@ jobs:
 
         - attach_workspace:
             at: ~/repo
+
         - run:
-          name: Install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
-        - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgress && exit 1
         # run tests!
         - run:
             name: Run unit and integration test
+            environment:
+              PROFILE: test
+              POSTGRES_URL: postgres://dbuser@localhost:5432/myRefriDB
+              TZ: Europe/Berlin
             command: yarn test
 
 workflows:
