@@ -2,34 +2,35 @@
  * Defines the properties of an item that user has set and added to his shopping list.
  * @typedef {object} Item
  */
-import Product from './Product';
-import Unity from './Unity';
+import Unit from './Unity';
 
-class Item {
+export default interface Item {
   /**
-   * @param {string} id - Item Identifier
-   * @param {Product} product - Product reference to which the item belongs
-   * @param {Date} date - Date item creation
-   * @param {Unity} unity - Selected item unit
-   * @param {number} quantity - Selected item quantity
-   * @param {boolean} active - Shopping status of item
+   * Item Identifier
    */
-
   id: string;
-  product: Product;
-  date!: Date;
-  unity: Unity;
+  /**
+   * Name of item
+   */
+  name: string;
+  /**
+   * Product reference to which the item belongs
+   */
+  productId: string;
+  /**
+   * Date item creation
+   */
+  date: Date;
+  /**
+   * Selected item unit
+   */
+  unity: Unit;
+  /**
+   * Selected item quantity
+   */
   quantity: number;
+  /**
+   * Shopping status of item
+   */
   active: boolean;
-
-  constructor(id: string, product: Product, date: Date, unity: Unity, quantity: number, active: boolean) {
-    this.id = id;
-    this.product = product;
-    this.date = date;
-    this.unity = unity;
-    this.quantity = quantity;
-    this.active = active;
-  }
 }
-
-export = Item;

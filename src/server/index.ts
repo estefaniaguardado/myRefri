@@ -3,18 +3,20 @@ import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import expressFlash from 'express-flash';
 import passport from 'passport';
-import debug from 'debug';
-
-const http = debug('http');
-
 import bodyParser from 'body-parser';
-import expressSession from 'express-session';
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import routes from './routes';
 import DetailsError from './DetailsError';
 import './services/auth';
+import connectPgSession from 'connect-pg-simple';
+import config from '../config';
+import logger from './logger';
+import { db } from './db/connector';
 
+const log = logger('server');
 const app = express();
+const pgSession = connectPgSession(session);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
@@ -22,7 +24,17 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(session({
+  store: new pgSession({
+    pgPromise: db,
+    schemaName: 'main',
+    tableName: 'session',
+  }),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 900000 },
+}));
 app.use(expressFlash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -44,9 +56,9 @@ app.use((error: DetailsError, req: Request, res: Response, next: NextFunction) =
   return next(error);
 });
 
-const port = process.env.PORT || 3000;
+const port = config('PORT');
 app.listen(port, () => {
-  debug(`App is listening in port ${port}`);
+  log.info(`App is listening in port ${port}`);
 });
 
 export = app;

@@ -3,30 +3,20 @@ import expressPromiseRouter from 'express-promise-router';
 
 const router = expressPromiseRouter();
 
+// TODO: Implement Dependency Injection
+import { db } from '../db/connector';
 import ItemHandler from '../services/ItemHandler';
-
-const itemHandler = new ItemHandler();
-
+import ItemDAO from '../dao/ItemDAO';
 import ProductHandler from '../services/ProductHandler';
-
-const productHandler = ProductHandler();
-
+import ProductDAO from '../dao/ProductDAO';
 import DetailsError from '../DetailsError';
+import logger from '../logger';
 
-/**
- * Return the item page.
- * @memberof Router.item
- * @param {object} req - Express object
- * @param {object} res - Express object
- * @param {object} next - Express object
- */
-function getItemList(req: Request, res: Response, next: NextFunction) {
-  if (req.accepts('application/json')) {
-    return res.json({ ok: true, result: itemHandler.getList() });
-  }
-
-  return next();
-}
+const log = logger('ItemService');
+const itemDAO = new ItemDAO(db);
+const itemHandler = new ItemHandler(itemDAO);
+const productDAO = new ProductDAO(db);
+const productHandler = new ProductHandler(productDAO);
 
 /**
  * Return the item list.
@@ -35,12 +25,27 @@ function getItemList(req: Request, res: Response, next: NextFunction) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function shoopingListView(req: Request, res: Response, next: NextFunction) {
+async function getItemList(req: Request, res: Response, next: NextFunction) {
+  if (req.accepts('application/json')) {
+    return res.json({ ok: true, result: await itemHandler.getList(req.user.id) });
+  }
+
+  return next();
+}
+
+/**
+ * Return the item page.
+ * @memberof Router.item
+ * @param {object} req - Express object
+ * @param {object} res - Express object
+ * @param {object} next - Express object
+ */
+async function shoopingListView(req: Request, res: Response, next: NextFunction) {
   if (req.accepts('text/html')) {
     return res.render('index', {
+      products: await productHandler.fetchProductList(),
       message: 'Shopping List',
-      products: productHandler.getProductList(),
-      listOfItems: itemHandler.getList(),
+      listOfItems: await itemHandler.getList(req.user.id),
     });
   }
 
@@ -52,35 +57,75 @@ function shoopingListView(req: Request, res: Response, next: NextFunction) {
  * @memberof Router.item
  * @param {object} req - Express object
  * @param {object} res - Express object
+ * @param {object} next - Express object
  */
-function getItemById(req: Request, res: Response, next: NextFunction) {
-  const item = itemHandler.findItemById(req.params.id);
+async function getItemById(req: Request, res: Response, next: NextFunction) {
+  const item = await itemHandler.findItemById(req.params.id);
 
   if (item) return res.json({ result: item });
 
   const error = new DetailsError(
+    'ERROR_ITEM',
     'ERROR_ITEM_NOT_FOUND',
     404,
-    'The item has not been found in your shopping list.',
-    `Item ${req.params.id} has not found.`);
+    'The item has not been found in your list.',
+    `Item ${req.params.id} has not found.`,
+  );
 
   return next(error);
 }
 
 /**
  * @memberof Router.item
- * Ccreates and adds a new item with the given data into the shopping list.
+ * Creates and adds a new item with the given data into the list.
  * @param {object} req - Express object
  * @param {object} res - Express object
+ * @param {object} next - Express object
  */
-function createNewItem(req: Request, res: Response) {
-  const product = productHandler.findProductById(req.body.selectedProduct);
-  itemHandler.createNewItem(product, req.body);
-  res.render('index', {
-    message: 'Shopping List',
-    products: productHandler.getProductList(),
-    listOfItems: itemHandler.getList(),
-  });
+async function createNewItem(req: Request, res: Response, next: NextFunction) {
+  const productId = req.body.selectedProduct;
+  const unity = req.body.unityItem;
+  const quantity = req.body.quantityItem;
+  const userId = req.user.id;
+
+  try {
+    // TODO: Review the userId as parameter to identigy list(s)
+    const newItem = await itemHandler.createNewItem(productId, unity, quantity, userId);
+
+    if (!newItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_CREATE',
+        400,
+        'The item has not be created into your list.',
+        `Item has not be created with the input values: idProduct: ${productId},
+        unity: ${unity}, quantity: ${quantity}, userId: ${userId}`);
+    }
+
+    if (req.accepts('text/html')) {
+      return res.render('index', {
+        message: 'Shopping List',
+        products: await productHandler.fetchProductList(),
+        listOfItems: await itemHandler.getList(req.user.id),
+      });
+    }
+
+    return res.json({ ok: true, result: newItem });
+  } catch (error) {
+    log.error('ERROR_CREATING_NEW_ITEM', error);
+
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_CREATED',
+      404,
+      'The item has not be created into your list.',
+      `Item has not be created with the input values: idProduct: ${productId},
+      unity: ${unity}, quantity: ${quantity}, userId: ${userId}`);
+
+    return next(itemError);
+  }
 }
 
 /**
@@ -90,26 +135,46 @@ function createNewItem(req: Request, res: Response) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function updateItem(req: Request, res: Response, next: NextFunction) {
-  const item = itemHandler.findItemById(req.params.id);
+async function updateItem(req: Request, res: Response, next: NextFunction) {
+  try {
+    const updatedItem = await itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
 
-  if (item) {
-    itemHandler.modifyItem(req.params.id, req.body.unityItem, req.body.quantityItem);
+    if (!updatedItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_UPDATE',
+        400,
+        'The item has not be updated.',
+        `Item ${req.params.id} has not be updated with the input values:
+        unity: ${req.body.unityItem}, quantity: ${req.body.quantityItem}`,
+      );
+    }
+
+    if (req.accepts('application/json')) {
+      return res.json({ ok: true, result: updatedItem });
+    }
 
     return res.render('index', {
       message: 'Shopping List',
-      products: productHandler.getProductList(),
-      listOfItems: itemHandler.getList(),
+      products: await productHandler.fetchProductList(),
+      listOfItems: await itemHandler.getList(req.user.id),
     });
+  } catch (error) {
+    log.error('ERROR_UPDATING_ITEM', error);
+
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_UPDATED',
+      400,
+      'The item has not be updated.',
+      `Item ${req.params.id} has not be updated with the input values:
+      unity: ${req.body.unityItem}, quantity: ${req.body.quantityItem}`,
+    );
+
+    return next(itemError);
   }
-
-  const error = new DetailsError(
-    'ERROR_ITEM_NOT_FOUND',
-    404,
-    'The item has not been found in your shopping list.',
-    `Item ${req.params.id} has not found.`);
-
-  return next(error);
 }
 
 /**
@@ -119,25 +184,40 @@ function updateItem(req: Request, res: Response, next: NextFunction) {
  * @param {object} res - Express object
  * @param {object} next - Express object
  */
-function removeItem(req: Request, res: Response, next: NextFunction) {
-  const item = itemHandler.findItemById(req.params.id);
+async function removeItem(req: Request, res: Response, next: NextFunction) {
+  try {
+    const removedItem = await itemHandler.removeItemOfList(req.params.id);
 
-  if (item) {
-    itemHandler.removeItemOfList(req.params.id);
+    if (!removedItem) {
+      throw new DetailsError(
+        'ERROR_ITEM',
+        'ERROR_INCORRECT_DATA_ITEM_TO_REMOVE',
+        400,
+        'The item has not be removed of your list.',
+        `Item ${req.params.id} has not be removed of the list`,
+      );
+    }
+
     return res.render('index', {
       message: 'Shopping List',
-      products: productHandler.getProductList(),
-      listOfItems: itemHandler.getList(),
+      products: await productHandler.fetchProductList(),
+      listOfItems: await itemHandler.getList(req.user.id),
     });
+  } catch (error) {
+    log.error('ERROR_REMOVING_ITEM', error);
+
+    if (error instanceof DetailsError) { return next(error); }
+
+    const itemError = new DetailsError(
+      'ERROR_ITEM',
+      'ERROR_ITEM_HAS_NOT_BE_REMOVED',
+      400,
+      'The item has not be removed of your list.',
+      `Item ${req.params.id} has not be removed of the list`,
+    );
+
+    return next(itemError);
   }
-
-  const error = new DetailsError(
-    'ERROR_ITEM_NOT_FOUND',
-    404,
-    'The item has not been found in your shopping list.',
-    `Item ${req.params.id} has not found.`);
-
-  return next(error);
 }
 
 router.get('/', shoopingListView, getItemList);

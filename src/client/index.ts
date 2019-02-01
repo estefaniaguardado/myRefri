@@ -4,21 +4,21 @@ const enterKeycode = 13;
 function setQuantityInput(unitySelect) {
   const selectedOption = $(unitySelect).find(':selected').val();
 
-  if (selectedOption === 'gr' || selectedOption === 'mL') {
-    $('input#quantityInput').attr('value', 50);
+  if (selectedOption === 'gram' || selectedOption === 'mililiter') {
+    $('input#quantityInput').val(50);
     $('input#quantityInput').attr('step', 50);
     $('input#quantityInput').attr('max', 100000);
     $('input#quantityInput').attr('min', 50);
   } else {
-    $('input#quantityInput').attr('value', 1);
+    $('input#quantityInput').val(1);
     $('input#quantityInput').attr('step', 1);
     $('input#quantityInput').attr('max', 100);
     $('input#quantityInput').attr('min', 1);
   }
 }
 
-function setUnitySelect(unities) {
-  unities.forEach((unit) => {
+function setUnitySelect(units) {
+  units.forEach((unit) => {
     $('select#unitySelect').append($('<option>', {
       selected: false,
       value: unit,
@@ -33,7 +33,7 @@ function setUnitySelect(unities) {
   $('li#submitNewItem').show();
 }
 
-$('select#selectProducts').change(function createUnitiesSelect() {
+$('select#selectProducts').change(function createUnitsSelect() {
   const hasPreviousOptions = $('select#unitySelect').children('option').length > 0;
 
   if (hasPreviousOptions) {
@@ -47,7 +47,7 @@ $('select#selectProducts').change(function createUnitiesSelect() {
     url: `/products/${selectedOption}`,
     type: 'GET',
     success: (data) => {
-      setUnitySelect(data.unities);
+      setUnitySelect(data.units);
     },
   });
 });
@@ -109,7 +109,7 @@ function getDetailsProductItemById(id) {
 }
 
 function setItemUnitySelect(item, product) {
-  product.unities.forEach((unit) => {
+  product.units.forEach((unit) => {
     let isSelected;
 
     if (item.unity !== unit) {
@@ -127,9 +127,9 @@ function setItemUnitySelect(item, product) {
 }
 
 function setItemQuantityInput(unity, quantity) {
-  $('input#itemQuantityInput').attr('value', parseInt(quantity, 10));
+  $('input#itemQuantityInput').val(quantity);
 
-  if (unity === 'gr' || unity === 'mL') {
+  if (unity === 'gram' || unity === 'mililiter') {
     $('input#itemQuantityInput').attr('step', 50);
     $('input#itemQuantityInput').attr('max', 100000);
     $('input#itemQuantityInput').attr('min', 50);
@@ -144,11 +144,11 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
   event.preventDefault();
 
   const idItemSelected = $(this).closest('.detailsItem').attr('id');
-  const result = (await getDetailsItembyId(idItemSelected));
+  const result = await getDetailsItembyId(idItemSelected);
   const item = result['result'];
-  const product = await getDetailsProductItemById(item.product.id);
+  const product = await getDetailsProductItemById(item.productId);
 
-  $('#modifyItemP').text(item.product.names[0]);
+  $('#modifyItemP').text(item.name);
   $('select#itemUnitySelect option').remove();
   setItemUnitySelect(item, product);
   setItemQuantityInput(item.unity, item.quantity);
@@ -198,13 +198,13 @@ $('button#modifyItemButton').click(async function modifyHandler(event) {
 $('select#itemUnitySelect').change(function modifiedItemQuantitySelect() {
   const selectedOption = $(this).find(':selected').val();
 
-  if (selectedOption === 'gr' || selectedOption === 'mL') {
-    $('input#itemQuantityInput').attr('value', 50);
+  if (selectedOption === 'gram' || selectedOption === 'mililiter') {
+    $('input#itemQuantityInput').val(50);
     $('input#itemQuantityInput').attr('step', 50);
     $('input#itemQuantityInput').attr('max', 100000);
     $('input#itemQuantityInput').attr('min', 50);
   } else {
-    $('input#itemQuantityInput').attr('value', 1);
+    $('input#itemQuantityInput').val(1);
     $('input#itemQuantityInput').attr('step', 1);
     $('input#itemQuantityInput').attr('max', 100);
     $('input#itemQuantityInput').attr('min', 1);

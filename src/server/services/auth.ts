@@ -1,7 +1,13 @@
 import LocalStrategy from 'passport-local';
 import passport from 'passport';
 
-import userHandler from './userHandler';
+import UserHandler from './UserHandler';
+import UserDAO from '../dao/UserDAO';
+
+// TODO: Implement Dependency Injection
+import { db } from '../db/connector';
+const userDAO = new UserDAO(db);
+const userHandler = new UserHandler(userDAO);
 
 /**
  * Authenticate if the given user already exists by the given username and password.
@@ -12,12 +18,13 @@ import userHandler from './userHandler';
  */
 async function validateUser(username:string, password: string, done: Function) {
   try {
-    const user: any = await userHandler.findUserByName(username);
-    if (user.password !== password) throw new Error('ERROR_INVALID_PASSWORD');
+    const user = await userHandler.findUserByName(username);
+    if (!user) return done(null, false, { message: 'INCORRECT_USER' });
+    if (user.password !== password) return done(null, false, { message: 'INCORRECT_PASSWORD' });
 
     done(null, user);
   } catch (error) {
-    done(null, false, error);
+    done(error);
   }
 }
 
@@ -40,9 +47,11 @@ function serialize(user: any, done: Function) {
 async function deserialize(id: string, done: Function) {
   try {
     const user = await userHandler.findUserById(id);
+    if (!user) return done(null, false, { message: 'INCORRECT_USER' });
+
     done(null, user);
   } catch (error) {
-    done(null, false, error);
+    done(error);
   }
 }
 
