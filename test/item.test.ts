@@ -22,7 +22,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', async () => {
@@ -38,7 +38,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', () => {
@@ -54,7 +54,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', async () => {
@@ -74,7 +74,7 @@ describe('Item API', () => {
             unityItem: 'pz',
             quantityItem: 2,
           })
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', () => {
@@ -93,7 +93,7 @@ describe('Item API', () => {
             unityItem: 'pz',
             quantityItem: 2,
           })
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', () => {
@@ -108,7 +108,7 @@ describe('Item API', () => {
           .set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
           .set('Expires', '-1')
           .set('Pragma', 'no-cache')
-          .expect(401);
+          .expect(302);
       });
 
       it('should redirect to the login', () => {
