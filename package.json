@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run database-init && ts-node ./src",
+    "build-client": "tsc",
     "dev": "nodemon",
     "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
     "test": "npm run lint && npm run unit-test && npm run integration-test",

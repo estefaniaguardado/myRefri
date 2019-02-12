@@ -18,7 +18,7 @@ describe('Product API', () => {
       it('should redirect to the login', async () => {
         const response = await agent
           .get('/products/1')
-          .expect(401);
+          .expect(302);
 
         expect(response.headers.location, 'to be', '/login');
       });

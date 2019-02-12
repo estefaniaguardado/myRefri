@@ -8,23 +8,6 @@ import item from './item';
 import products from './products';
 
 /**
- * Verifies if the user has an active session,
- * it redirects him to the login router if the given data is incorrect.
- * @param {object} req - Express object
- * @param {object} res - Express object
- * @param {object} next - Express object
- */
-function authorized(req: Request, res: Response, next: NextFunction) {
-  if (!req.user) {
-    res.status(401);
-    res.set({ location: '/login' });
-    return res.render('login');
-  }
-
-  return next();
-}
-
-/**
  * Sets the headers in the responses middleware to not save cache.
  * @param {object} req - Express object
  * @param {object} res - Express object
@@ -59,7 +42,7 @@ router.get('/', initialRoute);
  * @memberof Router.index
  * @param {auth} auth - Auth router
  */
-router.use(auth);
+router.use(auth.router);
 
 /**
  * Load item middleware, it verifies the user active session and set no-cache into responses.
@@ -68,7 +51,7 @@ router.use(auth);
  * @param {Function} authorized - Function to verify user authorization
  * @param {Function} noCache - Function to set no-cahce into responses
  */
-router.use('/item', authorized, noCache, item);
+router.use('/item', auth.authorized, noCache, item);
 
 /**
  * Load product middleware, it verifies the user active session.
@@ -76,7 +59,7 @@ router.use('/item', authorized, noCache, item);
  * @param {string} path - Express path
  * @param {Function} authorized - Function to verify user authorization
  */
-router.use('/products', authorized, products);
+router.use('/products', auth.authorized, products);
 
 /**
  * @namespace Router.index
