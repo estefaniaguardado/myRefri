@@ -193,7 +193,7 @@ describe('Item API', () => {
         });
 
         it('should not update any item', () => {
-          expect(response.body, 'to satisfy', { message: 'ERROR_INCORRECT_DATA_ITEM_TO_UPDATE' });
+          expect(response.body, 'to satisfy', { name: 'ERROR_INCORRECT_DATA_ITEM_TO_UPDATE' });
         });
       });
 
@@ -209,7 +209,7 @@ describe('Item API', () => {
         });
 
         it('should not delete any item', () => {
-          expect(response.body, 'to satisfy', { message: 'ERROR_INCORRECT_DATA_ITEM_TO_REMOVE' });
+          expect(response.body, 'to satisfy', { name: 'ERROR_INCORRECT_DATA_ITEM_TO_REMOVE' });
         });
       });
     });

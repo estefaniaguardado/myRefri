@@ -1,28 +1,8 @@
-export default class DetailsError extends Error {
+import ExtendableError from 'es6-error';
 
-  /**
-   * HTTP response status code by the server to the client
-   */
-  statusCode: number;
+export default class DetailsError extends ExtendableError {
 
-  /**
-   * Description to show in the client
-   */
-  description: string;
-
-  /**
-   * Details about the info that can help to fix
-   */
-  details: string;
-
-  constructor(name: string, message: string, code: number, description: string, details: string) {
-    super();
-    this.name = name;
-    this.message = message;
-    this.statusCode = code;
-    this.description = description;
-    this.details = details;
-
-    Object.setPrototypeOf(this, DetailsError.prototype);
+  constructor(readonly name: string, readonly message: string, readonly statusCode: number, readonly description: string, readonly details: string) {
+    super(message);
   }
 }
