@@ -58,4 +58,4 @@ function authorized(req: Request, res: Response, next: NextFunction) {
 /**
  * @namespace Router.authenticate
  */
-export = { router, authMiddleware, authorized };
+export = { router, authorized };
