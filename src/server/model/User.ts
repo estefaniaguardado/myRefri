@@ -9,6 +9,10 @@ export default interface User {
    */
   id: string;
   /**
+   * Email of user to identify
+   */
+  email: string;
+  /**
    * Username of user to access
    */
   username: string;

@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS "main"."product_unit" (
 
 CREATE TABLE IF NOT EXISTS "main"."user" (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
+  email TEXT NOT NULL,
   username TEXT NOT NULL,
   pass TEXT NOT NULL ,
   token TEXT
