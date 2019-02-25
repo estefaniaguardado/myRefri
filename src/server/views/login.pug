@@ -5,14 +5,31 @@ html
         script(src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js")
         link(href='/static/css/login.css', rel='stylesheet')
     body
-        form(action="/login" method="post" id="loginForm")
-            h1 Log In
-            div
-                input(type="text" name="username" id="usernameInput" placeholder="Username")
-            div
-                input(type="password" name="password" placeholder="Password")
-            div
-                input(type="submit" value="Log In")
-            div#error #{error}
-        
+        ul(class="forms")
+            li
+                form(action="/signup" method="post" class="signForm")
+                    h1 Sign up
+                    div
+                        input(type="text" name="emailRegister" class="email" placeholder="Email")
+                    div
+                        input(type="text" name="usernameRegister" class="username" placeholder="Username")
+                    div
+                        input(type="password" name="passwordRegister" class="password" placeholder="Password")
+                    div
+                        input(type="password" name="passwordRepeat" class="password" placeholder="Repite Password")
+                    div
+                        input(type="submit" class="submit" value="Sign Up")
+                    div#error #{error}
+
+            li
+                form(action="/login" method="post" class="loginForm")
+                    h1 Log In
+                    div
+                        input(type="text" name="username" class="username" placeholder="Username")
+                    div
+                        input(type="password" name="password" class="password" placeholder="Password")
+                    div
+                        input(type="submit" class="submit" value="Log In")
+                    div#error #{error}
+
         script(src='/static/login.js')
