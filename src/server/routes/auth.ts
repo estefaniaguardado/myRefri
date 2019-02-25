@@ -10,8 +10,8 @@ const router = expressPromiseRouter();
  * @param {Request} req - Express object
  * @param {Response} res - Express object
  */
-function login(req: Request, res: Response) {
-  res.render('login', req.flash());
+function entry(req: Request, res: Response) {
+  res.render('entry', req.flash());
 }
 
 /**
@@ -25,11 +25,11 @@ function logout(req: Request, res: Response) {
 }
 
 const authMiddleware = passport.authenticate('local', {
-  failureRedirect: '/login',
+  failureRedirect: '/entry',
   failureFlash: true,
 });
 
-router.get('/login', login);
+router.get('/entry', entry);
 router.post('/login', authMiddleware, (req, res, next) => {
   req.session!.save((err) => {
     if (err) return next(err);
@@ -49,7 +49,7 @@ router.get('/logout', logout);
  */
 function authorized(req: Request, res: Response, next: NextFunction) {
   if (!req.user) {
-    return res.redirect('/login');
+    return res.redirect('/entry');
   }
 
   return next();

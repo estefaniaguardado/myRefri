@@ -10,13 +10,13 @@ html
                 form(action="/signup" method="post" class="signForm")
                     h1 Sign up
                     div
-                        input(type="text" name="emailRegister" class="email" placeholder="Email")
+                        input(type="text" name="email" class="email" placeholder="Email")
                     div
-                        input(type="text" name="usernameRegister" class="username" placeholder="Username")
+                        input(type="text" name="username" class="username" placeholder="Username")
                     div
-                        input(type="password" name="passwordRegister" class="password" placeholder="Password")
+                        input(type="password" name="password" class="password" placeholder="Password")
                     div
-                        input(type="password" name="passwordRepeat" class="password" placeholder="Repite Password")
+                        input(type="password" name="passwordRepeat" class="password" placeholder="Repeat Password")
                     div
                         input(type="submit" class="submit" value="Sign Up")
                     div#error #{error}
