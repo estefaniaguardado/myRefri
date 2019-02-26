@@ -42,11 +42,6 @@ CREATE TABLE IF NOT EXISTS "main"."list" (
   list_name TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS "main"."user_list" (
-  list_id UUID REFERENCES main.list (id) NOT NULL,
-  user_id UUID REFERENCES main.user (id) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS "main"."item" (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
   product_id UUID REFERENCES main.product (id) NOT NULL,

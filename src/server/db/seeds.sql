@@ -61,12 +61,6 @@ INSERT INTO main.list (id, user_owner, list_name) VALUES ('7a696598-4d48-4279-99
 INSERT INTO main.list (id, user_owner, list_name) VALUES ('07a3a036-6f78-4ede-9ecb-da9dba419f90', '42f4deaf-e8df-485e-83d0-aa093c1434fa', 'Test List');
 
 --
--- Data for Name: user_list;
---
-INSERT INTO main.user_list (list_id, user_id) VALUES ('7a696598-4d48-4279-990b-9a8cda97d4aa', '378e5e70-856e-421b-931d-1eef5805ea9d');
-insert into main.user_list (list_id, user_id) values ('07a3a036-6f78-4ede-9ecb-da9dba419f90', '42f4deaf-e8df-485e-83d0-aa093c1434fa');
-
---
 -- Data for Name: item;
 --
 INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)

@@ -12,6 +12,7 @@ export default class UserDAO implements IUserDAO {
 
       const user: User = {
         id: data.id,
+        email: data.email,
         username: data.username,
         password: data.pass,
       };
@@ -29,6 +30,7 @@ export default class UserDAO implements IUserDAO {
 
       const user: User = {
         id: data.id,
+        email: data.email,
         username: data.username,
         password: data.pass,
       };
@@ -36,6 +38,18 @@ export default class UserDAO implements IUserDAO {
       return user;
     } catch (error) {
       throw new Error('ERROR_FETCHING_USER');
+    }
+  }
+
+  async createNewUser(email: string, username: string, password:string): Promise<string | null> {
+    try {
+      const query = 'INSERT INTO main.user (email, username, pass) VALUES ($1, $2, $3) RETURNING id';
+      const idUser = await this.db.oneOrNone(query, [email, username, password]);
+      if (!idUser) return null;
+
+      return idUser.id;
+    } catch (error) {
+      throw new Error('ERROR_CREATING_NEW_USER');
     }
   }
 }
