@@ -9,6 +9,9 @@ const initOptions = {
     const cp = client.connectionParameters;
     log.info('Connected to database...');
   },
+  query(e) {
+    log.info(e.query);
+  },
   error(error, e) {
     if (e.cn) {
       log.error('Error connection database', { error });
