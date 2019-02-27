@@ -66,8 +66,6 @@ INSERT INTO main.list (id, user_owner, list_name) VALUES ('07a3a036-6f78-4ede-9e
 INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)
   VALUES ('aa87496c-0685-4de5-a169-4958e71e4d89', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-10-01', 'kilogram', 5, '7a696598-4d48-4279-990b-9a8cda97d4aa', true);
 INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)
-  VALUES ('29b92597-c164-4a61-b216-9b1d9683b49c', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-10-01', 'kilogram', 5, '07a3a036-6f78-4ede-9ecb-da9dba419f90', true);
-INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)
   VALUES ('49831250-0844-4267-8b12-fcd3b3cde642', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-09-01', 'kilogram', 1, '7a696598-4d48-4279-990b-9a8cda97d4aa', true);
 
 END$$
