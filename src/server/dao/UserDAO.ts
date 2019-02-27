@@ -5,7 +5,7 @@ import pgPromise from 'pg-promise';
 export default class UserDAO implements IUserDAO {
   constructor(readonly db: pgPromise.IDatabase<{}>) {}
 
-  async getUserByName(username: string): Promise<User | null> {
+  async getUserByUsername(username: string): Promise<User | null> {
     try {
       const data = await this.db.oneOrNone('SELECT * FROM main.user WHERE username = $1', [username]);
       if (!data) return null;

@@ -4,8 +4,8 @@ import { IUserDAO } from '../dao/IUserDAO';
 export default class UserHandler {
   constructor(readonly dao: IUserDAO) {}
 
-  findUserByName(username: string): Promise<User | null> {
-    return this.dao.getUserByName(username);
+  findUserByUsername(username: string): Promise<User | null> {
+    return this.dao.getUserByUsername(username);
   }
 
   findUserById(id: string): Promise<User | null> {

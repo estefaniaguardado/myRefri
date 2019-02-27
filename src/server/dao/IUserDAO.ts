@@ -12,7 +12,7 @@ export interface IUserDAO {
    * Return an user information by username.
    * @param {string} username
    */
-  getUserByName(username: string): Promise<User | null>;
+  getUserByUsername(username: string): Promise<User | null>;
 
   /**
    * Return an user information by ID.

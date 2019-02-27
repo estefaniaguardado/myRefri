@@ -18,7 +18,7 @@ const userHandler = new UserHandler(userDAO);
  */
 async function validateUser(username:string, password: string, done: Function) {
   try {
-    const user = await userHandler.findUserByName(username);
+    const user = await userHandler.findUserByUsername(username);
     if (!user) return done(null, false, { message: 'INCORRECT_USER' });
     if (user.password !== password) return done(null, false, { message: 'INCORRECT_PASSWORD' });
 
