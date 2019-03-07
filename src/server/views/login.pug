@@ -1,28 +1,30 @@
 html
     head
         title Login
-        script(src="https://code.jquery.com/jquery-1.12.4.js")
-        script(src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js")
+        script(src="http://code.jquery.com/jquery-1.11.0.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js")
+        script(src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/additional-methods.js")
+        script(src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/additional-methods.min.js")
         link(href='/static/css/login.css', rel='stylesheet')
     body
         ul(class="forms")
             li
-                form(action="/signup" method="post" class="signForm")
+                form(action="/signup" onsubmit="return validateData(this)" method="post" id="signForm" class="signForm")
                     h1 Sign up
                     div
                         input(type="text" name="email" class="email" placeholder="Email")
                     div
                         input(type="text" name="username" class="username" placeholder="Username")
                     div
-                        input(type="password" name="password" class="password" placeholder="Password")
+                        input(type="password" name="password" id="password" class="password" placeholder="Password")
                     div
-                        input(type="password" name="passwordRepeat" class="password" placeholder="Repeat Password")
+                        input(type="password" name="repeatedPassword" class="password" placeholder="Repeat Password")
                     div
                         input(type="submit" class="submit" value="Sign Up")
-                    div#error #{error}
 
             li
-                form(action="/login" method="post" class="loginForm")
+                form(action="/login" method="post" id="loginForm" class="loginForm")
                     h1 Log In
                     div
                         input(type="text" name="username" class="username" placeholder="Username")

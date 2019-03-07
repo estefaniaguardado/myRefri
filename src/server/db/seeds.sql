@@ -4,7 +4,7 @@ DO $$ BEGIN
 -- Data for Name: user;
 --
 
-INSERT INTO main."user" (id, email, username, pass, token) VALUES ('378e5e70-856e-421b-931d-1eef5805ea9d', 'annie@example.com', 'annie', 'hola', NULL);
+INSERT INTO main."user" (id, email, username, pass, token) VALUES ('378e5e70-856e-421b-931d-1eef5805ea9d', 'annie@example.com', 'annie', 'holahola', NULL);
 insert into main."user" (id, email, username, pass, token) values ('42f4deaf-e8df-485e-83d0-aa093c1434fa', 'test@example.com', 'test', 'test', NULL);
 
 --
