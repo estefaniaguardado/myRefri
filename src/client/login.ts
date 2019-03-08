@@ -1,4 +1,9 @@
 /* global $ */
+
+$.validator.methods.email = function (value, element) {
+  return this.optional(element) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+};
+
 $('#signForm').validate({
   rules: {
     email: {
