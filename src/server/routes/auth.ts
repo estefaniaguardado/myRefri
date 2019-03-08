@@ -4,6 +4,8 @@ import { Request, Response, NextFunction } from 'express';
 
 const router = expressPromiseRouter();
 
+import user from './user';
+
 /**
  * If the user has an active session, it redirects to items route rather to the login form.
  * @memberof Router.authenticate
@@ -30,6 +32,7 @@ const authMiddleware = passport.authenticate('local', {
 });
 
 router.get('/login', login);
+router.post('/signup', user.registerNewUser);
 router.post('/login', authMiddleware, (req, res, next) => {
   req.session!.save((err) => {
     if (err) return next(err);

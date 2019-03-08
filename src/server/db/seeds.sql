@@ -4,8 +4,8 @@ DO $$ BEGIN
 -- Data for Name: user;
 --
 
-INSERT INTO main."user" (id, username, pass, token) VALUES ('378e5e70-856e-421b-931d-1eef5805ea9d', 'annie', 'hola', NULL);
-insert into main."user" (id, username, pass, token) values ('42f4deaf-e8df-485e-83d0-aa093c1434fa', 'test', 'test', NULL);
+INSERT INTO main."user" (id, email, username, pass, token) VALUES ('378e5e70-856e-421b-931d-1eef5805ea9d', 'annie@example.com', 'annie', 'holahola', NULL);
+insert into main."user" (id, email, username, pass, token) values ('42f4deaf-e8df-485e-83d0-aa093c1434fa', 'test@example.com', 'test', 'test', NULL);
 
 --
 -- Data for Name: category;
@@ -61,19 +61,11 @@ INSERT INTO main.list (id, user_owner, list_name) VALUES ('7a696598-4d48-4279-99
 INSERT INTO main.list (id, user_owner, list_name) VALUES ('07a3a036-6f78-4ede-9ecb-da9dba419f90', '42f4deaf-e8df-485e-83d0-aa093c1434fa', 'Test List');
 
 --
--- Data for Name: user_list;
---
-INSERT INTO main.user_list (list_id, user_id) VALUES ('7a696598-4d48-4279-990b-9a8cda97d4aa', '378e5e70-856e-421b-931d-1eef5805ea9d');
-insert into main.user_list (list_id, user_id) values ('07a3a036-6f78-4ede-9ecb-da9dba419f90', '42f4deaf-e8df-485e-83d0-aa093c1434fa');
-
---
 -- Data for Name: item;
 --
-INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active) 
+INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)
   VALUES ('aa87496c-0685-4de5-a169-4958e71e4d89', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-10-01', 'kilogram', 5, '7a696598-4d48-4279-990b-9a8cda97d4aa', true);
-INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active) 
-  VALUES ('29b92597-c164-4a61-b216-9b1d9683b49c', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-10-01', 'kilogram', 5, '07a3a036-6f78-4ede-9ecb-da9dba419f90', true);
-INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active) 
+INSERT INTO main.item (id, product_id, added, unit, quantity, list_id, active)
   VALUES ('49831250-0844-4267-8b12-fcd3b3cde642', '2fb403dd-d202-4f35-8650-23771534afe0', '2018-09-01', 'kilogram', 1, '7a696598-4d48-4279-990b-9a8cda97d4aa', true);
 
 END$$

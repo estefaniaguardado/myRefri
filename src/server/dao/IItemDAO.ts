@@ -32,4 +32,9 @@ export interface IItemDAO {
    * @param {string} id
    */
   deleteItem(id: string);
+  /**
+   * Create a new list for user
+   * @param {string} id
+   */
+  createItemListByUserId(listName: string, id: string): Promise<string | null>;
 }

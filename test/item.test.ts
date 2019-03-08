@@ -119,7 +119,7 @@ describe('Item API', () => {
 
   context('when access authorized user', () => {
     before(async () => {
-      user = { username: 'annie', password: 'hola' };
+      user = { username: 'test', password: 'test' };
       response = await agent
       .post('/login')
       .send(user)

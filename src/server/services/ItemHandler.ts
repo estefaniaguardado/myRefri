@@ -42,4 +42,12 @@ export default class ItemHandler {
 
     return item;
   }
+
+  async registerItemListForUser(listName: string, idUser: string): Promise<string | null> {
+    const idList = await this.dao.createItemListByUserId(listName, idUser);
+
+    if (!idList) return null;
+
+    return idList;
+  }
 }

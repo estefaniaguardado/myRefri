@@ -29,6 +29,26 @@ describe('Item Handler', () => {
     let response;
     let idItemMock;
 
+    describe('when create an item list by user id', () => {
+      let idItemListMock;
+
+      beforeEach(async () => {
+        idItemListMock = sinon.mock();
+
+        itemDAO.createItemListByUserId.resolves(idItemListMock);
+
+        response = await sut.registerItemListForUser('test list', userId);
+      });
+
+      it('should pass the user identifier', () =>
+        expect(itemDAO.createItemListByUserId, 'was called with', 'test list', userId),
+      );
+
+      it('should return the id of item list', () =>
+        expect(response, 'to be', idItemListMock),
+      );
+    });
+
     describe('when searching an item by the id', () => {
       beforeEach(async () => {
         itemMock = sinon.mock();

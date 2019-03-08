@@ -11,10 +11,10 @@ export default class ItemDAO implements IItemDAO {
 
   async getItemListByUser(userId: string): Promise<Item[]> {
     try {
-      const query = `SELECT i.id, i.product_id, i.added, i.unit, i.quantity, i.active, pn."name" FROM main.user_list ul
-      INNER JOIN main.item i ON i.list_id = ul.list_id
+      const query = `SELECT i.id, i.product_id, i.added, i.unit, i.quantity, i.active, pn."name" FROM main.list l
+      INNER JOIN main.item i ON i.list_id = l.id
       INNER JOIN main.product_name pn on pn.product_id = i.product_id
-      INNER JOIN main."user" u ON u.id = ul.user_id WHERE u.id = $1`;
+      INNER JOIN main."user" u ON u.id = l.user_owner WHERE u.id = $1`;
       const data = await this.db.manyOrNone(query, [userId]);
 
       if (!data) return data;
@@ -72,7 +72,7 @@ export default class ItemDAO implements IItemDAO {
   async createItem(productId: string, date: Date, unity: Unit, quantity: number, userId: string): Promise<string | null> {
     try {
       const query = `INSERT INTO main.item (product_id, added, unit, quantity, list_id, active)
-      VALUES ($1, $2, $3, $4, (SELECT ul.list_id FROM main.user_list ul WHERE ul.user_id = $5), true) RETURNING id`;
+      VALUES ($1, $2, $3, $4, (SELECT l.id FROM main.list l WHERE l.user_owner = $5), true) RETURNING id`;
       const data = await this.db.oneOrNone(query, [productId, date, unity, quantity, userId]);
 
       if (!data) return null;
@@ -106,4 +106,16 @@ export default class ItemDAO implements IItemDAO {
     }
   }
 
+  async createItemListByUserId(listName:string, id: string) {
+    try {
+      const query = 'INSERT INTO main.list (list_name, user_owner) VALUES ($1, $2) RETURNING id';
+      const idList = await this.db.oneOrNone(query, [listName, id]);
+      if (!idList) return null;
+
+      return idList.id;
+    } catch (error) {
+      log.error('Error creating list of items for user', error);
+      throw new Error('ERROR_CREATING_LIST_FOR_USER');
+    }
+  }
 }
